@@ -9,7 +9,7 @@
         private ?String $senha = null;
         private int $tokens = 0;
 
-        public function __construct($nome = null, $username = null, $email = null, $senha = null){
+        public function __construct(?String $nome = null, ?String $username = null, ?String $email = null, ?String $senha = null){
             if(!isset($nome) && !isset($username) && !isset($email) && !isset($senha)) return;
             
             self::validaNome($nome);

@@ -1,7 +1,7 @@
 <?php
     require_once "../../../config/autoload.php";
 
-    $acao = $_GET['acao'] ?? 'cadastro';
+    $acao = $_GET['acao'] ?? 'listar';
     
     $nomeClasse = ucfirst(basename(__DIR__));
     $nomeController = $nomeClasse . "Controller";
