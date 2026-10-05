@@ -19,8 +19,8 @@
         <div class="form">
             <h2><div class="titleform">FAÇA SEU LOGIN</div></h2>
             <div class="campos">
-                <a class="opformlog" href="">LOGIN</a>
-                <a class="opformlog" href="">CADASTRE-SE</a>
+                <a class="opformlog" href="src/Views/usuario/?acao=login">LOGIN</a>
+                <a class="opformlog" href="src/Views/usuario/?acao=cadastro">CADASTRE-SE</a>
             </div>
         </div>
     </main>
