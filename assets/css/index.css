@@ -5,10 +5,17 @@ html{
 body{
     height: 100vh;
     width: 100vw;
-    background-image: url('../images/Rayquazafundo.jpg');
+    background-image: url('/MonsterPE/assets/imgs/Rayquazafundo.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    gap: 1vh;
+    align-items: center;
+    color: aliceblue;
+    background-attachment: fixed;
 }
 main{
     height: 100vh;
@@ -16,6 +23,8 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 50px;
 }
 nav{
     display: flex;
@@ -32,6 +41,43 @@ nav{
     align-items: center;
     gap: 25px;
     color: aliceblue;
+} 
+footer{
+    padding-top: 5vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100vw;
+    background: linear-gradient(to bottom, #1f2451a5, #1f2451ad, #1f2451, #1f2451);
+    gap: 2vh;
+    padding-bottom: 5vh;
+}
+.logofoot{
+    width: 15%;
+    align-self: center;
+}
+.opfoot{
+    color: aliceblue;
+    font-size: 20px;
+    font-family: Lexend, sans-serif;
+    align-self: center;
+    font-size: 15px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+.opfoot > a{
+   color: aliceblue;
+    font-size: 20px;
+    font-family: Lexend, sans-serif;
+    align-self: center;
+    font-size: 15px;
+    text-decoration: none;
+    background-color: #9900ff;
+    padding: 4px;
+    border: #ffffff7b 1px solid;
+    border-radius: 10%;
 }
 .opnav > a{
     text-decoration: none;
@@ -57,14 +103,6 @@ nav{
     0 0 30px rgba(79, 85, 255, 0.4),
     0 0 60px rgba(65, 132, 255, 0.2); 
 }
-body{
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    gap: 17vh;
-    align-items: center;
-    color: aliceblue;
-}
 .form {
     width: 30vw; 
     aspect-ratio: 1 / 1;
@@ -86,7 +124,7 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../images/masterballwall.png');
+    background-image: url('/MonsterPE/assets/imgs/masterballwall.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -128,4 +166,103 @@ body{
     background-color: rgba(255, 255, 255, 0.663);
     transition: 250ms;
     font-weight: bolder;
+}
+.player-audio-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 2px solid #ff2a2a;
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 12px rgba(255, 42, 42, 0.4);
+  margin: 10px;
+}
+.player-audio-btn {
+  background: linear-gradient(135deg, #ff3b3b, #b30000);
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.1s ease, filter 0.2s ease;
+}
+.player-audio-btn:hover {
+  filter: brightness(1.15);
+}
+.player-audio-btn:active {
+  transform: scale(0.96);
+}
+.player-audio-label {
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.player-audio-slider {
+  cursor: pointer;
+  accent-color: #ff2a2a;
+  width: 90px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+input{
+    width: 20vw;
+    height: 2vh;
+}
+.blocosenha{
+    width: 21vw;
+    display: flex;
+    flex-direction:row;
+    gap: 2px;
+}
+.blocosenha > button{
+      font-size: clamp(0.5rem, 1vw, 1rem);
+      white-space: nowrap;
+}
+.opcadastrform{
+    color: #9900ff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+    border: 1px solid black;
+    background-color: rgba(255, 255, 255, 0.663);
+    padding: 5px;
+    flex-direction: column;
+    display: flex;
+    gap: 3px;
+}
+.formcadastro {
+    width: 30vw; 
+    aspect-ratio: 1 / 1;
+    border-radius: 15%;
+    display: flex;
+    flex-direction: column;
+    font-family: Lexend, sans-serif;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.75);
+    border: 3px solid black;
+}
+.formcadastro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/MonsterPE/assets/imgs/masterballwall.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+    z-index: -1;
 }
