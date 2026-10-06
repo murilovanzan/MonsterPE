@@ -16,7 +16,7 @@ function validaFormulario(evento){
         erro = true;
     }
     if(erro){
-        errorMessage.innerHTML = "Você deve preencher todos os campos.";
+        errorMessage.innerHTML = "‼️Você deve preencher todos os campos‼️";
         evento.preventDefault();
     }
     
@@ -31,11 +31,11 @@ function mostrarSenha(){
 
     if(input.type == "password"){
         input.type = "text";
-        botao.innerText="X";
+        botao.innerText= "🙈";
     }
     else if(input.type == "text"){
         input.type = "password";
-        botao.innerText="O";
+        botao.innerText= "👀";
     }
 
 }
