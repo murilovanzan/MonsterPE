@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogos da Primeira Geração</title>
+    <title>Jogos da Sexta Geração</title>
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
     <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=2">
     <link rel="stylesheet" href="/MonsterPE/assets/css/Dropdown.css?v=2">
@@ -38,7 +38,7 @@
         </div>
     </div>
     </div>
-    <div class="titlegen">JOGOS DA PRIMEIRA GERAÇÃO</div>
+    <div class="titlegen">JOGOS DA SEXTA GERAÇÃO</div>
     <div class="cardes">
         <div class="card">
             <div class="personagem"><img src="/MonsterPE/assets/Jogos/Red_JP_boxart.webp" alt="Pocket Monsters Red Image"></div>

@@ -19,7 +19,7 @@
         public function registrar(){
 
             if(!$this->validaPost($_POST)){
-                $errorMessage = 'Você deve preencher todos os campos.';
+                $errorMessage = '‼️Você deve preencher todos os campos‼️';
                 header("Location: ?acao=cadastro&errorMessage=" . urlencode($errorMessage));
                 exit;
             }
@@ -40,7 +40,7 @@
 
         public function fazerLogin(){
             if(!$this->validaPost($_POST)){
-                $errorMessage = 'Você deve preencher todos os campos.';
+                $errorMessage = '‼️Você deve preencher todos os campos‼️';
                 header("Location: ?acao=login&errorMessage=" . urlencode($errorMessage));
                 exit;
             }
