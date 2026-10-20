@@ -115,7 +115,7 @@
             return $stmt->execute([':id' => $id]);
         }
 
-        public static function getTodos(){
+        public function getTodos(){
             $db = getConnection();
             $sql = "SELECT * FROM pokemon;";
             $stmt = $db->prepare($sql);

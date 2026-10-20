@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <table>
+    <table border=1>
         <thead>
             <tr>
                 <th>Nome</th>
@@ -20,16 +20,17 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($pokemons as $pokemon): ?>
+            <?php foreach($dados as $pokemon): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($pokemon->getNome()); ?></td>
-                    <td><?php echo htmlspecialchars($pokemon->getDescricao()); ?></td>
-                    <td><?php echo htmlspecialchars($pokemon->getGeracao()); ?></td>
-                    <td><?php echo htmlspecialchars($pokemon->getSpeed()); ?></td>
-                    <td><?php echo htmlspecialchars($pokemon->getAttack()); ?></td>
-                    <td><?php echo htmlspecialchars($pokemon->getDefense()); ?></td>
-                    <td><?php echo htmlspecialchars($pokemon->getSpAttack()); ?></td>
-                    <td><?php echo htmlspecialchars($pokemon->getSpDefense()); ?></td>
+                    <td><?= $pokemon['nome']?></td>
+                    <td><?= $pokemon['descricao']?></td>
+                    <td><?= $pokemon['geracao']?></td>
+                    <td><?= $pokemon['hp']?></td>
+                    <td><?= $pokemon['speed']?></td>
+                    <td><?= $pokemon['attack']?></td>
+                    <td><?= $pokemon['spAttack']?></td>
+                    <td><?= $pokemon['defense']?></td>
+                    <td><?= $pokemon['spDefense']?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

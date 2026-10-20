@@ -6,12 +6,17 @@
 
         }
 
-        private function renderizar($view){
+        private function renderizar($view, $dados = []){
             require_once __DIR__ . "/../Views/pokemon/{$view}.php";
         }
 
         public function listar(){
-            $this->renderizar('listar');
+
+            $model = new Pokemon();
+
+            $pokemons = $model->getTodos();
+            
+            $this->renderizar('listar', $pokemons);
         }
 
     }
