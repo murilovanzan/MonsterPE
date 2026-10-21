@@ -7,7 +7,7 @@
         }
 
         private function renderizar($view){
-            require_once __DIR__ . "/../Views/usuario/$view.php";
+            require_once __DIR__ . "/../Views/usuario/{$view}.php";
         }
         public function cadastro(){
             $this->renderizar('cadastro');
@@ -19,7 +19,7 @@
         public function registrar(){
 
             if(!$this->validaPost($_POST)){
-                $errorMessage = '‼️Você deve preencher todos os campos‼️';
+                $errorMessage = 'Você deve preencher todos os campos.';
                 header("Location: ?acao=cadastro&errorMessage=" . urlencode($errorMessage));
                 exit;
             }
@@ -40,7 +40,7 @@
 
         public function fazerLogin(){
             if(!$this->validaPost($_POST)){
-                $errorMessage = '‼️Você deve preencher todos os campos‼️';
+                $errorMessage = 'Você deve preencher todos os campos.';
                 header("Location: ?acao=login&errorMessage=" . urlencode($errorMessage));
                 exit;
             }
@@ -51,6 +51,8 @@
 
                 if(password_verify($_POST['senha'], $user->getSenha())){
                     $_SESSION['usuario'] = $user;
+                    $_SESSION['isAdmin'] = $user->getAdm();
+                    session_regenerate_id(true);
                     header("Location: ?acao=dashboard");
                     exit;
                 }
