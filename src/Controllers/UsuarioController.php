@@ -7,7 +7,7 @@
         }
 
         private function renderizar($view){
-            require_once __DIR__ . "/../Views/usuario/$view.php";
+            require_once __DIR__ . "/../Views/usuario/{$view}.php";
         }
         public function cadastro(){
             $this->renderizar('cadastro');
@@ -51,6 +51,8 @@
 
                 if(password_verify($_POST['senha'], $user->getSenha())){
                     $_SESSION['usuario'] = $user;
+                    $_SESSION['isAdmin'] = $user->getAdm();
+                    session_regenerate_id(true);
                     header("Location: ?acao=dashboard");
                     exit;
                 }

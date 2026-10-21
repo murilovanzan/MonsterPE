@@ -20,5 +20,6 @@
         <br>
         <button type="submit">Login</button>    
         <span id="errorMessage"><?= htmlspecialchars($errorMessage) ?></span>
+    </form>
 </body>
 </html>

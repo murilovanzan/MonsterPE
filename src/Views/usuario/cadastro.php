@@ -1,6 +1,10 @@
 <?php
 
     $errorMessage = $_GET['errorMessage'] ?? '';
+
+    if(isset($_SESSION['usuario'])) {
+        
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +57,7 @@
         
     </form>
     </div>
-    <script src="../../../assets/script/validaFormulario.js"></script>
+    <script src="/MonsterPE/assets/script/validaFormulario.js"></script>
 
 </main>
 <footer>

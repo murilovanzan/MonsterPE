@@ -10,7 +10,7 @@
     <nav>
         <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav">
-        <a href="/">Dúvidas</a>|
+        <a href="/MonsterPE/src/Views/PagesDavi/duvidas.php">Dúvidas</a>|
         <a href="/MonsterPE/src/Views/PagesDavi/guia.php">Guias</a>|
         <a href="/MonsterPE/src/Views/PagesDavi/jogospoke.php">Jogos de Pokémon</a>|
         <a href="/MonsterPE/src/Views/PagesDavi/animes.php">Anime</a>|
