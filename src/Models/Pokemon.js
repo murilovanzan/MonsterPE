@@ -45,7 +45,7 @@ class Pokemon{
                 const url = species.url.replace("-species", "");
                 const pokemon = await this.getByUrl(url);
                 lista.innerHTML += `
-                    <li>${pokemon.name}</li>
+                    <li><img src = '${pokemon.sprites.front_default}'></li>
                     <br>
                 `
             }

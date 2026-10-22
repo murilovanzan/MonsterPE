@@ -11,5 +11,7 @@
     <a href="../usuario">USUARIO</a>
     <br>
     <a href="../main">INICIO</a>
+    <br>
+    <a href="../usuario/?acao=logout">Logout</a>
 </body>
 </html>
