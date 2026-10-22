@@ -25,7 +25,7 @@
             }
             else{
                 try{
-                    $usuario = new Usuario($_POST['nome'], $_POST['username'], $_POST['email'], $_POST['senha']);
+                    $usuario = new Usuario($_POST['nome'], $_POST['username'], $_POST['email'], $_POST['senha'], false, null);
                     $usuario->salvar();
                     header("Location: ?acao=login");
                     exit;
@@ -51,9 +51,10 @@
 
                 if(password_verify($_POST['senha'], $user->getSenha())){
                     $_SESSION['usuario'] = $user;
+                    $_SESSION['login'] = true;
                     $_SESSION['isAdmin'] = $user->getAdm();
                     session_regenerate_id(true);
-                    header("Location: ?acao=dashboard");
+                    header("Location: ../main/dashboard.php");
                     exit;
                 }
                 else{

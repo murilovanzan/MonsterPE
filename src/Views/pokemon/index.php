@@ -1,12 +1,11 @@
-<?php
-    require_once __DIR__ . "/../../../config/autoload.php";
-
-    $acao = $_GET['acao'] ?? 'listar';
-    
-    $nomeClasse = ucfirst(basename(__DIR__));
-    $nomeController = $nomeClasse . "Controller";
-
-    $controller = new $nomeController();
-
-    $controller->$acao();
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="listar.php">Ver Pokémon</a>
+</body>
+</html>
