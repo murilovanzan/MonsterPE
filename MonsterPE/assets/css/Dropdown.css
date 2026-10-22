@@ -1,0 +1,223 @@
+#dropdown-toggle {
+    display: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-family: Lexend, sans-serif;
+}
+
+.dropdown-btn {
+    background-color: #384cff;
+    color:rgb(255, 255, 255);
+    padding: 25px;
+    font-size: 25px;
+    border: solid black 1px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 140px;
+    background-color: #000000ca;
+    z-index: 1;
+    max-height: 250px;
+    overflow-y: auto;
+}
+.dropdown-content::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 10px;
+  background-color: rgb(211, 211, 211);
+  margin-left: -2000px;
+}
+.dropdown-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+.dropdown-content .dropop {
+    color: black;
+    padding: 10px 14px;
+    min-width: 110px;
+    text-decoration: none;
+}
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+#dropdown-toggle:checked + .dropdown-btn + .dropdown-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#drop1{
+    background-color: rgb(255, 0, 0);
+    color:white;
+    transition: 0.2s;
+}
+#drop2{
+    background-color: #1500ff;
+    color: white;
+    transition: 0.2s;
+}
+#drop3{
+    background-color: #ff8000;
+    transition: 0.2s;
+}
+#drop4{
+    background-color: #ff00c3;
+    transition: 0.2s;
+}
+#drop5{
+    background-color: #9000ff;
+    color: white;
+    transition: 0.2s;
+}
+#drop6{
+    background-color: #ff00a6;
+    color: white;
+    transition: 0.2s;
+}
+#drop7{
+    background-color: #05560a;
+    color: white;
+    transition: 0.2s;
+}
+#drop8{
+    background-color: #15868e;
+    color: white;
+    transition: 0.2s;
+}
+#drop9{
+    background-color: #b64343;
+    color: white;
+    transition: 0.2s;
+}
+#drop10{
+    background-color: #2950ff;
+    color: white;
+    transition: 0.2s;
+}
+#drop11{
+    background-color: #000;
+    color: #fff;
+    transition: 0.2s;
+}
+#drop1:hover{
+    background-color: rgb(255, 0, 0, 0.493);
+    transition: 0.2s;
+}
+#drop2:hover{
+    background-color: #1500ff87;
+    transition: 0.2s;
+}
+#drop3:hover{
+    background-color: #ff800087;
+    transition: 0.2s;
+}
+#drop4:hover{
+    background-color: #ff00c387;
+    transition: 0.2s;
+}
+#drop5:hover{
+    background-color: #9000ff87;
+    transition: 0.2s;
+}
+#drop6:hover{
+    background-color: #ff00a687;
+    color: white;
+    transition: 0.2s;
+}
+#drop7:hover{
+    background-color: #05560a87;
+    color: white;
+    transition: 0.2s;
+}
+#drop8:hover{
+    background-color: #15868e87;
+    color: white;
+    transition: 0.2s;
+}
+#drop9:hover{
+    background-color: #b6434387;
+    color: white;
+    transition: 0.2s;
+}
+#drop10:hover{
+    background-color: #2950ff87;
+    color: white;
+    transition: 0.2s;
+}
+#drop11:hover{
+    background-color: #1f1d1d;
+    color: #fff;
+    transition: 0.2s;
+}
+.card{
+    background-image: url('/MonsterPE/assets/imgs/Ultraball1-1.png');
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    border-radius: 6%;
+    justify-content: flex-end;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+.personagem{
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+}
+.personagem > img{
+    height: 170px;
+    aspect-ratio: 1 1;
+    padding-top: 15px;
+    margin-bottom: -15px;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 140px;
+    
+}
+.escrita{
+    background-color: rgba(0, 0, 0, 0.425);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    font-size: clamp(0.5rem, 2vw, 1.5rem);
+    color:rgb(251, 255, 0);
+    font-family: Lexend, sans-serif;
+    align-items: center;
+    text-align: center;
+}
+.cardes{
+    display: flex;
+    gap: 80px;
+    flex-wrap: wrap;
+    padding: 0px 50px;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+.titlegen{
+    height: 70px;
+    color:rgb(251, 255, 0);
+    font-family: Lexend, sans-serif;
+    align-items: center;
+    text-align: center; 
+    font-size: 50px;
+    background-color: #0000005b;
+    padding: 20px;
+    border: #000000b5 solid 1px;
+}
