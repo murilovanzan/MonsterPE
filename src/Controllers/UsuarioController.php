@@ -25,7 +25,7 @@
             }
             else{
                 try{
-                    $usuario = new Usuario($_POST['nome'], $_POST['username'], $_POST['email'], $_POST['senha'], false, null);
+                    $usuario = new Usuario($_POST['nome'], $_POST['username'], $_POST['email'], $_POST['senha']);
                     $usuario->salvar();
                     header("Location: ?acao=login");
                     exit;
@@ -51,10 +51,9 @@
 
                 if(password_verify($_POST['senha'], $user->getSenha())){
                     $_SESSION['usuario'] = $user;
-                    $_SESSION['login'] = true;
                     $_SESSION['isAdmin'] = $user->getAdm();
                     session_regenerate_id(true);
-                    header("Location: ../main/dashboard.php");
+                    header("Location: ?acao=dashboard");
                     exit;
                 }
                 else{
@@ -77,26 +76,6 @@
                 }
             }
             return true;
-        }
-        
-        public function logout(){
-            session_start();
-
-            $_SESSION = array();
-
-            if (ini_get("session.use_cookies")) {
-                $params = session_get_cookie_params();
-                setcookie(session_name(), '', time() - 42000,
-                    $params["path"], $params["domain"],
-                    $params["secure"], $params["httponly"]
-                );
-            }
-
-            session_destroy();
-
-            header('Location: /MonsterPE');
-            exit();
-
         }
 
         

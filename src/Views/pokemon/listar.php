@@ -1,34 +1,39 @@
-<?php
-
-    require_once '../../../assets/script/restricoes.php';
-    verificaLogin();
-?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar</title>
+    <title>Document</title>
 </head>
 <body>
-    <div id="opcoes-pokemon" class="menugens">
-        <button onclick="Pokemon.showGen('i')">MOSTRAR 1</button>
-        <button onclick="Pokemon.showGen('ii')">MOSTRAR 2</button>
-        <button onclick="Pokemon.showGen('iii')">MOSTRAR 3</button>
-        <button onclick="Pokemon.showGen('iv')">MOSTRAR 4</button>
-        <button onclick="Pokemon.showGen('v')">MOSTRAR 5</button>
-        <button onclick="Pokemon.showGen('vi')">MOSTRAR 6</button>
-        <button onclick="Pokemon.showGen('vii')">MOSTRAR 7</button>
-        <button onclick="Pokemon.showGen('viii')">MOSTRAR 8</button>
-        <button onclick="Pokemon.showGen('ix')">MOSTRAR 9</button>
-    </div>
-    <ul id='pokemon'>
-
-
-
-    </ul>
-
-
+    <table border=1>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Geração</th>
+                <th>Speed</th>
+                <th>Attack</th>
+                <th>Defense</th>
+                <th>Sp. Attack</th>
+                <th>Sp. Defense</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($dados as $pokemon): ?>
+                <tr>
+                    <td><?= $pokemon['nome']?></td>
+                    <td><?= $pokemon['descricao']?></td>
+                    <td><?= $pokemon['geracao']?></td>
+                    <td><?= $pokemon['hp']?></td>
+                    <td><?= $pokemon['speed']?></td>
+                    <td><?= $pokemon['attack']?></td>
+                    <td><?= $pokemon['spAttack']?></td>
+                    <td><?= $pokemon['defense']?></td>
+                    <td><?= $pokemon['spDefense']?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </body>
-<script src="../../Models/Pokemon.js"></script>
 </html>
