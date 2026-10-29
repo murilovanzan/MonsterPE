@@ -3,7 +3,7 @@
     function getConnection() {
 
             $host = "localhost";
-            $dbname = "beta_MonsterPE";
+            $dbname = "MonsterPE";
             $user = "root";
             $pass = "";
 

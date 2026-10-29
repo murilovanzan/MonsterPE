@@ -1,5 +1,10 @@
 
-CREATE TABLE pokemon
+CREATE DATABASE IF NOT EXISTS MonsterPE;
+USE MonsterPE;
+
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+
+CREATE TABLE IF NOT EXISTS pokemon
 (
   id        INT          NOT NULL AUTO_INCREMENT,
   nome      VARCHAR(12)  NOT NULL,
@@ -11,13 +16,11 @@ CREATE TABLE pokemon
   spAttack  INT          NOT NULL,
   defense   INT          NOT NULL,
   spDefense INT          NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT UQ_pokemon_nome UNIQUE (nome)
 );
 
-ALTER TABLE pokemon
-  ADD CONSTRAINT UQ_pokemon_nome UNIQUE (nome);
-
-CREATE TABLE usuario
+CREATE TABLE IF NOT EXISTS usuario
 (
   id       INT          NOT NULL AUTO_INCREMENT,
   nome     VARCHAR(128) NOT NULL,
@@ -25,11 +28,12 @@ CREATE TABLE usuario
   email    VARCHAR(320) NOT NULL,
   senha    CHAR(60)     NOT NULL,
   tokens   INT          NULL     DEFAULT 0,
-  PRIMARY KEY (id)
+  adm      BOOLEAN      NOT NULL DEFAULT 0,
+  foto     VARCHAR(128) NULL    ,
+  PRIMARY KEY (id),
+  CONSTRAINT UQ_usuario_username UNIQUE (username),
+  CONSTRAINT UQ_usuario_email UNIQUE (email),
+  CONSTRAINT UQ_usuario_adm UNIQUE (adm)
 );
 
-ALTER TABLE usuario
-  ADD CONSTRAINT UQ_usuario_username UNIQUE (username);
-
-ALTER TABLE usuario
-  ADD CONSTRAINT UQ_usuario_email UNIQUE (email);
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

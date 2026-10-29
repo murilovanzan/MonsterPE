@@ -7,9 +7,11 @@
         private ?String $username = null;
         private ?String $email = null;
         private ?String $senha = null;
-        private int $tokens = 0;
+        private ?int $tokens = 0;
+        private ?bool $adm = false;
+        private ?String $foto = null;
 
-        public function __construct(?String $nome = null, ?String $username = null, ?String $email = null, ?String $senha = null){
+        public function __construct(?String $nome = null, ?String $username = null, ?String $email = null, ?String $senha = null,?bool $adm = false, ?String $foto = null) {
             if(!isset($nome) && !isset($username) && !isset($email) && !isset($senha)) return;
             
             self::validaNome($nome);
@@ -22,7 +24,8 @@
             $this->email = strtolower(trim($email));
             $this->senha = $senha;
             $this->tokens = 0;
-            
+            $this->adm = $adm;
+            $this->foto = $foto;
         }
 
         public function getId(){
@@ -42,6 +45,12 @@
         }
         public function getTokens(){
             return $this->tokens;
+        }
+        public function getAdm(){
+            return $this->adm;
+        }
+        public function getFoto(){
+            return $this->foto;
         }
 
         public function setNome($nome){
@@ -63,17 +72,24 @@
             $tokens ??= 0;
             $this->tokens = $tokens;
         }
+        public function setAdm($adm){
+            $this->adm = (bool) $adm;
+        }
+        public function setFoto($foto){
+            $this->foto = $foto;
+        }
 
         public function salvar(){
             $db = getConnection();
+            $admInt = $this->adm ? 1 : 0;
             if($this->id){
-                $sql = "UPDATE usuario SET nome = :n, username = :u, email = :e, senha = :s, tokens = :t WHERE id = :id;";
+                $sql = "UPDATE usuario SET nome = :n, username = :u, email = :e, senha = :s, tokens = :t, adm = :a, foto = :img WHERE id = :id;";
                 $stmt = $db->prepare($sql);
-                return $stmt->execute([':n' => $this->nome, ':u' => $this->username, ':e' => $this->email, ':s' => $this->senha, ':t' => $this->tokens, ':id' => $this->id]);
+                return $stmt->execute([':n' => $this->nome, ':u' => $this->username, ':e' => $this->email, ':s' => $this->senha, ':t' => $this->tokens, ':a' => $admInt, ':img' => $this->foto, ':id' => $this->id]);
             }
-            $sql = "INSERT INTO usuario (nome, username, email, senha, tokens) VALUES (:n, :u, :e, :s, :t);";
+            $sql = "INSERT INTO usuario (nome, username, email, senha, tokens, adm, foto) VALUES (:n, :u, :e, :s, :t, :a, :img);";
             $stmt = $db->prepare($sql);
-            $inserido = $stmt->execute([':n' => $this->nome, ':u' => $this->username, ':e' => $this->email, ':s' => $this->senha, ':t' => $this->tokens]);
+            $inserido = $stmt->execute([':n' => $this->nome, ':u' => $this->username, ':e' => $this->email, ':s' => $this->senha, ':t' => $this->tokens, ':a' => $admInt, ':img' => $this->foto]);
             if($inserido){
                 $this->id = (int) $db->lastInsertId();
             }
@@ -134,7 +150,14 @@
                 $user->email = $obj->email;
                 $user->senha = $obj->senha;
                 $user->tokens = $obj->tokens;
+                $user->adm = $obj->adm;
+                $user->foto = $obj->foto;
                 return $user;
+        }
+
+        private static function isAdmin($id){
+            $user = self::getById($id);
+            return $user->getAdm();
         }
 
         private static function validaNome($nome){
