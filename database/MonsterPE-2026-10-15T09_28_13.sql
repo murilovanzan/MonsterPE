@@ -4,22 +4,6 @@ USE monsterpe;
 
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 
-CREATE TABLE IF NOT EXISTS pokemon
-(
-  id        INT          NOT NULL AUTO_INCREMENT,
-  nome      VARCHAR(12)  NOT NULL,
-  descricao VARCHAR(255) NOT NULL,
-  geracao   INT          NOT NULL,
-  hp        INT          NOT NULL,
-  speed     INT          NOT NULL,
-  attack    INT          NOT NULL,
-  spAttack  INT          NOT NULL,
-  defense   INT          NOT NULL,
-  spDefense INT          NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT UQ_pokemon_nome UNIQUE (nome)
-);
-
 CREATE TABLE IF NOT EXISTS usuario
 (
   id       INT          NOT NULL AUTO_INCREMENT,

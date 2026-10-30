@@ -12,7 +12,7 @@
         <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav">
             <a class="userview"> Usuário</a>|
-            <a href="../usuario/?acao=logout" > Logout</a>
+            <a href="../usuario/?acao=logout" >Logout</a>
         </div>
         
     </nav>
@@ -85,5 +85,6 @@
         </div>
 </footer>
 <script src="../../Models/Pokemon.js"></script>
+<script src="../../../assets/script/dashboard.js"></script>
 </body>
 </html>

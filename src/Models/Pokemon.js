@@ -35,22 +35,40 @@ class Pokemon{
             console.error("Erro: ", erro);
         }
     }
-    
+
     static async showGen(gen){
+        document.getElementById('opgens').classList.remove('ativo');
+        document.getElementById('voltargen').classList.add('ativo');
         const lista = document.getElementById('pokemon');
         const pokemons = await this.getByGen(gen);
-        lista.innerHTML = '';
-        for(const species of pokemons.pokemon_species){
-            const url = species.url.replace("-species", "");
-            const pokemon = await this.getByUrl(url);
-            lista.innerHTML += `
-                <li><img src = '${pokemon.sprites.front_default}'></li>
-                <br>
-            `
-        }
+            lista.innerHTML = '';
+            for(const species of pokemons.pokemon_species){
+                const url = species.url.replace("-species", "");
+                const pokemon = await this.getByUrl(url);
+                let nomeTipo1 = pokemon.types[0].type.name;
+                let tiposPokemon = tiposTraduzidos[nomeTipo1] || nomeTipo1; 
+
+                if(pokemon.types.length > 1) {
+                    let nomeTipo2 = pokemon.types[1].type.name;
+                    tiposPokemon += " / " + (tiposTraduzidos[nomeTipo2] || nomeTipo2);
+                }
+                lista.innerHTML += `
+                    <li class="cartao-pokemon">
+                        <div class="cartao-fundo"></div>
+                        <img src='${pokemon.sprites.front_default}'>
+                        <h3>${pokemon.name}</h3>
+                        <h3>#${pokemon.id}</h3>
+                    
+                        <div class="costas-seguras">
+                            <h3>${pokemon.name}</h3>
+                            <p>${tiposPokemon}</p>
+                        </div>
+                    </li>`
+            }
     }
 
-    static async showPokemon(){
+
+    static async getPokemon(){
         const inputQuery = document.getElementById('queryPokemon');
         const div = document.getElementById('pokemon');
         const pokemon = await this.getByUrl(`https://pokeapi.co/api/v2/pokemon/${inputQuery.value}`);
@@ -62,17 +80,4 @@ class Pokemon{
 
         `
     }
-
-    static async addTime(){
-        document.innerHTML +=  `
-        
-            <?php
-            
-                
-
-            ?>
-
-        `
-    }
-
 }
