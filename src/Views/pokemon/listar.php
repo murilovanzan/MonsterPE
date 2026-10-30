@@ -9,9 +9,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar</title>
+    <script src="../../Models/Pokemon.js"></script>
 </head>
 <body>
     
+    <a href="?acao=time">Montar time</a>
+    <br>
     <button onclick="Pokemon.showGen('i')">MOSTRAR 1</button>
     <br>
     <button onclick="Pokemon.showGen('ii')">MOSTRAR 2</button>
@@ -39,5 +42,4 @@
 
 
 </body>
-<script src="../../Models/Pokemon.js"></script>
 </html>
