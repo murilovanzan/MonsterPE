@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const telaEquipe = document.getElementById('tela-equipe');
     if (linkVerPoke) {
         linkVerPoke.addEventListener('click', function(event) {
-            event.preventDefault(); 
+            event.preventDefault();
             if(menuJogar) menuJogar.classList.remove('ativo'); 
             if(telaEquipe) telaEquipe.classList.remove('ativo');
             if(menuVoltar) menuVoltar.classList.remove('ativo'); 
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-function montarEquipe() {
+function telaMontarEquipe() {
     document.getElementById('opjogar').classList.remove('ativo');
     document.getElementById('tela-equipe').classList.add('ativo');
 }
@@ -36,11 +36,6 @@ function voltarParaGeracoes() {
     document.getElementById('voltargen').classList.remove('ativo');
     document.getElementById('opgens').classList.add('ativo');
 }
-
-function iniciarJogo() {
-    alert("Iniciando MonsterPE!");
-}
-
 
 function voltarParaJogar() {
     document.getElementById('tela-equipe').classList.remove('ativo');
@@ -71,61 +66,22 @@ const tiposTraduzidos = {
 };
 
 let timeEscolhido = [];
-let pokemonTemp = null;
-
-async function buscarPokemonDaApi() {
-    let input = document.getElementById('input-busca').value.toLowerCase().trim();
-    let telaResultado = document.getElementById('resultado-pesquisa');
-    
-    if (input === "") return;
-    
-    telaResultado.innerHTML = "<p style='color: yellow;'>Buscando...</p>";
-
-    try {
-        let resposta = await fetch(`https://pokeapi.co/api/v2/pokemon/${input}`);
-        let dados = await resposta.json();
-
-        let tipo1 = tiposTraduzidos[dados.types[0].type.name] || dados.types[0].type.name;
-        let tiposFinais = tipo1;
-        
-        if (dados.types.length > 1) {
-            let tipo2 = tiposTraduzidos[dados.types[1].type.name] || dados.types[1].type.name;
-            tiposFinais += " / " + tipo2;
-        }
-
-        pokemonTemp = {
-            id: dados.id,
-            nome: dados.name,
-            sprite: dados.sprites.front_default,
-            tipo: tiposFinais
-        };
-
-        telaResultado.innerHTML = `
-            <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
-                <div class="cartao-fundo"></div>
-                <img src="${pokemonTemp.sprite}">
-                <h3 style="margin: 5px 0;">Nº ${pokemonTemp.id} - ${pokemonTemp.nome}</h3>
-                <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemonTemp.tipo}</p>
-                <button onclick="adicionarAoTime()" class="btn-adicionar">Adicionar ao Time</button>
-            </div>
-        `;
-    } catch (e) {
-        telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Não encontrado!</p>";
-    }
-}
+let pokemon = null;
 
 function adicionarAoTime() {
-    if (timeEscolhido.length < 6 && pokemonTemp !== null) {
-        timeEscolhido.push(pokemonTemp);
+    if (timeEscolhido.length < 6 && pokemon !== null) {
+        timeEscolhido.push(pokemon);
         atualizarTelaTime();
     } else if (timeEscolhido.length >= 6) {
         alert("Seu time já tem 6 Pokémons!");
     }
 }
+
 function removerDoTime(posicao) {
     timeEscolhido.splice(posicao, 1);
     atualizarTelaTime();
 }
+
 function atualizarTelaTime() {
     let grid = document.getElementById('grid-time');
     grid.innerHTML = "";
@@ -147,9 +103,16 @@ function atualizarTelaTime() {
         }
     }
     let btnSalvar = document.getElementById('btn-salvar-time');
-    if (timeEscolhido.length === 6) {
+    if (timeEscolhido.length > 0) {
         btnSalvar.style.display = 'block';
     } else {
         btnSalvar.style.display = 'none';
     }
+}
+
+function salvarTime(){
+
+    dadosJSON = JSON.stringify(timeEscolhido, null, 2);
+    console.log(dadosJSON);
+
 }

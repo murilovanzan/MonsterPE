@@ -34,19 +34,19 @@
     <main class="maindash">
         <div id="opgens" class="menugens">
             <h2 class="titulo-geracoes">MOSTRAR POKÉMON PELA GERAÇÃO</h2>
-            <button onclick="Pokemon.showGen('i')">1ª GERAÇÃO</button>
-            <button onclick="Pokemon.showGen('ii')">2ª GERAÇÃO</button>
-            <button onclick="Pokemon.showGen('iii')">3ª GERAÇÃO</button>
-            <button onclick="Pokemon.showGen('iv')">4ª GERAÇÃO</button>
-            <button onclick="Pokemon.showGen('v')">5ª GERAÇÃO</button>
-            <button onclick="Pokemon.showGen('vi')">6ª GERAÇÃO</button>
-            <button onclick="Pokemon.showGen('vii')">7ª GERAÇÃO</button>
-            <button onclick="Pokemon.showGen('viii')">8ª GERAÇÃO</button>
-            <button onclick="Pokemon.showGen('ix')">9ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('i')">1ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('ii')">2ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('iii')">3ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('iv')">4ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('v')">5ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('vi')">6ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('vii')">7ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('viii')">8ª GERAÇÃO</button>
+            <button onclick="Pokeapi.showGen('ix')">9ª GERAÇÃO</button>
         </div>
         <div id="opjogar" class="menugens">
             <h2 class="titulo-geracoes">ESCOLHA UMA AÇÃO</h2>
-            <button onclick="montarEquipe()">MONTAR EQUIPE</button>
+            <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>
             <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png"></button>
         </div>
         <div id="tela-equipe" class="menugens">
@@ -62,19 +62,19 @@
                         <div class="slot-pokemon">5</div>
                         <div class="slot-pokemon">6</div>
                     </div>
-                    <button id="btn-salvar-time" onclick="salvarTimeFinal()">SALVAR TIME COMPLETO</button>
+                    <button id="btn-salvar-time" onclick="salvarTime()">SALVAR TIME COMPLETO</button>
                 </div>
                 <div class="area-pesquisa">
                     <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
                     <input type="search" id="input-busca"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
-                    <button onclick="buscarPokemonDaApi()" class="btn-buscar">Pesquisar</button>
+                    <button onclick="Pokeapi.showCard()" class="btn-buscar">Pesquisar</button>
                     <div id="resultado-pesquisa"></div>
                 </div>
             </div>
         </div>
         <div id="voltargen" class="menugens">
             <button onclick="voltarParaGeracoes()">⬅ Voltar para gerações</button>
-        <ul id='pokemon'> </ul>
+        <ul id='pokemon'></ul>
         </main>
     </div>
     <footer>
@@ -84,7 +84,7 @@
           <a href="https://discord.gg/uaCCbWHex" target="_blank">Clique aqui!</a>
         </div>
 </footer>
-<script src="../../Models/Pokemon.js"></script>
+<script src="../../Models/Pokeapi.js"></script>
 <script src="../../../assets/script/dashboard.js"></script>
 </body>
 </html>
