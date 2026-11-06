@@ -11,26 +11,17 @@
     <title>Listar</title>
 </head>
 <body>
-    
-    <button onclick="Pokemon.showGen('i')">MOSTRAR 1</button>
-    <br>
-    <button onclick="Pokemon.showGen('ii')">MOSTRAR 2</button>
-    <br>
-    <button onclick="Pokemon.showGen('iii')">MOSTRAR 3</button>
-    <br>
-    <button onclick="Pokemon.showGen('iv')">MOSTRAR 4</button>
-    <br>
-    <button onclick="Pokemon.showGen('v')">MOSTRAR 5</button>
-    <br>
-    <button onclick="Pokemon.showGen('vi')">MOSTRAR 6</button>
-    <br>
-    <button onclick="Pokemon.showGen('vii')">MOSTRAR 7</button>
-    <br>
-    <button onclick="Pokemon.showGen('viii')">MOSTRAR 8</button>
-    <br>
-    <button onclick="Pokemon.showGen('ix')">MOSTRAR 9</button>
-    <br>
-
+    <div id="opcoes-pokemon" class="menugens">
+        <button onclick="Pokemon.showGen('i')">MOSTRAR 1</button>
+        <button onclick="Pokemon.showGen('ii')">MOSTRAR 2</button>
+        <button onclick="Pokemon.showGen('iii')">MOSTRAR 3</button>
+        <button onclick="Pokemon.showGen('iv')">MOSTRAR 4</button>
+        <button onclick="Pokemon.showGen('v')">MOSTRAR 5</button>
+        <button onclick="Pokemon.showGen('vi')">MOSTRAR 6</button>
+        <button onclick="Pokemon.showGen('vii')">MOSTRAR 7</button>
+        <button onclick="Pokemon.showGen('viii')">MOSTRAR 8</button>
+        <button onclick="Pokemon.showGen('ix')">MOSTRAR 9</button>
+    </div>
     <ul id='pokemon'>
 
 
