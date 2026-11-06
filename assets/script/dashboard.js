@@ -67,10 +67,9 @@ const tiposTraduzidos = {
 
 let timeEscolhido = [];
 
-function adicionarAoTime(pokemon) {
-    console.log(pokemon);
+function adicionarAoTime(id) {
     if (timeEscolhido.length < 6 && pokemon !== null) {
-        timeEscolhido.push(pokemon);
+        timeEscolhido.push(cachePokemon[id]);
         atualizarTelaTime();
     } else if (timeEscolhido.length >= 6) {
         alert("Seu time já tem 6 Pokémons!");
@@ -87,7 +86,7 @@ function atualizarTelaTime() {
     grid.innerHTML = "";
     for (let i = 0; i < 6; i++) {
         if (timeEscolhido[i] != null) {
-            const p = timeEscolhido[i];
+            let p = timeEscolhido[i];
             grid.innerHTML += `
                 <div class="slot-pokemon preenchido">
                     <button class="btn-remover" onclick="removerDoTime(${i})">X</button>

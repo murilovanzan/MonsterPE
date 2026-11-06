@@ -33,15 +33,15 @@
     <main class="maindash">
         <div id="opgens" class="menugens">
             <h2 class="titulo-geracoes">MOSTRAR POKÉMON PELA GERAÇÃO</h2>
-            <button onclick="Pokeapi.showGen('i')">1ª GERAÇÃO</button>
-            <button onclick="Pokeapi.showGen('ii')">2ª GERAÇÃO</button>
-            <button onclick="Pokeapi.showGen('iii')">3ª GERAÇÃO</button>
-            <button onclick="Pokeapi.showGen('iv')">4ª GERAÇÃO</button>
-            <button onclick="Pokeapi.showGen('v')">5ª GERAÇÃO</button>
-            <button onclick="Pokeapi.showGen('vi')">6ª GERAÇÃO</button>
-            <button onclick="Pokeapi.showGen('vii')">7ª GERAÇÃO</button>
-            <button onclick="Pokeapi.showGen('viii')">8ª GERAÇÃO</button>
-            <button onclick="Pokeapi.showGen('ix')">9ª GERAÇÃO</button>
+            <button onclick="showGen('i')">1ª GERAÇÃO</button>
+            <button onclick="showGen('ii')">2ª GERAÇÃO</button>
+            <button onclick="showGen('iii')">3ª GERAÇÃO</button>
+            <button onclick="showGen('iv')">4ª GERAÇÃO</button>
+            <button onclick="showGen('v')">5ª GERAÇÃO</button>
+            <button onclick="showGen('vi')">6ª GERAÇÃO</button>
+            <button onclick="showGen('vii')">7ª GERAÇÃO</button>
+            <button onclick="showGen('viii')">8ª GERAÇÃO</button>
+            <button onclick="showGen('ix')">9ª GERAÇÃO</button>
         </div>
         <div id="opjogar" class="menugens">
             <h2 class="titulo-geracoes">ESCOLHA UMA AÇÃO</h2>
@@ -66,7 +66,7 @@
                 <div class="area-pesquisa">
                     <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
                     <input type="search" id="input-busca"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
-                    <button onclick="Pokeapi.showCard()" class="btn-buscar">Pesquisar</button>
+                    <button onclick="showCard()" class="btn-buscar">Pesquisar</button>
                     <div id="resultado-pesquisa"></div>
                 </div>
             </div>
