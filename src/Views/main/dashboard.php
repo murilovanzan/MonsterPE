@@ -14,7 +14,6 @@
             <a class="userview"> Usuário</a>|
             <a href="../usuario/?acao=logout" >Logout</a>
         </div>
-        
     </nav>
     <div class="conteudo">
         <aside class="dashaside">

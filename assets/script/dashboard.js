@@ -66,9 +66,9 @@ const tiposTraduzidos = {
 };
 
 let timeEscolhido = [];
-let pokemon = null;
 
-function adicionarAoTime() {
+function adicionarAoTime(pokemon) {
+    console.log(pokemon);
     if (timeEscolhido.length < 6 && pokemon !== null) {
         timeEscolhido.push(pokemon);
         atualizarTelaTime();
@@ -87,14 +87,14 @@ function atualizarTelaTime() {
     grid.innerHTML = "";
     for (let i = 0; i < 6; i++) {
         if (timeEscolhido[i] != null) {
-            let p = timeEscolhido[i];
+            const p = timeEscolhido[i];
             grid.innerHTML += `
                 <div class="slot-pokemon preenchido">
                     <button class="btn-remover" onclick="removerDoTime(${i})">X</button>
-                    <img src="${p.sprite}">
+                    <img src="${p.sprites.front_default}">
                     <div class="slot-info">
                         <span class="slot-id">Nº ${p.id}</span>
-                        <span class="slot-nome">${p.nome}</span>
+                        <span class="slot-nome">${p.name}</span>
                     </div>
                 </div>
             `;
