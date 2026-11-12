@@ -113,7 +113,7 @@ async function salvarTime(){
 
     try{
 
-        const dadosEnviados = await fetch('../pokemon/salvar.php', {
+        const dadosEnviados = await fetch('../pokemon/?acao=salvar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

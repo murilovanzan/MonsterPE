@@ -2,9 +2,6 @@
 
     require_once __DIR__ . "/../../../config/autoload.php";
 
-    $dadosBrutos = file_get_contents("php://input");
-
-    $timeJSON = json_decode($dadosBrutos, true);
 
     $pdo = getConnection();
 
