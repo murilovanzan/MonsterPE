@@ -1,3 +1,9 @@
+<?php
+
+    require_once '../../../assets/script/restricoes.php';
+    verificaLogin();
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

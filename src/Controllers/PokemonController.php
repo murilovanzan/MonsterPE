@@ -12,8 +12,8 @@
         public function listar(){
             $this->renderizar('listar');
         }
-        public function time(){
-            $this->renderizar('time');
+        public function salvar(){
+            $this->renderizar('salvar');
         }
 
     }

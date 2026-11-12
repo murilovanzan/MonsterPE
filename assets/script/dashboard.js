@@ -76,7 +76,7 @@ function adicionarAoTime(id) {
     }
 }
 
-function removerDoTime(posicao) {
+function removerDoTime(posicao) {1
     timeEscolhido.splice(posicao, 1);
     atualizarTelaTime();
 }
@@ -109,9 +109,21 @@ function atualizarTelaTime() {
     }
 }
 
-function salvarTime(){
+async function salvarTime(){
 
-    dadosJSON = JSON.stringify(timeEscolhido, null, 2);
-    console.log(dadosJSON);
+    try{
+
+        const dadosEnviados = await fetch('../pokemon/salvar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(timeEscolhido)
+        });
+        const resultado = await dadosEnviados.json();
+    }
+    catch(erro){
+        console.log("Os dados não foram passados corretamente;\nErro: ", erro);
+    }
 
 }
