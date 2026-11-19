@@ -54,29 +54,7 @@
             <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>
             <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png"></button>
         </div>
-        <div id="tela-equipe" class="menugens">
-            <button class="btn-voltar-pequeno" onclick="voltarParaJogar()">⬅ Voltar</button>
-            <div class="layout-equipe">
-                <div class="area-time">
-                    <h2 class="titulo-geracoes" style="font-size: 40px;">Meu Time</h2>
-                    <div class="grid-time" id="grid-time">
-                        <div class="slot-pokemon">1</div>
-                        <div class="slot-pokemon">2</div>
-                        <div class="slot-pokemon">3</div>
-                        <div class="slot-pokemon">4</div>
-                        <div class="slot-pokemon">5</div>
-                        <div class="slot-pokemon">6</div>
-                    </div>
-                    <button id="btn-salvar-time" onclick="salvarTime()">SALVAR TIME COMPLETO</button>
-                </div>
-                <div class="area-pesquisa">
-                    <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
-                    <input type="search" id="input-busca"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
-                    <button onclick="showCard()" class="btn-buscar">Pesquisar</button>
-                    <div id="resultado-pesquisa"></div>
-                </div>
-            </div>
-        </div>
+        
         <div id="voltargen" class="menugens">
             <button onclick="voltarParaGeracoes()">⬅ Voltar para gerações</button>
         <ul id='pokemon'></ul>

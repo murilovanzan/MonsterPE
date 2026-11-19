@@ -7,7 +7,7 @@
     
     $nomeClasse = ucfirst(basename(__DIR__));
     $nomeController = $nomeClasse . "Controller";
-    var_dump($nomeClasse);
+
     $controller = new $nomeController();
 
     $controller->$acao();

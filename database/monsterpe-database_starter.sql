@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS pokemon
   id         INT         NOT NULL AUTO_INCREMENT,
   usuario_id INT         NOT NULL,
   pokemon    VARCHAR(38) NOT NULL,
+  nivel      INT         NOT NULL DEFAULT 1,
   hp         INT         NOT NULL,
   speed      INT         NOT NULL,
   attack     INT         NOT NULL,
@@ -32,6 +33,7 @@ CREATE TABLE IF NOT EXISTS pokemon
   posicao    INT         NOT NULL,
   item       VARCHAR(31) NULL    ,
   status     VARCHAR(10) NULL    ,
+  ativo      BOOLEAN     NOT NULL DEFAULT 1,
   PRIMARY KEY (id),
   CONSTRAINT FK_usuario_TO_pokemon
     FOREIGN KEY (usuario_id)

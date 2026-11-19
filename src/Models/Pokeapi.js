@@ -21,11 +21,11 @@ async function showGen(gen){
     document.getElementById('opgens').classList.remove('ativo');
     document.getElementById('voltargen').classList.add('ativo');
     const lista = document.getElementById('pokemon');
-    const pokemons = await this.getByUrl(`https://pokeapi.co/api/v2/generation/generation-${gen}`);
+    const pokemons = await getByUrl(`https://pokeapi.co/api/v2/generation/generation-${gen}`);
         lista.innerHTML = '';
         for(const species of pokemons.pokemon_species){
             const url = species.url.replace("-species", "");
-            const pokemon = await this.getByUrl(url);
+            const pokemon = await getByUrl(url);
             let nomeTipo1 = pokemon.types[0].type.name;
             let tiposPokemon = tiposTraduzidos[nomeTipo1] || nomeTipo1; 
 
@@ -48,7 +48,41 @@ async function showGen(gen){
             `
         }
 }
-    
+
+const tiposTraduzidos = {
+    normal: 'Normal',
+    fighting: 'Lutador',
+    flying: 'Voador',
+    poison: 'Venenoso',
+    ground: 'Terra',
+    rock: 'Pedra',
+    bug: 'Inseto',
+    ghost: 'Fantasma',
+    steel: 'Metal',
+    fire: 'Fogo',
+    water: 'Água',
+    grass: 'Grama',
+    electric: 'Elétrico',
+    psychic: 'Psíquico',
+    ice: 'Gelo',
+    dragon: 'Dragão',
+    dark: 'Sombrio',
+    fairy: 'Fada'
+};
+
+async function isEvolution(pokeID){
+
+    pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon-species/${pokeID}`);
+    pokePreEvo = pokemon.evolves_from_species;
+    if(pokePreEvo === null){
+        return false
+    }
+    else{
+        return true;
+    }
+
+}
+
 async function showCard() {
     let input = document.getElementById('input-busca').value.toLowerCase().trim();
     let telaResultado = document.getElementById('resultado-pesquisa');
@@ -58,11 +92,12 @@ async function showCard() {
     telaResultado.innerHTML = "<p style='color: yellow;'>Buscando...</p>";
         
     let pokemon = null;
-    
-    pokemon = await this.getByUrl(`https://pokeapi.co/api/v2/pokemon/${input}`);
-    
-    if(pokemon == null){
 
+    const booleanVar = await isEvolution(input);
+    pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${input}`);
+
+    if(pokemon == null){
+        
         telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Não encontrado!</p>";
         return;
     }
@@ -76,7 +111,19 @@ async function showCard() {
     pokemon.tiposFormatados = tiposFormatados;
     
     cachePokemon[pokemon.id] = pokemon;
-
+    console.log(booleanVar);
+    if(booleanVar){
+        telaResultado.innerHTML = `
+            <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
+                <div class="cartao-fundo"></div>
+                <img src="${pokemon.sprites.front_default}">
+                <h3 style="margin: 5px 0;">Nº ${pokemon.id} - ${pokemon.name}</h3>
+                <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
+                <button onclick="adicionarAoTime(${pokemon.id})" class="btn-adicionar" disabled>Adicionar ao Time</button>
+            </div>
+        `;
+    }
+    else{
         telaResultado.innerHTML = `
             <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
                 <div class="cartao-fundo"></div>
@@ -86,4 +133,11 @@ async function showCard() {
                 <button onclick="adicionarAoTime(${pokemon.id})" class="btn-adicionar">Adicionar ao Time</button>
             </div>
         `;
+    }
+
 }
+
+/*async function getPokemon(){
+    
+    pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`);
+}*/
