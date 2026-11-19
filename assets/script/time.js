@@ -65,3 +65,23 @@ async function salvarTime(){
 
     location.reload();
 }
+
+
+function showPokemonSalvo(pokemonSalvo){
+
+    const listaPokemonSalvo = document.getElementById('pokemonSalvo');
+    listaPokemonSalvo.innerHTML = "";
+
+    pokemonSalvo.forEach(pokemon => {
+        cachePokemon[pokemon.id] = pokemon;
+        listaPokemonSalvo.innerHTML += `
+            <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
+                <div class="cartao-fundo"></div>
+                <img src="${pokemon.sprites.front_default}">
+                <h3 style="margin: 5px 0;">Nº ${pokemon.id} - ${pokemon.name}</h3>
+                <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
+                <button onclick="adicionarAoTime(${pokemon.id})" class="btn-adicionar">Adicionar ao Time</button>
+            </div>
+        `;
+    });
+}

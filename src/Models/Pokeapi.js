@@ -149,6 +149,7 @@ async function showCard() {
 
 async function transformarEmObjeto(arrayPokemon){
 
+    console.log(arrayPokemon);
     const promisses = arrayPokemon.map(async pokemon => {
         let pokemonObject = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon}`);
         pokemonObject = formatarPokemon(pokemonObject);
@@ -156,6 +157,21 @@ async function transformarEmObjeto(arrayPokemon){
     });
 
     const arrayPokemonObjeto = await Promise.all(promisses);
+
+    for(let i=0;i<arrayPokemon.length;i++){
+        arrayPokemonObjeto[i].ativo = arrayPokemon.ativo;
+        arrayPokemonObjeto[i].stats[0].base_stat = arrayPokemon[i].hp;
+        arrayPokemonObjeto[i].stats[1].base_stat = arrayPokemon[i].attack;
+        arrayPokemonObjeto[i].stats[2].base_stat = arrayPokemon[i].defense;
+        arrayPokemonObjeto[i].stats[3].base_stat = arrayPokemon[i].spAttack;
+        arrayPokemonObjeto[i].stats[4].base_stat = arrayPokemon[i].spDefense;
+        arrayPokemonObjeto[i].stats[5].base_stat = arrayPokemon[i].speed;
+        arrayPokemonObjeto[i].nivel = arrayPokemon[i].nivel;
+    }
     
+    console.log(arrayPokemonObjeto);
     return arrayPokemonObjeto;
 }
+
+
+

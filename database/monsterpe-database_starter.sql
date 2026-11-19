@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS pokemon
   id         INT         NOT NULL AUTO_INCREMENT,
   usuario_id INT         NOT NULL,
   pokemon    VARCHAR(38) NOT NULL,
+  nome       VARCHAR(12) NULL,
   nivel      INT         NOT NULL DEFAULT 1,
   hp         INT         NOT NULL,
   speed      INT         NOT NULL,

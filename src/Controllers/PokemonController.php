@@ -41,7 +41,7 @@
 
         public function pokemonSalvo(){
 
-            $_SESSION['pokemonSalvo'] = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), false, false);
+            $_SESSION['pokemonSalvo'] = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), false, true);
             $_SESSION['pokemonAtivo'] = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), true, false);
             $this->renderizar("time", "main");
             

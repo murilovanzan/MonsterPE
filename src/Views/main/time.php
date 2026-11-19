@@ -13,7 +13,6 @@
     else{
         $salvarTimeErro = "";
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -28,11 +27,15 @@
     <script type="module">
 
         //Aqui estas variáveis são arrays associativos
+        
         let pokemonSalvo = <?= json_encode($_SESSION['pokemonSalvo'] ?? []) ?>;
         let pokemonAtivo = <?= json_encode($_SESSION['pokemonAtivo'] ?? []) ?>;
 
         //Aqui elas já serão arrays de objetos
-        console.log(await transformarEmObjeto(pokemonSalvo));
+        pokemonSalvo = await transformarEmObjeto(pokemonSalvo);
+        pokemonAtivo = await transformarEmObjeto(pokemonAtivo);
+
+        showPokemonSalvo(pokemonSalvo);
     </script>
 </head>
 <body>
@@ -71,8 +74,7 @@
             </div>
         </div>
         <div>
-            <ul style="list-style-type: none;">
-
+            <ul style="list-style-type: none;" id="pokemonSalvo">
             </ul>
         </div>
     </main>
