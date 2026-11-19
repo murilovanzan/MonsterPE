@@ -25,15 +25,14 @@
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
     <script src="../../Models/Pokeapi.js"></script>
     <script src="../../../assets/script/time.js"></script>
-    <script>
+    <script type="module">
 
         //Aqui estas variáveis são arrays associativos
-        let pokemonSalvo = <?= json_encode($_SESSION['pokemonSalvos'] ?? []) ?>;
-        let pokemonAtivo = <?= json_encode($_SESSION['pokemonAtivos'] ?? []) ?>;
+        let pokemonSalvo = <?= json_encode($_SESSION['pokemonSalvo'] ?? []) ?>;
+        let pokemonAtivo = <?= json_encode($_SESSION['pokemonAtivo'] ?? []) ?>;
 
         //Aqui elas já serão arrays de objetos
-        transformarEmObjeto(pokemonSalvo);
-        transformarEmObjeto(pokemonAtivo);
+        console.log(await transformarEmObjeto(pokemonSalvo));
     </script>
 </head>
 <body>

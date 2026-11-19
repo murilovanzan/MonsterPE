@@ -49,7 +49,23 @@ async function showGen(gen){
         }
 }
 
-const tiposTraduzidos = {
+
+async function isEvolution(pokeID){
+
+    pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon-species/${pokeID}`);
+    pokePreEvo = pokemon.evolves_from_species;
+    if(pokePreEvo === null){
+        return false
+    }
+    else{
+        return true;
+    }
+
+}
+
+function formatarPokemon(pokemon){
+
+    const tiposTraduzidos = {
     normal: 'Normal',
     fighting: 'Lutador',
     flying: 'Voador',
@@ -68,18 +84,18 @@ const tiposTraduzidos = {
     dragon: 'Dragão',
     dark: 'Sombrio',
     fairy: 'Fada'
-};
+    };
 
-async function isEvolution(pokeID){
+    let tiposFormatados = "";
+    pokemon.types.forEach(tipo => {
+        tipo.type.name = tiposTraduzidos[tipo.type.name] || tipo.type.name;
+        tiposFormatados += tipo.type.name + " | ";
+    });
 
-    pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon-species/${pokeID}`);
-    pokePreEvo = pokemon.evolves_from_species;
-    if(pokePreEvo === null){
-        return false
-    }
-    else{
-        return true;
-    }
+    tiposFormatados = tiposFormatados.replace(/ \| \s*$/, "");
+    pokemon.tiposFormatados = tiposFormatados;
+
+    return pokemon;
 
 }
 
@@ -101,17 +117,11 @@ async function showCard() {
         telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Não encontrado!</p>";
         return;
     }
-    let tiposFormatados = "";
-    pokemon.types.forEach(tipo => {
-        tipo.type.name = tiposTraduzidos[tipo.type.name] || tipo.type.name;
-        tiposFormatados += tipo.type.name + " | ";
-    });
 
-    tiposFormatados = tiposFormatados.replace(/ \| \s*$/, "");
-    pokemon.tiposFormatados = tiposFormatados;
-    
+    pokemon = formatarPokemon(pokemon);
+
     cachePokemon[pokemon.id] = pokemon;
-    console.log(booleanVar);
+
     if(booleanVar){
         telaResultado.innerHTML = `
             <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
@@ -136,16 +146,16 @@ async function showCard() {
     }
 
 }
-async function transformarEmObjeto(pokemonSalvo){
 
-    pokemonSalvo = pokemonSalvo.map(pokemon => {
-        pokemonObject = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon}`);
-        console.log("pokemonSalvo: ", pokemonObject);
+async function transformarEmObjeto(arrayPokemon){
+
+    const promisses = arrayPokemon.map(async pokemon => {
+        let pokemonObject = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon}`);
+        pokemonObject = formatarPokemon(pokemonObject);
         return pokemonObject;
     });
 
-}    
-/*async function getPokemon(){
+    const arrayPokemonObjeto = await Promise.all(promisses);
     
-    pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`);
-}*/
+    return arrayPokemonObjeto;
+}
