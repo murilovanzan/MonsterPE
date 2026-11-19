@@ -1,5 +1,4 @@
 <?php
-    session_start();
 
     if(isset($_SESSION['salvarTimeErro'])){
         if($_SESSION['salvarTimeErro']){
@@ -24,6 +23,18 @@
     <title>Página do usuário</title>
     <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=2">
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
+    <script src="../../Models/Pokeapi.js"></script>
+    <script src="../../../assets/script/time.js"></script>
+    <script>
+
+        //Aqui estas variáveis são arrays associativos
+        let pokemonSalvo = <?= json_encode($_SESSION['pokemonSalvos'] ?? []) ?>;
+        let pokemonAtivo = <?= json_encode($_SESSION['pokemonAtivos'] ?? []) ?>;
+
+        //Aqui elas já serão arrays de objetos
+        transformarEmObjeto(pokemonSalvo);
+        transformarEmObjeto(pokemonAtivo);
+    </script>
 </head>
 <body>
     <nav style="justify-content:space-around;">
@@ -62,28 +73,7 @@
         </div>
         <div>
             <ul style="list-style-type: none;">
-                <?php
-                
-                    foreach ($_SESSION['pokemonBD'] as $pokemon){
-                        $id = $pokemon['id'];
-                        $name = $pokemon['name'];
-                        $sprite = $pokemon['sprites']['front_default'];
-                        $tiposFormatados = $pokemon['tiposFormatados'];
 
-                        echo <<<HTML
-                            <li>
-                                <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
-                                    <div class="cartao-fundo"></div>
-                                    <img src="$sprite" alt="$name">
-                                    <h3 style="margin: 5px 0;">Nº $id - $name</h3>
-                                    <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">$tiposFormatados</p>
-                                    <button onclick="adicionarAoTime($id)" class="btn-adicionar">Adicionar ao Time</button>
-                                </div>
-                            </li>
-                        HTML;
-                    }
-                    
-                ?>
             </ul>
         </div>
     </main>
@@ -94,7 +84,5 @@
           <a href="https://discord.gg/uaCCbWHex" target="_blank">Clique aqui!</a>
         </div>
 </footer>
-<script src="../../Models/Pokeapi.js"></script>
-<script src="../../../assets/script/time.js"></script>
 </body>
 </html>

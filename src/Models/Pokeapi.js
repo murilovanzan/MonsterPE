@@ -136,7 +136,15 @@ async function showCard() {
     }
 
 }
+async function transformarEmObjeto(pokemonSalvo){
 
+    pokemonSalvo = pokemonSalvo.map(pokemon => {
+        pokemonObject = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon}`);
+        console.log("pokemonSalvo: ", pokemonObject);
+        return pokemonObject;
+    });
+
+}    
 /*async function getPokemon(){
     
     pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`);

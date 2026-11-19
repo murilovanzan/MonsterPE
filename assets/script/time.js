@@ -63,5 +63,5 @@ async function salvarTime(){
         console.log("Os dados não foram passados corretamente;\nErro: ", erro);
     }
 
-    //location.reload();
+    location.reload();
 }

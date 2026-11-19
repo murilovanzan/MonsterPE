@@ -101,18 +101,26 @@ class Pokemon {
     
     }
 
-    public static function getUsuarioPokemon($usuario_id) {
+    public static function getUsuarioPokemon($usuario_id, $ativo = null, $objeto = true) {
         $db = getConnection();
-        $sql = "SELECT * FROM pokemon WHERE usuario_id = :usuario_id;";
+        $sql = "SELECT id, pokemon FROM pokemon WHERE usuario_id = :usuario_id AND ativo = :ativo;";
         $stmt = $db->prepare($sql);
-        $stmt->execute([':usuario_id' => $usuario_id]);
-        
-        $resultados = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $pokemonSalvo = [];
-        foreach ($resultados as $obj) {
-            array_push($pokemonSalvo, self::hydrate($obj));
+        $stmt->execute([
+            ':usuario_id' => $usuario_id,
+            ':ativo' => $ativo
+        ]);
+        if(!$objeto){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        return $pokemonSalvo;
+        else
+        {
+            $resultados = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $pokemonSalvo = [];
+            foreach ($resultados as $obj) {
+                array_push($pokemonSalvo, self::hydrate($obj));
+            }
+            return $pokemonSalvo;
+        }
     }
 
     public static function desativarTime($usuario_id){
