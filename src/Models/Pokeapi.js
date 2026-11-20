@@ -17,39 +17,6 @@ async function getByUrl(url){
     }
 }
 
-async function showGen(gen){
-    document.getElementById('opgens').classList.remove('ativo');
-    document.getElementById('voltargen').classList.add('ativo');
-    const lista = document.getElementById('pokemon');
-    const pokemons = await getByUrl(`https://pokeapi.co/api/v2/generation/generation-${gen}`);
-        lista.innerHTML = '';
-        for(const species of pokemons.pokemon_species){
-            const url = species.url.replace("-species", "");
-            const pokemon = await getByUrl(url);
-            let nomeTipo1 = pokemon.types[0].type.name;
-            let tiposPokemon = tiposTraduzidos[nomeTipo1] || nomeTipo1; 
-
-            if(pokemon.types.length > 1) {
-                let nomeTipo2 = pokemon.types[1].type.name;
-                tiposPokemon += " / " + (tiposTraduzidos[nomeTipo2] || nomeTipo2);
-            }
-            lista.innerHTML += `
-                <li class="cartao-pokemon">
-                    <div class="cartao-fundo"></div>
-                    <img src='${pokemon.sprites.front_default}'>
-                    <h3>${pokemon.name}</h3>
-                    <h3>#${pokemon.id}</h3>
-                
-                    <div class="costas-seguras">
-                        <h3>${pokemon.name}</h3>
-                        <p>${tiposPokemon}</p>
-                    </div>
-                </li>
-            `
-        }
-}
-
-
 async function isEvolution(pokeID){
 
     pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon-species/${pokeID}`);
@@ -63,8 +30,10 @@ async function isEvolution(pokeID){
 
 }
 
-function formatarPokemon(pokemon){
+async function formatarPokemon(pokemon, salvo = false){
 
+    let pokemonFormatado = {};
+    
     const tiposTraduzidos = {
     normal: 'Normal',
     fighting: 'Lutador',
@@ -87,16 +56,76 @@ function formatarPokemon(pokemon){
     };
 
     let tiposFormatados = "";
-    pokemon.types.forEach(tipo => {
+    if(!salvo){
+        pokemon.apelido = pokemon.name;
+        pokemon.api_id = pokemon.id;
+        pokemon.ativo = null;
+        pokemon.nivel = 1;
+        pokemon.item = null;
+        pokemon.status = null;
+        pokemon.id = null;
+        pokemonFormatado = pokemon;
+    }
+    else{
+        pokemonFormatado = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.api_id}`);
+
+        pokemonFormatado.id = pokemon.id;
+        pokemonFormatado.api_id = pokemon.api_id;
+        pokemonFormatado.apelido = pokemon.apelido;
+        pokemonFormatado.nivel = pokemon.nivel;
+        pokemonFormatado.stats[0].base_stat = pokemon.hp;
+        pokemonFormatado.stats[5].base_stat = pokemon.speed;
+        pokemonFormatado.stats[1].base_stat = pokemon.attack;
+        pokemonFormatado.stats[3].base_stat = pokemon.spAttack;
+        pokemonFormatado.stats[2].base_stat = pokemon.defense;
+        pokemonFormatado.stats[4].base_stat = pokemon.spDefense;
+        pokemonFormatado.posicao = pokemon.posicao;
+        pokemonFormatado.item = pokemon.item;
+        pokemonFormatado.status = pokemon.status;
+        pokemonFormatado.ativo = pokemon.ativo;
+
+        cachePokemon[pokemonFormatado.id] = pokemonFormatado;
+    
+    }
+
+    pokemonFormatado.types.forEach(tipo => {
         tipo.type.name = tiposTraduzidos[tipo.type.name] || tipo.type.name;
         tiposFormatados += tipo.type.name + " | ";
     });
 
     tiposFormatados = tiposFormatados.replace(/ \| \s*$/, "");
-    pokemon.tiposFormatados = tiposFormatados;
+    pokemonFormatado.tiposFormatados = tiposFormatados;
+    
+    return pokemonFormatado;
 
-    return pokemon;
+}
 
+async function showGen(gen){
+    document.getElementById('opgens').classList.remove('ativo');
+    document.getElementById('voltargen').classList.add('ativo');
+    const lista = document.getElementById('pokemon');
+    const pokemons = await getByUrl(`https://pokeapi.co/api/v2/generation/generation-${gen}`);
+        lista.innerHTML = '';
+        for(const species of pokemons.pokemon_species){
+            const url = species.url.replace("-species", "");
+            let pokemon = await getByUrl(url);
+            
+            pokemon = await formatarPokemon(pokemon);
+
+            lista.innerHTML += `
+                <li class="cartao-pokemon">
+                    <div class="cartao-fundo"></div>
+                    <img src='${pokemon.sprites.front_default}'>
+                    <h3>${pokemon.apelido}</h3>
+                    <h3>#${pokemon.api_id}</h3>
+                
+                    <div class="costas-seguras">
+                        <h3>${pokemon.apelido}</h3>
+                        <p>${pokemon.tiposFormatados}</p>
+                    </div>
+                </li>
+            `
+        }
 }
 
 async function showCard() {
@@ -109,7 +138,6 @@ async function showCard() {
         
     let pokemon = null;
 
-    const booleanVar = await isEvolution(input);
     pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${input}`);
 
     if(pokemon == null){
@@ -118,60 +146,34 @@ async function showCard() {
         return;
     }
 
-    pokemon = formatarPokemon(pokemon);
+    const isEvolutionBoolean = await isEvolution(input);
+    pokemon = await formatarPokemon(pokemon);
 
-    cachePokemon[pokemon.id] = pokemon;
-
-    if(booleanVar){
+    if(isEvolutionBoolean){
         telaResultado.innerHTML = `
             <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
                 <div class="cartao-fundo"></div>
                 <img src="${pokemon.sprites.front_default}">
-                <h3 style="margin: 5px 0;">Nº ${pokemon.id} - ${pokemon.name}</h3>
+                <h3 style="margin: 5px 0;">Nº ${pokemon.api_id} - ${pokemon.apelido}</h3>
                 <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
-                <button onclick="adicionarAoTime(${pokemon.id})" class="btn-adicionar" disabled>Adicionar ao Time</button>
+                <button onclick="adicionarAoTime(${pokemon.api_id})" class="btn-adicionar" disabled>Adicionar ao Time</button>
             </div>
         `;
     }
     else{
+
+        cachePokemon[pokemon.api_id] = pokemon;
         telaResultado.innerHTML = `
             <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
                 <div class="cartao-fundo"></div>
                 <img src="${pokemon.sprites.front_default}">
-                <h3 style="margin: 5px 0;">Nº ${pokemon.id} - ${pokemon.name}</h3>
+                <h3 style="margin: 5px 0;">Nº ${pokemon.api_id} - ${pokemon.apelido}</h3>
                 <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
-                <button onclick="adicionarAoTime(${pokemon.id})" class="btn-adicionar">Adicionar ao Time</button>
+                <button onclick="adicionarAoTime(${pokemon.api_id})" class="btn-adicionar">Adicionar ao Time</button>
             </div>
         `;
     }
 
 }
-
-async function transformarEmObjeto(arrayPokemon){
-
-    console.log(arrayPokemon);
-    const promisses = arrayPokemon.map(async pokemon => {
-        let pokemonObject = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.pokemon}`);
-        pokemonObject = formatarPokemon(pokemonObject);
-        return pokemonObject;
-    });
-
-    const arrayPokemonObjeto = await Promise.all(promisses);
-
-    for(let i=0;i<arrayPokemon.length;i++){
-        arrayPokemonObjeto[i].ativo = arrayPokemon.ativo;
-        arrayPokemonObjeto[i].stats[0].base_stat = arrayPokemon[i].hp;
-        arrayPokemonObjeto[i].stats[1].base_stat = arrayPokemon[i].attack;
-        arrayPokemonObjeto[i].stats[2].base_stat = arrayPokemon[i].defense;
-        arrayPokemonObjeto[i].stats[3].base_stat = arrayPokemon[i].spAttack;
-        arrayPokemonObjeto[i].stats[4].base_stat = arrayPokemon[i].spDefense;
-        arrayPokemonObjeto[i].stats[5].base_stat = arrayPokemon[i].speed;
-        arrayPokemonObjeto[i].nivel = arrayPokemon[i].nivel;
-    }
-    
-    console.log(arrayPokemonObjeto);
-    return arrayPokemonObjeto;
-}
-
 
 

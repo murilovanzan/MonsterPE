@@ -13,6 +13,7 @@
     else{
         $salvarTimeErro = "";
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -25,24 +26,28 @@
     <script src="../../Models/Pokeapi.js"></script>
     <script src="../../../assets/script/time.js"></script>
     <script type="module">
-
-        //Aqui estas variáveis são arrays associativos
         
-        let pokemonSalvo = <?= json_encode($_SESSION['pokemonSalvo'] ?? []) ?>;
-        let pokemonAtivo = <?= json_encode($_SESSION['pokemonAtivo'] ?? []) ?>;
+        const pokemonSalvoPoor = <?= json_encode($_SESSION['pokemonSalvo']) ?>;
+        const pokemonAtivoPoor = <?= json_encode($_SESSION['pokemonAtivo']) ?>;
 
-        //Aqui elas já serão arrays de objetos
-        pokemonSalvo = await transformarEmObjeto(pokemonSalvo);
-        pokemonAtivo = await transformarEmObjeto(pokemonAtivo);
+        const promissesSalvo = pokemonSalvoPoor.map(pokemon => formatarPokemon(pokemon, true));
+        const pokemonSalvoArray = await Promise.all(promissesSalvo);
 
-        showPokemonSalvo(pokemonSalvo);
+        const promissesAtivo = pokemonAtivoPoor.map(pokemon => formatarPokemon(pokemon, true));
+        const pokemonAtivoArray = await Promise.all(promissesAtivo);
+
+        showPokemonSalvos(pokemonSalvoArray);
+        pokemonAtivoArray.forEach(pokemon => {
+            adicionarAoTime(pokemon.id);
+        });
     </script>
 </head>
 <body>
     <nav style="justify-content:space-around;">
-        <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
+        <div class="logonav"><a href="../main/index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav">
-            <a class="userview"> Usuário</a>|
+            <a class="userview"> Usuário</a>
+            |
             <a href="../usuario/?acao=logout" >Logout</a>
         </div>
     </nav>
@@ -60,7 +65,8 @@
                         <div class="slot-pokemon">5</div>
                         <div class="slot-pokemon">6</div>
                     </div>
-                    <button id="btn-salvar-time" onclick="salvarTime()">SALVAR TIME COMPLETO</button>
+                    <button id="btn-salvar-time" class="btn-time" onclick="salvarTime()">SALVAR TIME COMPLETO</button>
+                    <button id="btn-limpar-time" class="btn-time" onclick="limparTime()">Limpar Time</button>
                     <span>
                         <?= $salvarTimeErro?>
                     </span>
@@ -74,8 +80,7 @@
             </div>
         </div>
         <div>
-            <ul style="list-style-type: none;" id="pokemonSalvo">
-            </ul>
+            <ul style="list-style-type: none; display: flex;" id="pokemonSalvo"></ul>
         </div>
     </main>
 <footer>

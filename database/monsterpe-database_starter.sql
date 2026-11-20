@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS usuario
 
 CREATE TABLE IF NOT EXISTS pokemon
 (
-  id         INT         NOT NULL AUTO_INCREMENT,
+  id         char(36)    NOT NULL,
   usuario_id INT         NOT NULL,
-  pokemon    VARCHAR(38) NOT NULL,
-  nome       VARCHAR(12) NULL,
+  api_id     VARCHAR(38) NOT NULL,
+  apelido    VARCHAR(12) NOT NULL,
   nivel      INT         NOT NULL DEFAULT 1,
   hp         INT         NOT NULL,
   speed      INT         NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS pokemon
   spAttack   INT         NOT NULL,
   defense    INT         NOT NULL,
   spDefense  INT         NOT NULL,
-  posicao    INT         NOT NULL,
+  posicao    INT         NULL,
   item       VARCHAR(31) NULL    ,
   status     VARCHAR(10) NULL    ,
   ativo      BOOLEAN     NOT NULL DEFAULT 1,

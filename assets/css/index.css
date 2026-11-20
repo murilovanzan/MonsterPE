@@ -662,7 +662,7 @@ input{
     background-color: #45a049;
 }
 
-#btn-salvar-time {
+.btn-time {
     display: none;
     width: 100%;
     padding: 15px;
@@ -677,6 +677,6 @@ input{
     text-transform: uppercase;
 }
 
-#btn-salvar-time:hover {
+.btn-time:hover {
     background-color: #ffe066;
 }

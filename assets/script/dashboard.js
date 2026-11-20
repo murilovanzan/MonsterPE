@@ -35,3 +35,7 @@ function voltarParaGeracoes() {
     document.getElementById('voltargen').classList.remove('ativo');
     document.getElementById('opgens').classList.add('ativo');
 }
+
+function iniciarJogo(){
+    window.location.href = "../pokemon/?acao=batalha";
+}
