@@ -1,3 +1,8 @@
+<?php
+
+    $errorMessage = $_GET['errorMessage'] ?? '';
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -25,6 +30,8 @@
                 <a class="opformlog" href="/MonsterPE/src/Views/usuario/?acao=cadastro">CADASTRE-SE</a>
             </div>
         </div>
+
+            <span><?= $errorMessage?></span>
 
     <div class="player-audio-container">
         <audio id="meuAudio" src="/MonsterPE/assets/songs/PokemonTema.mp3" loop></audio>

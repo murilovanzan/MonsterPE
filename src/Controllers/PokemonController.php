@@ -1,22 +1,81 @@
 <?php
 
-    class PokemonController{
+    class PokemonController {
 
         public function __construct(){
 
         }
 
-        private function renderizar($view, $dados = []){
-            require_once __DIR__ . "/../Views/pokemon/{$view}.php";
+        private function renderizar($view, $pasta = 'pokemon'){
+            require_once __DIR__ . "/../Views/{$pasta}/{$view}.php";
         }
 
-        public function listar(){
-
-            $model = new Pokemon();
-
-            $pokemons = $model->getTodos();
+        public function salvar(){
             
-            $this->renderizar('listar', $pokemons);
+            $dadosBrutos = file_get_contents("php://input");
+
+            $timeJSON = json_decode($dadosBrutos, true);
+            $posicao = 0;
+            $vetorErro = [];
+
+            Pokemon::desativarTime($_SESSION['usuario']->getId());
+
+            foreach ($timeJSON as $dadosPokemon){
+                $pokemon = new Pokemon(
+                    $dadosPokemon['id'],
+                    $_SESSION['usuario']->getId(),
+                    $dadosPokemon['api_id'],
+                    $dadosPokemon['apelido'],
+                    $dadosPokemon['nivel'],
+                    $dadosPokemon['stats'][0]['base_stat'],
+                    $dadosPokemon['stats'][5]['base_stat'],
+                    $dadosPokemon['stats'][1]['base_stat'],
+                    $dadosPokemon['stats'][3]['base_stat'],
+                    $dadosPokemon['stats'][2]['base_stat'],
+                    $dadosPokemon['stats'][4]['base_stat'],
+                    $posicao,
+                    $dadosPokemon['item'],
+                    $dadosPokemon['status'],
+                    1
+                );
+                array_push($vetorErro, !$pokemon->salvar());
+                $posicao++;
+            }
+            foreach ($vetorErro as $erro){
+                if($erro){
+                    $_SESSION['salvarTimeErro'] = $erro;
+                    exit;
+                }
+                else{
+                    $_SESSION['salvarTimeErro'] = $erro;
+                }
+            }
+        }
+
+        public function pokemonSalvo(){
+
+            $_SESSION['pokemonSalvo'] = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), false);
+            $_SESSION['pokemonAtivo'] = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), true);
+
+            $this->renderizar("time", "main");
+            
+        }
+
+        public function limparTime(){
+            Pokemon::desativarTime($_SESSION['usuario']->getId());
+
+            header('location: ?acao=pokemonSalvo');
+        }
+
+        public function excluir(){
+            
+            $id = file_get_contents("php://input");
+            
+            Pokemon::deletePokemon($id);
+        }
+
+        public function batalha(){
+            $this->renderizar("batalha", "main");
         }
 
     }
