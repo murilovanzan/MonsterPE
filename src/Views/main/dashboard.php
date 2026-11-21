@@ -1,3 +1,25 @@
+<?php
+    $caminhoModelo = $_SERVER['DOCUMENT_ROOT'] . '/MonsterPE/src/Models/Usuario.php';
+
+    if (file_exists($caminhoModelo)) {
+        require_once $caminhoModelo;
+    }
+
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $nomeSeguro = 'Jogador';
+    $emailSeguro = 'email@desconhecido.com';
+
+    if (isset($_SESSION['usuario']) && is_object($_SESSION['usuario']) && method_exists($_SESSION['usuario'], 'getUsername')) {
+        $nomeSeguro = $_SESSION['usuario']->getUsername();
+        $emailSeguro = $_SESSION['usuario']->getEmail();
+    }
+    require_once '../../../assets/script/restricoes.php';
+    verificaLogin();
+    session_start();
+    
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,11 +32,13 @@
 <body>
     <nav style="justify-content:space-around;">
         <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
-        <div class="opnav">
-            <a class="userview"> Usuário</a>|
-            <a href="../usuario/?acao=logout" > Logout</a>
+        <div class="opnav" style="position: relative;">
+            <a class="userview" style="cursor: pointer;" 
+                data-username="<?php echo $nomeSeguro; ?>" 
+                data-email="<?php echo $emailSeguro; ?>"
+                onclick="toggleDropdown(event)"> Usuário</a> |
+            <a href="../usuario/?acao=logout">Logout</a>
         </div>
-        
     </nav>
     <div class="conteudo">
         <aside class="dashaside">
@@ -33,20 +57,28 @@
     </aside>
     <main class="maindash">
         <div id="opgens" class="menugens">
-            <h2 class="titulo-geracoes">MOSTRAR POKÉMONS PELA GERAÇÃO</h2>
-            <button onclick="Pokemon.showGen('i')">MOSTRAR 1ª</button>
-            <button onclick="Pokemon.showGen('ii')">MOSTRAR 2ª</button>
-            <button onclick="Pokemon.showGen('iii')">MOSTRAR 3ª</button>
-            <button onclick="Pokemon.showGen('iv')">MOSTRAR 4ª</button>
-            <button onclick="Pokemon.showGen('v')">MOSTRAR 5ª</button>
-            <button onclick="Pokemon.showGen('vi')">MOSTRAR 6ª</button>
-            <button onclick="Pokemon.showGen('vii')">MOSTRAR 7ª</button>
-            <button onclick="Pokemon.showGen('viii')">MOSTRAR 8ª</button>
-            <button onclick="Pokemon.showGen('ix')">MOSTRAR 9ª</button>
+            <h2 class="titulo-geracoes">MOSTRAR POKÉMON PELA GERAÇÃO</h2>
+            <button onclick="showGen('i')">1ª GERAÇÃO</button>
+            <button onclick="showGen('ii')">2ª GERAÇÃO</button>
+            <button onclick="showGen('iii')">3ª GERAÇÃO</button>
+            <button onclick="showGen('iv')">4ª GERAÇÃO</button>
+            <button onclick="showGen('v')">5ª GERAÇÃO</button>
+            <button onclick="showGen('vi')">6ª GERAÇÃO</button>
+            <button onclick="showGen('vii')">7ª GERAÇÃO</button>
+            <button onclick="showGen('viii')">8ª GERAÇÃO</button>
+            <button onclick="showGen('ix')">9ª GERAÇÃO</button>
         </div>
+        <div id="opjogar" class="menugens">
+            <h2 class="titulo-geracoes">ESCOLHA UMA AÇÃO</h2>
+            <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>
+            <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png"></button>
+            <button onclick="IrALoja()">IR À LOJA</button>
+            <button onclick="Creditos()">CRÉDITOS</button>
+        </div>
+        
         <div id="voltargen" class="menugens">
             <button onclick="voltarParaGeracoes()">⬅ Voltar para gerações</button>
-        <ul id='pokemon'> </ul>
+        <ul id='pokemon'></ul>
         </main>
     </div>
     <footer>
@@ -56,6 +88,24 @@
           <a href="https://discord.gg/uaCCbWHex" target="_blank">Clique aqui!</a>
         </div>
 </footer>
-<script src="../../Models/Pokemon.js"></script>
+<script src="../../Models/Pokeapi.js"></script>
+<script src="../../../assets/script/dashboard.js"></script>
+    <div id="modal-avatar" class="modal-fundo" style="display: none;">
+        <div class="modal-card" style="width: 360px; text-align: center;">
+            <span class="btn-fechar" onclick="document.getElementById('modal-avatar').style.display='none'">X</span>
+            <h3>Escolher Avatar</h3>
+            <div class="grid-avatares">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-alola.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-capbackward.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-hoenn.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-johto.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-kalos.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-sinnoh.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-unova.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/marcio.png" onclick="trocarAvatar(this.src)">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
