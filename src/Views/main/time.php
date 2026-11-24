@@ -30,6 +30,9 @@
         const pokemonSalvoPoor = <?= json_encode($_SESSION['pokemonSalvo']) ?>;
         const pokemonAtivoPoor = <?= json_encode($_SESSION['pokemonAtivo']) ?>;
 
+        const moves = <?= json_encode($_SESSION['moves']) ?>;
+        console.log(moves);
+
         const promissesSalvo = pokemonSalvoPoor.map(pokemon => formatarPokemon(pokemon, true));
         const pokemonSalvoArray = await Promise.all(promissesSalvo);
 
@@ -40,6 +43,8 @@
         pokemonAtivoArray.forEach(pokemon => {
             adicionarAoTime(pokemon.id);
         });
+        atualizarTimeAtaques();
+
     </script>
 </head>
 <body>
@@ -52,9 +57,9 @@
         </div>
     </nav>
     <main class="maindash">
-        <div id="tela-equipe" class="menugens" style="display:flex;">
+        <div id="tela-equipe" class="menugens" style="display:flex; position:relative;">
+            <div class="layout-equipe" id="time" style="display: flex;">
             <button class="btn-voltar-pequeno" onclick="voltarParaJogar()">⬅ Voltar</button>
-            <div class="layout-equipe">
                 <div class="area-time">
                     <h2 class="titulo-geracoes" style="font-size: 40px;">Meu Time</h2>
                     <div class="grid-time" id="grid-time">
@@ -70,12 +75,53 @@
                     <span>
                         <?= $salvarTimeErro?>
                     </span>
-                    </div>
-                    <div class="area-pesquisa">
-                        <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
-                        <input type="search" id="input-busca"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
-                        <button onclick="showCard()" class="btn-buscar">Pesquisar</button>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
+                    <input type="search" id="input-busca"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
+                    <button onclick="showCard()" class="btn-buscar">Pesquisar</button>
                     <div id="resultado-pesquisa"></div>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">Ataques</h2>
+                    <button onclick="toggleMoves()" class="btn-buscar">Escolher ataques</button>
+                </div>
+            </div>
+
+            <div class="layout-equipe" id="time-moves" style="display: none;">
+                <div class="area-time" id="area-time-ataques" style="display: block;">
+                    <h2 class="titulo-geracoes" style="font-size: 40px;">ESCOLHER ATAQUES</h2>
+                    <div class="grid-time" id="grid-time-ataques">
+                        <div class="slot-pokemon">1</div>
+                        <div class="slot-pokemon">2</div>
+                        <div class="slot-pokemon">3</div>
+                        <div class="slot-pokemon">4</div>
+                        <div class="slot-pokemon">5</div>
+                        <div class="slot-pokemon">6</div>
+                    </div>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">⬅Montar Time</h2>
+                    <button onclick="toggleMoves()" class="btn-buscar">Voltar Para Montagem</button>
+                    <div id="resultado-pesquisa"></div>
+                </div>
+            </div>
+            <div class="layout-equipe" id="moves" style="display: none;">
+                <div class="area-time">
+                    <h2 class="titulo-geracoes" style="font-size: 40px;">ESCOLHER ATAQUES</h2>
+                    <div class="grid-time" id="grid-time-ataques">
+                        <div class="slot-pokemon">1</div>
+                        <div class="slot-pokemon">2</div>
+                        <div class="slot-pokemon">3</div>
+                        <div class="slot-pokemon">4</div>
+                    </div>
+                    <button id="btn-voltar-time-ataques" class="btn-time" style="display: block;" onclick="editarMoves()">VER TIME COMPLETO</button>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
+                    <input type="search" id="input-busca-move"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
+                    <button onclick="showMove()" class="btn-buscar">Escolher ataque</button>
+                    <div id="resultado-pesquisa-move"></div>
                 </div>
             </div>
         </div>

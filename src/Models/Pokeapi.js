@@ -1,4 +1,5 @@
 let cachePokemon = {};
+let cacheMove = {};
 
 async function getByUrl(url){
 
@@ -156,7 +157,6 @@ async function showCard() {
                 <img src="${pokemon.sprites.front_default}">
                 <h3 style="margin: 5px 0;">Nº ${pokemon.api_id} - ${pokemon.apelido}</h3>
                 <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
-                <button onclick="adicionarAoTime(${pokemon.api_id})" class="btn-adicionar" disabled>Adicionar ao Time</button>
             </div>
         `;
     }
@@ -173,6 +173,36 @@ async function showCard() {
             </div>
         `;
     }
+
+}
+
+async function showMove(){
+    let input = document.getElementById('input-busca-move').value.toLowerCase().trim();
+    let telaResultado = document.getElementById('resultado-pesquisa-move');
+        
+    if (input === "") return;
+        
+    telaResultado.innerHTML = "<p style='color: yellow;'>Buscando...</p>";
+        
+    let move = null;
+
+    move = await getByUrl(`https://pokeapi.co/api/v2/move/${input}`);
+
+    if(move == null){
+        telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Não encontrado!</p>";
+        return;
+    }
+
+    cacheMove[move.id] = move;
+    telaResultado.innerHTML = `
+        <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
+            <div class="cartao-fundo"></div>
+            <img src="">
+            <h3 style="margin: 5px 0;">Nº ${move.name} - ${move.damage_class.name}</h3>
+            <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${move.type.name}</p>
+            <button onclick="" class="btn-adicionar">Adicionar ao Pokemon</button>
+        </div>
+    `;
 
 }
 

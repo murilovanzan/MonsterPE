@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function telaMontarEquipe() {
-    window.location.href = "../pokemon/?acao=pokemonSalvo";
+    window.location.href = "../pokemon/?acao=time";
 }
 
 function voltarParaGeracoes() {

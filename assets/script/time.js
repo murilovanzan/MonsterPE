@@ -63,12 +63,33 @@ function atualizarTelaTime() {
         btnLimpar.style.display = 'none';
     } else {
         btnSalvar.style.display = 'none';
-        btnLimpar.style.display = 'Block';
+        btnLimpar.style.display = 'block';
+    }
+}
+
+function atualizarTimeAtaques() {
+    let grid = document.getElementById('grid-time-ataques');
+    grid.innerHTML = "";
+    for (let i = 0; i < 6; i++) {
+        if (timeEscolhido[i] != null) {
+            let p = timeEscolhido[i];
+            grid.innerHTML += `
+                <div class="slot-pokemon preenchido">
+                    <img src="${p.sprites.front_default}">
+                    <div class="slot-info">
+                        <span class="slot-id">Nível ${p.nivel}</span>
+                        <span class="slot-nome">${p.apelido}</span>
+                        <button onclick="editarMoves()" class="btn-adicionar">EDITAR</button>
+                    </div>
+                </div>
+            `;
+        } else {
+            grid.innerHTML += `<div class="slot-pokemon">${i + 1}</div>`;
+        }
     }
 }
 
 async function salvarTime(){
-
     try{
 
         const dadosEnviados = await fetch('../pokemon/?acao=salvar', {
@@ -77,6 +98,25 @@ async function salvarTime(){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(timeEscolhido)
+        });
+        const resultado = await dadosEnviados.json();
+    }
+    catch(erro){
+        console.log("Os dados não foram passados corretamente;\nErro: ", erro);
+    }
+
+    location.reload();
+}
+
+async function salvarMoves(){
+    try{
+
+        const dadosEnviados = await fetch('../pokemon/?acao=salvarMoves', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(movesPokemon[id])
         });
         const resultado = await dadosEnviados.json();
     }
@@ -110,6 +150,7 @@ async function excluirPokemonSalvo(id){
 function limparTime(){
     window.location.href = "?acao=limparTime";
 }
+
 function showPokemonSalvos(pokemonSalvo){
 
     const listaPokemonSalvo = document.getElementById('pokemonSalvo');
@@ -128,4 +169,38 @@ function showPokemonSalvos(pokemonSalvo){
             </div>
         `;
     });
+}
+
+function toggleMoves(){
+    const divTime = document.getElementById('time');
+    const divMoves = document.getElementById('time-moves');
+    
+    if(timeEscolhido.length == 0){
+        alert("Seu time está vazio!");
+        return;
+    };
+
+    if(divTime.style.display == 'flex'){
+        divTime.style.display = "none";
+        divMoves.style.display = "flex";
+    }
+    else if(divTime.style.display == "none"){
+        divTime.style.display = "flex";
+        divMoves.style.display = "none";
+    }
+}
+
+function editarMoves(){
+
+    const divTime = document.getElementById('time-moves');
+    const divMoves = document.getElementById('moves');
+
+    if(divTime.style.display == 'flex'){
+        divTime.style.display = "none";
+        divMoves.style.display = "flex";
+    }
+    else if(divTime.style.display == "none"){
+        divTime.style.display = "flex";
+        divMoves.style.display = "none";
+    }
 }
