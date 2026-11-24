@@ -3,6 +3,8 @@ function voltarParaJogar() {
 }
 
 let timeEscolhido = [];
+let moves = [];
+
 function adicionarAoTime(id, salvo = false) {
     if (timeEscolhido.length < 6 && cachePokemon[id] !== null) {
         timeEscolhido.push(cachePokemon[id]);
@@ -79,7 +81,7 @@ function atualizarTimeAtaques() {
                     <div class="slot-info">
                         <span class="slot-id">Nível ${p.nivel}</span>
                         <span class="slot-nome">${p.apelido}</span>
-                        <button onclick="editarMoves()" class="btn-adicionar">EDITAR</button>
+                        <button onclick="editarMoves('${p.id}')" class="btn-adicionar">EDITAR</button>
                     </div>
                 </div>
             `;
@@ -190,7 +192,14 @@ function toggleMoves(){
     }
 }
 
-function editarMoves(){
+function editarMoves(id = 0){
+
+    if(id == 0){
+        pokemonSelecionado = null;
+    }
+    else{
+        pokemonSelecionado = id;
+    }
 
     const divTime = document.getElementById('time-moves');
     const divMoves = document.getElementById('moves');
@@ -202,5 +211,36 @@ function editarMoves(){
     else if(divTime.style.display == "none"){
         divTime.style.display = "flex";
         divMoves.style.display = "none";
+    }
+}
+
+function adicionarMove(id){
+    if (moves[pokemonSelecionado].length < 4 && cacheMove[id] !== null) {
+        moves[pokemonSelecionado].push(cacheMove[id]);
+        atualizarTelaMove(); 
+    } else if (timeEscolhido.length >= 4) {
+        alert("Seu time já tem 6 Pokémons!");
+    }
+
+}
+
+function atualizarTelaMove(){
+    let grid = document.getElementById('grid-time-ataques');
+    grid.innerHTML = "";
+    for (let i = 0; i < 6; i++) {
+        if (moves[pokemonSelecionado][i] != null) {
+            let move = moves[pokemonSelecionado][i];
+            grid.innerHTML += `
+                <div class="slot-pokemon preenchido">
+                    <button class="btn-remover" onclick="">X</button>
+                    <img src="">
+                    <div class="slot-info">
+                        <span class="slot-nome">${move.name}</span>
+                    </div>
+                </div>
+            `;
+        } else {
+            grid.innerHTML += `<div class="slot-pokemon">${i + 1}</div>`;
+        }
     }
 }

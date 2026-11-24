@@ -1,5 +1,6 @@
 let cachePokemon = {};
 let cacheMove = {};
+let pokemonSelecionado;
 
 async function getByUrl(url){
 
@@ -200,7 +201,7 @@ async function showMove(){
             <img src="">
             <h3 style="margin: 5px 0;">Nº ${move.name} - ${move.damage_class.name}</h3>
             <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${move.type.name}</p>
-            <button onclick="" class="btn-adicionar">Adicionar ao Pokemon</button>
+            <button onclick="adicionarMove(${move.id})" class="btn-adicionar">Adicionar ao Pokemon</button>
         </div>
     `;
 
