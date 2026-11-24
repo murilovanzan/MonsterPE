@@ -54,7 +54,7 @@ async function formatarPokemon(pokemon, salvo = false){
     dark: 'Sombrio',
     fairy: 'Fada'
     };
-
+    
     let tiposFormatados = "";
     if(!salvo){
         pokemon.apelido = pokemon.name;
@@ -128,18 +128,52 @@ async function showGen(gen){
         }
 }
 
+const brincadeirasAmigos = {
+    "a buznello ta confusa": {
+        url: "/MonsterPE/assets/imgs/Forçadas/Buzconfuzz.png",
+        nome: "Buznello",
+        tipo: "Confusa",
+        descricao: "Finge que te ama, mas ta confusa."
+    },
+
+    "ladaia": {
+        url: "/MonsterPE/assets/imgs/Forçadas/Ladaia.png",
+        nome: "Lukan(O Ladaia)",
+        tipo: "Ladaiento",
+        descricao: "A gente perde no jogo, mas na briga..."
+    }
+};
+
 async function showCard() {
     let input = document.getElementById('input-busca').value.toLowerCase().trim();
     let telaResultado = document.getElementById('resultado-pesquisa');
         
     if (input === "") return;
         
-    telaResultado.innerHTML = "<p style='color: yellow;'>Buscando...</p>";
+    telaResultado.innerHTML = "<p style='color: yellow;'>Buzcando...</p>";
+
+    if (brincadeirasAmigos[input]) {
+        const amigo = brincadeirasAmigos[input];
+        telaResultado.innerHTML = `
+            <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
+                <div class="cartao-fundo"></div>
+                <img src="${amigo.url}" style="border-radius: 10px; max-width: 150px; margin-top: 10px;">
+                <h3 style="margin: 5px 0;">${amigo.nome}</h3>
+                <h4 style="margin: 5px 0; color:black;">${amigo.descricao}</h4>
+                <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${amigo.tipo}</p>
+                <p style="font-size: 12px; font-style: italic; padding: 0 10px;">${amigo.descricao}</p>
+            </div>
+        `;
+        return; 
+    }
         
     let pokemon = null;
 
     pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${input}`);
 
+    if(input === "A buznello ta confusa"){
+        pokemon = getByUrl(`/MonsterPE/assets/imgs/Forçadas/Buzconfuzz.png`);
+    }
     if(pokemon == null){
         
         telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Não encontrado!</p>";
