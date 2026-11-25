@@ -17,7 +17,6 @@
     }
     require_once '../../../assets/script/restricoes.php';
     verificaLogin();
-    session_start();
     
 ?>
 <!DOCTYPE html>
@@ -26,33 +25,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página do usuário</title>
-    <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=2">
+    <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=3">
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
 </head>
 <body>
-    <nav style="justify-content:space-around;">
+    <nav>
         <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav" style="position: relative;">
-            <a class="userview" style="cursor: pointer;" 
-                data-username="<?php echo $nomeSeguro; ?>" 
-                data-email="<?php echo $emailSeguro; ?>"
-                onclick="toggleDropdown(event)"> Usuário</a> |
-            <a href="../usuario/?acao=logout">Logout</a>
+          <a class="userview" style="cursor: pointer;" 
+            data-username="<?php echo $nomeSeguro; ?>" 
+            data-email="<?php echo $emailSeguro; ?>"
+            onclick="toggleDropdown(event)">
+            <img id="avatar-nav" src="" alt="Avatar">
+        </a>
+            <span></span>
+            <a href="../usuario/?acao=logout" class="btn-logout">| Logout</a>
         </div>
     </nav>
     <div class="conteudo">
-        <aside class="dashaside">
-        <div class="opdashmain">
-            <a id="verpoke" class="dashmainclick">VER POKÉMON</a>
-            <ul class="ulescondida">
-                <li>Aqui é possível visualizar os pokémons separados por geração podendo voltar depois para entrar na aba Jogar e escolher seu time depois de ver todas opções.</li>
-            </ul>
+        <aside class="dashaside modo-inicial">
+                <div class="opdashmain">
+            <a href="../main" class="dashmainclick" id="jogarpoke">JOGAR</a>
         </div>
         <div class="opdashmain">
-            <a href="../main" class="dashmainclick" id="jogarpoke">JOGAR</a>
-            <ul class="ulescondida">
-                <li>Aqui você terá duas opções uma para montar a sua equipe e outra para jogar o MonsterPE.
-            </ul>
+            <a id="verpoke" class="dashmainclick">VER POKÉMON</a>
         </div>
     </aside>
     <main class="maindash">
@@ -70,8 +66,8 @@
         </div>
         <div id="opjogar" class="menugens">
             <h2 class="titulo-geracoes">ESCOLHA UMA AÇÃO</h2>
-            <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>
             <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png"></button>
+            <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>        
             <button onclick="IrALoja()">IR À LOJA</button>
             <button onclick="Creditos()">CRÉDITOS</button>
         </div>

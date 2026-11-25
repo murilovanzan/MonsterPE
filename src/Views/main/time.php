@@ -92,10 +92,12 @@
     <nav style="justify-content:space-around; margin-bottom: 10px !important; position: relative; z-index: 100;">
         <div class="logonav"><a href="../main/index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav" style="position: relative;">
-            <a class="userview" style="cursor: pointer;" 
+             <a class="userview" style="cursor: pointer;" 
                 data-username="<?php echo $nomeSeguro; ?>" 
                 data-email="<?php echo $emailSeguro; ?>"
-                onclick="toggleDropdown(event)"> Usuário</a> |
+                onclick="toggleDropdown(event)">
+                <img id="avatar-nav" src="" alt="Avatar">
+            </a>
             <a href="../usuario/?acao=logout">Logout</a>
     </nav>
 <main style="padding-top: 50px !important; padding-bottom: 267px; display: block !important;">

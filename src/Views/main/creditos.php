@@ -17,7 +17,6 @@
     }
     require_once '../../../assets/script/restricoes.php';
     verificaLogin();
-    session_start();
     
 ?>
 <!DOCTYPE html>
@@ -33,10 +32,12 @@
     <nav style="justify-content:space-around;">
         <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav" style="position: relative;">
-            <a class="userview" style="cursor: pointer;" 
-                data-username="<?php echo $nomeSeguro; ?>" 
-                data-email="<?php echo $emailSeguro; ?>"
-                onclick="toggleDropdown(event)"> Usuário</a> |
+          <a class="userview" style="cursor: pointer;" 
+            data-username="<?php echo $nomeSeguro; ?>" 
+            data-email="<?php echo $emailSeguro; ?>"
+            onclick="toggleDropdown(event)">
+            <img id="avatar-nav" src="" alt="Avatar">
+        </a>
             <a href="../usuario/?acao=logout">Logout</a>
         </div>
     </nav>
@@ -53,21 +54,21 @@
                                     <img src="/MonsterPE/assets/imgs/CreditosPessoas/Davi Gross.jpg" alt="DaviGross img" class="autor-imagem">
                                     <div class="infosautor" >
                                     <span class="item-nome" style="color: black;">DAVI GROSS</span>
-                                    <span class="item-preco" style="font-size: 20px;">Davi Gross Viegas da Silva é um dos criadores do jogo MonsterPE, tem 18 anos, é colorado e muito fã de pokémom, e o seu favorito é o Greninja.</span></div>
+                                    <span class="item-preco" style="font-size: 20px;">Davi Gross Viegas da Silva é um dos criadores do jogo MonsterPE, tem 18 anos, é colorado e muito fã de pokémon, e o seu favorito é o Greninja.</span></div>
                                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/658.gif" class="pokefav" style="width: 230px; height: 150px;">
                                 </div>
                                 <div class="slot-autor">
                                     <img src="/MonsterPE/assets/imgs/CreditosPessoas/Gabriel Mello.jpg" alt="GabrielMello img" class="autor-imagem">
                                     <div class="infosautor" >
                                     <span class="item-nome" style="color: black;">GABRIEL MELLO</span>
-                                    <span class="item-preco" style="font-size: 20px;">Gabriel Mello de Azevedo é um dos criadores do jogo MonsterPE, tem 18 anos, é gremista e muito fã de pokémom, e o seu favorito é a Melloeta.</span></div>
+                                    <span class="item-preco" style="font-size: 20px;">Gabriel Mello de Azevedo é um dos criadores do jogo MonsterPE, tem 18 anos, é gremista e muito fã de pokémon, e o seu favorito é a Melloeta.</span></div>
                                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/648.gif" class="pokefav" style="width: auto; height: 200px;">
                                 </div>
                                 <div class="slot-autor">
                                     <img src="/MonsterPE/assets/imgs/CreditosPessoas/Murilo Vanzan.jpg" alt="MuriloVanzan img" class="autor-imagem">
                                     <div class="infosautor" >
                                     <span class="item-nome" style="color: black;">MURILO VANZAN</span>
-                                    <span class="item-preco" style="font-size: 20px;">Murilo Vanzan da Silva é um dos criadores do jogo MonsterPE, tem 17 anos, é gremista e muito fã de pokémom, e o seu favorito é a Sableye.</span></div>
+                                    <span class="item-preco" style="font-size: 20px;">Murilo Vanzan da Silva é um dos criadores do jogo MonsterPE, tem 17 anos, é gremista e muito fã de pokémon, e o seu favorito é a Sableye.</span></div>
                                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/10066.gif" class="pokefav" style="width: auto; height: 200px;">
                                 </div>
                             </div>

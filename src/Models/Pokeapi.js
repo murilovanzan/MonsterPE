@@ -229,13 +229,13 @@ function toggleDropdown(event) {
         dropdown.className = "dropdown-branco";
         
         dropdown.innerHTML = `
-            <aside class="dropdown-avatar" onclick="document.getElementById('modal-avatar').style.display='flex'" style="cursor:pointer;">
+            <aside class="dropdown-avatar">
                 <img id="foto-perfil" src="${avatarSalvo}" alt="Avatar">
             </aside>
             <div class="dropdown-info">
                 <span class="dropdown-nome">${nomeBd}</span>
                 <span class="dropdown-email">${emailBd}</span>
-                <a class="btn-editar-usuario">Clique no avatar para mudar ele</a>
+                <a class="btn-editar-usuario" onclick="document.getElementById('modal-avatar').style.display='flex'" style="cursor:pointer;">Editar avatar</a>
             </div>
         `;
         event.target.parentElement.appendChild(dropdown);
@@ -246,5 +246,29 @@ function toggleDropdown(event) {
 function trocarAvatar(novaImagem) {
     localStorage.setItem("meuAvatar", novaImagem);
     document.getElementById("foto-perfil").src = novaImagem;
+    document.getElementById("modal-avatar").style.display = "none";
+}
+document.addEventListener("DOMContentLoaded", () => {
+    const avatarSalvo = localStorage.getItem("meuAvatar") || "/MonsterPE/assets/imgs/Avatars/ash.png";
+    const avatarNav = document.getElementById("avatar-nav");
+    
+    if (avatarNav) {
+        avatarNav.src = avatarSalvo;
+    }
+});
+
+function trocarAvatar(novaImagem) {
+    localStorage.setItem("meuAvatar", novaImagem);
+
+    const fotoDropdown = document.getElementById("foto-perfil");
+    if (fotoDropdown) {
+        fotoDropdown.src = novaImagem;
+    }
+
+    const avatarNav = document.getElementById("avatar-nav");
+    if (avatarNav) {
+        avatarNav.src = novaImagem;
+    }
+
     document.getElementById("modal-avatar").style.display = "none";
 }

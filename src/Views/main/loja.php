@@ -29,10 +29,12 @@
     <nav style="justify-content:space-around;">
         <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav" style="position: relative;">
-            <a class="userview" style="cursor: pointer;" 
-                data-username="<?php echo $nomeSeguro; ?>" 
-                data-email="<?php echo $emailSeguro; ?>"
-                onclick="toggleDropdown(event)"> Usuário</a> |
+                  <a class="userview" style="cursor: pointer;" 
+                    data-username="<?php echo $nomeSeguro; ?>" 
+                    data-email="<?php echo $emailSeguro; ?>"
+                    onclick="toggleDropdown(event)">
+                    <img id="avatar-nav" src="" alt="Avatar">
+                </a>
             <a href="../usuario/?acao=logout">Logout</a>
     </nav>
     <main class="maindash">

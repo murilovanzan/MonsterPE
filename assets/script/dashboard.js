@@ -7,13 +7,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const menuVoltar = document.getElementById('voltargen');
     const menuJogar = document.getElementById('opjogar');
     const telaEquipe = document.getElementById('tela-equipe');
+
     if (linkVerPoke) {
         linkVerPoke.addEventListener('click', function(event) {
             event.preventDefault();
             if(menuJogar) menuJogar.classList.remove('ativo'); 
             if(telaEquipe) telaEquipe.classList.remove('ativo');
             if(menuVoltar) menuVoltar.classList.remove('ativo'); 
-            if(menuGens) menuGens.classList.toggle('ativo');   
+            if(menuGens) menuGens.classList.add('ativo');   
         });
     }
     if (linkJogar) {
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if(menuGens) menuGens.classList.remove('ativo');   
             if(menuVoltar) menuVoltar.classList.remove('ativo'); 
             if(telaEquipe) telaEquipe.classList.remove('ativo');
-            if(menuJogar) menuJogar.classList.toggle('ativo');  
+            if(menuJogar) menuJogar.classList.add('ativo');  
         });
     }
 });
@@ -45,3 +46,12 @@ function IrALoja() {
 function Creditos() {
     window.location.href = "../main/creditos.php";
 }
+
+document.querySelectorAll('.dashmainclick').forEach(botao => {
+    botao.addEventListener('click', () => {
+        const aside = document.querySelector('.dashaside');
+        if (aside) {
+            aside.classList.remove('modo-inicial');
+        }
+    });
+});
