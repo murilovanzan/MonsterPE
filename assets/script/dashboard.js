@@ -46,6 +46,34 @@ function Creditos() {
     window.location.href = "../main/creditos.php";
 }
 
+async function showGen(gen){
+    document.getElementById('opgens').classList.remove('ativo');
+    document.getElementById('voltargen').classList.add('ativo');
+    const lista = document.getElementById('pokemon');
+    const pokemons = await getByUrl(`https://pokeapi.co/api/v2/generation/generation-${gen}`);
+        lista.innerHTML = '';
+        for(const species of pokemons.pokemon_species){
+            const url = species.url.replace("-species", "");
+            let pokemon = await getByUrl(url);
+            
+            pokemon = await formatarPokemon(pokemon);
+
+            lista.innerHTML += `
+                <li class="cartao-pokemon">
+                    <div class="cartao-fundo"></div>
+                    <img src='${pokemon.sprites.front_default}'>
+                    <h3>${pokemon.apelido}</h3>
+                    <h3>#${pokemon.api_id}</h3>
+                
+                    <div class="costas-seguras">
+                        <h3>${pokemon.apelido}</h3>
+                        <p>${pokemon.tiposFormatados}</p>
+                    </div>
+                </li>
+            `
+        }
+}
+
 document.querySelectorAll('.dashmainclick').forEach(botao => {
     botao.addEventListener('click', () => {
         const aside = document.querySelector('.dashaside');
@@ -54,3 +82,4 @@ document.querySelectorAll('.dashmainclick').forEach(botao => {
         }
     });
 });
+

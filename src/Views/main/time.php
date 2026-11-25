@@ -8,6 +8,7 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+
     $nomeSeguro = 'Jogador';
     $emailSeguro = 'email@desconhecido.com';
 
@@ -47,53 +48,33 @@
     <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=2">
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
     <style>
-    .layout-banco {
-    height: auto !important;
-    max-height: none !important;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 30px !important;
-}
+        .layout-banco {
+            height: auto !important;
+            max-height: none !important;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 30px !important;
+        }
 
-.grid-bank, #pokemonSalvo {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center;
-    gap: 15px;
-    height: auto !important;
-    max-height: none !important;
-}
+        .grid-bank, #pokemonSalvo {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center;
+            gap: 15px;
+            height: auto !important;
+            max-height: none !important;
+        }
 
-.cartao-pokemon {
-    height: auto !important;
-    min-height: 350px !important;
-}
+        .cartao-pokemon {
+            height: auto !important;
+            min-height: 350px !important;
+        }
 
-</style>
+    </style>
     <script src="../../Models/Pokeapi.js"></script>
     <script src="../../../assets/script/time.js"></script>
     <script type="module">
-        
-        const pokemonSalvoPoor = <?= json_encode($_SESSION['pokemonSalvo']) ?>;
-        const pokemonAtivoPoor = <?= json_encode($_SESSION['pokemonAtivo']) ?>;
-
-        const pokemonMovesBruto = <?= json_encode($_SESSION['moves']) ?>;
-
-        const promissesPokemonMoves = pokemonMovesBruto.map(pokemon => formatarMoves(pokemon));
-        let pokemonMoves = await Promise.all(promissesPokemonMoves);
-
-        const promissesSalvo = pokemonSalvoPoor.map(pokemon => formatarPokemon(pokemon, true));
-        const pokemonSalvoArray = await Promise.all(promissesSalvo);
-
-        const promissesAtivo = pokemonAtivoPoor.map(pokemon => formatarPokemon(pokemon, true));
-        const pokemonAtivoArray = await Promise.all(promissesAtivo);
-
-        showPokemonSalvos(pokemonSalvoArray);
-        pokemonAtivoArray.forEach(pokemon => {
-            adicionarAoTime(pokemon.id);
-        });
-        atualizarTimeAtaques(pokemonMoves);
-
+        getPokemonAndMoves();
     </script>
 </head>
 <body>

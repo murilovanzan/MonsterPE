@@ -21,7 +21,6 @@ class Pokemon implements JsonSerializable{
     public function jsonSerialize(): mixed {
         return [
             'id'         => $this->id,
-            'usuario_id' => $this->usuario_id,
             'api_id'     => $this->api_id,
             'apelido'    => $this->apelido,
             'nivel'      => $this->nivel,

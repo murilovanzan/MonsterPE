@@ -10,13 +10,19 @@
     <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=2">
     <link rel="stylesheet" href="/MonsterPE/assets/css/batalha.css?v=2">
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
+    <script src="../../../assets/script/batalha.js"></script>
+    <script type="module">
+        iniciarBatalha();
+    </script>
 </head>
 <body class="bodybattle">
+
     <nav style="justify-content:space-around; margin-bottom: 5px;">
-        <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo" style="height: 10vh;"></a></div>
-        <button class="btn-voltar-pequeno" onclick="voltarParaJogar()">⬅ Voltar</button>
+        <div class="logonav"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo" style="height: 10vh;"></a></div>
     </nav>
+
     <main class="jogo">
+
             <div class="telajogo">
                 <div class="pokemon-area oponente-area">
                     <div class="info-card">
@@ -59,6 +65,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="modal-mochila" class="modal-fundo" style="display: none;">
                 <div class="modal-card">
                     <span class="btn-fechar" onclick="fecharModal('modal-mochila')">X</span>
@@ -66,15 +73,14 @@
                     <p>Poções, Pokebolas, etc...</p>
                 </div>
             </div>
-
             <div id="modal-equipe" class="modal-fundo" style="display: none;">
                 <div class="modal-card">
                     <span class="btn-fechar" onclick="fecharModal('modal-equipe')">X</span>
                     <h3>Sua Equipe</h3>
                     <p>Selecione um Pokémon para trocar.</p>
+                    <div></div>
                 </div>
             </div>
-
             <div id="modal-fugir" class="modal-fundo" style="display: none;">
                 <div class="modal-card">
                     <h3>Você tem certeza que quer sair da batalha?</h3>
@@ -84,6 +90,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="logacoes">
                 <h2>Histórico dos Rounds</h2>
                 <div class="round">
@@ -130,9 +137,7 @@
     </footer>
 
 <script src="../../Models/Pokeapi.js"></script>
-<script src="../../../assets/script/dashboard.js"></script>
 <script src="../../../assets/script/BatalhaAnimation.js"></script>
-<script src="../../../assets/script/time.js"></script>
     <div id="modal-avatar" class="modal-fundo" style="display: none;">
         <div class="modal-card" style="width: 360px; text-align: center;">
             <span class="btn-fechar" onclick="document.getElementById('modal-avatar').style.display='none'">X</span>

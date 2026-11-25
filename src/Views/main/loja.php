@@ -128,8 +128,8 @@
                         </div>
 
                         <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/revive.png" alt="Revive" class="item-imagem">
-                            <span class="item-nome">Revive</span>
+                            <img src="/MonsterPE/assets/imgs/Loja/revive.png" alt="Revive Super (RS)" class="item-imagem">
+                            <span class="item-nome">Revive Super (RS)</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Tira o pokémon do estado de desmaiado e cura 50% de seu HP</span>
                         </div>
@@ -153,7 +153,7 @@
                             <span class="item-desc" style="display: none;">Pode te salvar de grandes fumaceiros.</span>
                         </div>
                         <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/egg.jpeg" alt="Lucky Egg" class="item-imagem">
+                            <img src="/MonsterPE/assets/imgs/Loja/Egg.jpeg" alt="Lucky Egg" class="item-imagem">
                             <span class="item-nome">Lucky Egg</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">O PascualOVO da sorte serve para aumentar a amizade com seu pokémon.</span>

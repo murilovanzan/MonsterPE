@@ -10,6 +10,26 @@
             require_once __DIR__ . "/../Views/{$pasta}/{$view}.php";
         }
 
+        public function time(){
+
+            $this->renderizar("time", "main");
+            
+        }
+
+        public function getPokemonAndMoves(){
+
+            header('Content-Type: application/json');
+            
+            $pokemonSalvo = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), 0);
+            $pokemonAtivo = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), 1);
+            $moves = [];
+            foreach ($pokemonAtivo  as $pokemon){
+                array_push($moves, Moves::getPokemonMoves($pokemon->getId()));
+            }
+            
+            echo json_encode([$pokemonSalvo, $pokemonAtivo, $moves]);
+        }
+
         public function salvar(){
             
             $dadosBrutos = file_get_contents("php://input");
@@ -74,19 +94,8 @@
 
         }
 
-        public function time(){
-
-            $_SESSION['pokemonSalvo'] = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), 0);
-            $_SESSION['pokemonAtivo'] = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), 1);
-            $_SESSION['moves'] = [];
-            foreach ($_SESSION['pokemonAtivo'] as $pokemon){
-                array_push($_SESSION['moves'], Moves::getPokemonMoves($pokemon->getId()));
-            }
-            $this->renderizar("time", "main");
-            
-        }
-
         public function limparTime(){
+
             Pokemon::desativarTime($_SESSION['usuario']->getId());
 
             header('location: ?acao=time');
@@ -100,11 +109,11 @@
         }
 
         public function batalha(){
-
-            $_SESSION['pokemonAtivo'] = Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), 1);
             
             $this->renderizar("batalha", "main");
         }
+
+
 
     }
 
