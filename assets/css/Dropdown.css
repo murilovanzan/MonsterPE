@@ -32,6 +32,7 @@ body, main {
 }
 
 .dropdown-content {
+    background-size: contain;
     display: none;
     position: absolute;
     top: 100%;
@@ -69,12 +70,10 @@ body, main {
     min-width: 110px;
     text-decoration: none;
 }
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+
 #dropdown-toggle:checked + .dropdown-btn + .dropdown-content {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     flex-direction: column;
 }
 
