@@ -24,16 +24,16 @@
         <input type="checkbox" id="dropdown-toggle">
         <label for="dropdown-toggle" class="dropdown-btn">Geração</label>
         <div class="dropdown-content">
-            <button onclick="genx('gen1')"><a>1° geração</a></button>
-            <button onclick="genx('gen2')"><a>2° geração</a></button>
-            <button onclick="genx('gen3')"><a>3° geração</a></button>
-            <button onclick="genx('gen4')"><a>4° geração</a></button>
-            <button onclick="genx('gen5')"><a>5° geração</a></button>
-            <button onclick="genx('gen6')"><a>6° geração</a></button>
-            <button onclick="genx('gen7')"><a>7° geração</a></button>
-            <button onclick="genx('gen8')"><a>8° geração</a></button>
-            <button onclick="genx('gen9')"><a>9° geração</a></button>
-            <button onclick="genx('gen0')"><a>sem geração</a></button> 
+            <button onclick="genx('gen1')" id="drop1"><a>1° geração</a></button>
+            <button onclick="genx('gen2')" id="drop2"><a>2° geração</a></button>
+            <button onclick="genx('gen3')" id="drop3" ><a>3° geração</a></button>
+            <button onclick="genx('gen4')" id="drop4"><a>4° geração</a></button>
+            <button onclick="genx('gen5')" id="drop5"><a>5° geração</a></button>
+            <button onclick="genx('gen6')" id="drop6"><a>6° geração</a></button>
+            <button onclick="genx('gen7')" id="drop7"><a>7° geração</a></button>
+            <button onclick="genx('gen8')" id="drop8"><a>8° geração</a></button>
+            <button onclick="genx('gen9')" id="drop9"><a>9° geração</a></button>
+            <button onclick="genx('gen0')" id="drop10"><a>sem geração</a></button> 
         </div>
     </div>
     </div>
