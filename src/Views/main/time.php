@@ -15,6 +15,7 @@
         $nomeSeguro = $_SESSION['usuario']->getUsername();
         $emailSeguro = $_SESSION['usuario']->getEmail();
     }
+
     if(isset($_SESSION['salvarTimeErro'])){
         if($_SESSION['salvarTimeErro']){
             $salvarTimeErro = "Não foi possivel salvar o time com sucesso!";
@@ -76,6 +77,11 @@
         const pokemonSalvoPoor = <?= json_encode($_SESSION['pokemonSalvo']) ?>;
         const pokemonAtivoPoor = <?= json_encode($_SESSION['pokemonAtivo']) ?>;
 
+        const pokemonMovesBruto = <?= json_encode($_SESSION['moves']) ?>;
+
+        const promissesPokemonMoves = pokemonMovesBruto.map(pokemon => formatarMoves(pokemon));
+        let pokemonMoves = await Promise.all(promissesPokemonMoves);
+
         const promissesSalvo = pokemonSalvoPoor.map(pokemon => formatarPokemon(pokemon, true));
         const pokemonSalvoArray = await Promise.all(promissesSalvo);
 
@@ -86,6 +92,8 @@
         pokemonAtivoArray.forEach(pokemon => {
             adicionarAoTime(pokemon.id);
         });
+        atualizarTimeAtaques(pokemonMoves);
+
     </script>
 </head>
 <body>
@@ -103,7 +111,7 @@
 <main style="padding-top: 50px !important; padding-bottom: 267px; display: block !important;">
         <div id="tela-equipe" class="menugens" style="display:flex; min-height: 700px;">
             <button class="btn-voltar-pequeno" onclick="voltarParaJogar()">⬅ Voltar</button>
-            <div class="layout-equipe" style="">
+            <div class="layout-equipe" id="time" style="display: flex;">
                 <div class="area-time">
                     <h2 class="titulo-geracoes" style="font-size: 40px; margin-bottom:15px; padding-bottom:10px;">Meu Time</h2>
                     <div class="grid-time" id="grid-time">
@@ -115,16 +123,60 @@
                         <div class="slot-pokemon">6</div>
                     </div>
                     <button id="btn-salvar-time" class="btn-time" onclick="salvarTime()">SALVAR TIME COMPLETO</button>
-                    <button id="btn-limpar-time" class="btn-time" onclick="limparTime()">Limpar Time</button>
-                    <span class="MensagemTime">
+                    <button id="btn-limpar-time" class="btn-time" onclick="limparTime()">LIMPAR TIME</button>
+                    <span>
                         <?= $salvarTimeErro?>
                     </span>
-                    </div>
-                    <div class="area-pesquisa">
-                        <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
-                        <input type="search" id="input-busca"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
-                        <button onclick="showCard()" class="btn-buscar">Pesquisar</button>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
+                    <input type="search" id="input-busca"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
+                    <button onclick="showCard()" class="btn-buscar">Pesquisar</button>
                     <div id="resultado-pesquisa"></div>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">Ataques</h2>
+                    <button onclick="toggleMoves()" class="btn-buscar">Escolher ataques</button>
+                </div>
+            </div>
+            <div class="layout-equipe" id="time-moves" style="display: none;">
+                <div class="area-time">
+                    <h2 class="titulo-geracoes" style="font-size: 40px;">ESCOLHER ATAQUES</h2>
+                    <div class="grid-time" id="grid-time-ataques">
+                        <div class="slot-pokemon">1</div>
+                        <div class="slot-pokemon">2</div>
+                        <div class="slot-pokemon">3</div>
+                        <div class="slot-pokemon">4</div>
+                        <div class="slot-pokemon">5</div>
+                        <div class="slot-pokemon">6</div>
+                    </div>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">⬅Montar Time</h2>
+                    <button onclick="toggleMoves()" class="btn-buscar">Voltar Para Montagem</button>
+                </div>
+            </div>
+
+            <div class="layout-equipe" id="moves" style="display: none;">
+                <div class="area-time">
+                    <h2 class="titulo-geracoes" style="font-size: 40px;">ESCOLHER ATAQUES</h2>
+                    <div class="grid-time" id="grid-ataques">
+                        <div class="slot-pokemon">1</div>
+                        <div class="slot-pokemon">2</div>
+                        <div class="slot-pokemon">3</div>
+                        <div class="slot-pokemon">4</div>
+                    </div>
+                    <button id="btn-salvar-ataques" class="btn-time" style="display: block;" onclick="salvarMoves()">SALVAR MOVES</button>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
+                    <input type="search" id="input-busca-move"  name="q" placeholder="Nome ou Número (ex: pikachu, 25)">
+                    <button onclick="showMove()" class="btn-buscar">Escolher ataque</button>
+                    <div id="resultado-pesquisa-move"></div>
+                </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">VER TIME COMPLETO</h2>
+                    <button onclick="editarMoves()" class="btn-buscar">VER TIME COMPLETO</button>
                 </div>
             </div>
         </div>
@@ -135,22 +187,22 @@
             </div>
         </div>
     </main>
-<div id="modal-avatar" class="modal-fundo" style="display: none;">
-        <div class="modal-card" style="width: 360px; text-align: center;">
-            <span class="btn-fechar" onclick="document.getElementById('modal-avatar').style.display='none'">X</span>
-            <h3>Escolher Avatar</h3>
-            <div class="grid-avatares">
-                <img src="/MonsterPE/assets/imgs/Avatars/ash-alola.png" onclick="trocarAvatar(this.src)">
-                <img src="/MonsterPE/assets/imgs/Avatars/ash-capbackward.png" onclick="trocarAvatar(this.src)">
-                <img src="/MonsterPE/assets/imgs/Avatars/ash-hoenn.png" onclick="trocarAvatar(this.src)">
-                <img src="/MonsterPE/assets/imgs/Avatars/ash-johto.png" onclick="trocarAvatar(this.src)">
-                <img src="/MonsterPE/assets/imgs/Avatars/ash-kalos.png" onclick="trocarAvatar(this.src)">
-                <img src="/MonsterPE/assets/imgs/Avatars/ash-sinnoh.png" onclick="trocarAvatar(this.src)">
-                <img src="/MonsterPE/assets/imgs/Avatars/ash-unova.png" onclick="trocarAvatar(this.src)">
-                <img src="/MonsterPE/assets/imgs/Avatars/ash.png" onclick="trocarAvatar(this.src)">
-                <img src="/MonsterPE/assets/imgs/Avatars/marcio.png" onclick="trocarAvatar(this.src)">
-            </div>
-        </div>
-    </div>
+    <div id="modal-avatar" class="modal-fundo" style="display: none;">
+          <div class="modal-card" style="width: 360px; text-align: center;">
+              <span class="btn-fechar" onclick="document.getElementById('modal-avatar').style.display='none'">X</span>
+              <h3>Escolher Avatar</h3>
+              <div class="grid-avatares">
+                  <img src="/MonsterPE/assets/imgs/Avatars/ash-alola.png" onclick="trocarAvatar(this.src)">
+                  <img src="/MonsterPE/assets/imgs/Avatars/ash-capbackward.png" onclick="trocarAvatar(this.src)">
+                  <img src="/MonsterPE/assets/imgs/Avatars/ash-hoenn.png" onclick="trocarAvatar(this.src)">
+                  <img src="/MonsterPE/assets/imgs/Avatars/ash-johto.png" onclick="trocarAvatar(this.src)">
+                  <img src="/MonsterPE/assets/imgs/Avatars/ash-kalos.png" onclick="trocarAvatar(this.src)">
+                  <img src="/MonsterPE/assets/imgs/Avatars/ash-sinnoh.png" onclick="trocarAvatar(this.src)">
+                  <img src="/MonsterPE/assets/imgs/Avatars/ash-unova.png" onclick="trocarAvatar(this.src)">
+                  <img src="/MonsterPE/assets/imgs/Avatars/ash.png" onclick="trocarAvatar(this.src)">
+                  <img src="/MonsterPE/assets/imgs/Avatars/marcio.png" onclick="trocarAvatar(this.src)">
+              </div>
+          </div>
+      </div>
 </body>
 </html>

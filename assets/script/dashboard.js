@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const menuVoltar = document.getElementById('voltargen');
     const menuJogar = document.getElementById('opjogar');
     const telaEquipe = document.getElementById('tela-equipe');
-
     if (linkVerPoke) {
         linkVerPoke.addEventListener('click', function(event) {
             event.preventDefault();
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function telaMontarEquipe() {
-    window.location.href = "../pokemon/?acao=pokemonSalvo";
+    window.location.href = "../pokemon/?acao=time";
 }
 
 function voltarParaGeracoes() {

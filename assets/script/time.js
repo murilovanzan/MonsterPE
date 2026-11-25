@@ -3,6 +3,9 @@ function voltarParaJogar() {
 }
 
 let timeEscolhido = [];
+let timeBanco = [];
+let moves = [];
+
 function adicionarAoTime(id, salvo = false) {
     if (timeEscolhido.length < 6 && cachePokemon[id] !== null) {
         timeEscolhido.push(cachePokemon[id]);
@@ -37,6 +40,28 @@ function removerDoTime(posicao, salvo = null) {
     atualizarTelaTime();
 }
 
+function alterarApelido(posicao, alterar = false){
+
+    if(alterar){
+        const inputTrocarApelido = document.getElementById('trocarApelido');
+        timeEscolhido[posicao].apelido = inputTrocarApelido.value;
+        salvarTime();
+    }
+    else{
+        const divPokemon = document.querySelector(`#pokemon-escolhido-${posicao} > div`);
+        const divPokemonButton = document.querySelector(`#pokemon-escolhido-${posicao} > div > button`);
+        console.log(divPokemon);
+        console.log(divPokemonButton);
+        divPokemonButton.style.display = "none";
+        divPokemon.innerHTML += `
+            <input type="text" id="trocarApelido">
+            <button onclick="alterarApelido(${posicao}, true)">Alterar</button>
+        `;
+    }
+
+
+}
+
 function atualizarTelaTime() {
     let grid = document.getElementById('grid-time');
     grid.innerHTML = "";
@@ -44,12 +69,13 @@ function atualizarTelaTime() {
         if (timeEscolhido[i] != null) {
             let p = timeEscolhido[i];
             grid.innerHTML += `
-                <div class="slot-pokemon preenchido">
+                <div class="slot-pokemon preenchido" id="pokemon-escolhido-${i}">
                     <button class="btn-remover" onclick="removerDoTime(${i}, ${p.ativo})">X</button>
                     <img src="${p.sprites.front_default}">
                     <div class="slot-info">
-                        <span class="slot-id">Nº${p.api_id}</span>
+                        <span class="slot-id">Nº ${p.api_id}</span>
                         <span class="slot-nome">${p.apelido}</span>
+                        <button type="button" onclick="alterarApelido(${i})">ALTERAR NOME</button>
                     </div>
                 </div>
             `;
@@ -64,12 +90,11 @@ function atualizarTelaTime() {
         btnLimpar.style.display = 'none';
     } else {
         btnSalvar.style.display = 'none';
-        btnLimpar.style.display = 'Block';
+        btnLimpar.style.display = 'block';
     }
 }
 
 async function salvarTime(){
-
     try{
 
         const dadosEnviados = await fetch('../pokemon/?acao=salvar', {
@@ -111,6 +136,7 @@ async function excluirPokemonSalvo(id){
 function limparTime(){
     window.location.href = "?acao=limparTime";
 }
+
 function showPokemonSalvos(pokemonSalvo){
 
     const listaPokemonSalvo = document.getElementById('pokemonSalvo');
@@ -130,4 +156,137 @@ function showPokemonSalvos(pokemonSalvo){
             </div>
         `;
     });
+}
+
+function atualizarTimeAtaques(pokemonMoves) {
+    let grid = document.getElementById('grid-time-ataques');
+    grid.innerHTML = "";
+    for (let i = 0; i < 6; i++) {
+        if (timeEscolhido[i] != null) {
+            timeBanco[i] = timeEscolhido[i];
+            let p = timeEscolhido[i];
+            
+            grid.innerHTML += `
+                <div class="slot-pokemon preenchido">
+                    <img src="${p.sprites.front_default}">
+                    <div class="slot-info">
+                        <span class="slot-id">Nível ${p.nivel}</span>
+                        <span class="slot-nome">${p.apelido}</span>
+                        <button onclick="editarMoves('${p.posicao}')" class="btn-adicionar">EDITAR</button>
+                    </div>
+                </div>
+            `;
+            moves[i] = pokemonMoves[i];
+        } else {
+            grid.innerHTML += `<div class="slot-pokemon">${i + 1}</div>`;
+        }
+    }
+}
+
+function toggleMoves(){
+    const divTime = document.getElementById('time');
+    const divMoves = document.getElementById('time-moves');
+    
+    if(timeEscolhido.length == 0){
+        alert("Seu time está vazio!");
+        return;
+    };
+
+    if(divTime.style.display == 'flex'){
+        divTime.style.display = "none";
+        divMoves.style.display = "flex";
+    }
+    else if(divTime.style.display == "none"){
+        divTime.style.display = "flex";
+        divMoves.style.display = "none";
+    }
+}
+
+function editarMoves(posicao = null){
+
+    if(posicao == null){
+        pokemonSelecionado = null;
+    }
+    else{
+        pokemonSelecionado = posicao;
+        atualizarTelaMove(); 
+    }
+
+    const divTime = document.getElementById('time-moves');
+    const divMoves = document.getElementById('moves');
+
+    if(divTime.style.display == 'flex'){
+        divTime.style.display = "none";
+        divMoves.style.display = "flex";
+    }
+    else if(divTime.style.display == "none"){
+        divTime.style.display = "flex";
+        divMoves.style.display = "none";
+    }
+}
+
+function adicionarMove(id){
+    if (moves[pokemonSelecionado].length < 4 && cacheMove[id] !== null) {
+        moves[pokemonSelecionado].push(cacheMove[id]);
+        atualizarTelaMove(); 
+    } else if (timeEscolhido.length >= 4) {
+        alert("Seu Pokemon já tem 4 Ataques!");
+    }
+}
+
+function removerMove(posicao) {
+    const move = moves[posicao];
+    moves[pokemonSelecionado].splice(posicao, 1);
+    atualizarTelaMove();
+}
+
+function atualizarTelaMove(){
+    let grid = document.getElementById('grid-ataques');
+    grid.innerHTML = "";
+    for (let i = 0; i < 4; i++) {
+        if (moves[pokemonSelecionado][i] != null) {
+            let move = moves[pokemonSelecionado][i];
+            grid.innerHTML += `
+                <div class="slot-pokemon preenchido">
+                    <button class="btn-remover" onclick="removerMove(${i})">X</button>
+                    <img src="">
+                    <div class="slot-info">
+                        <span class="slot-nome">${move.name}</span>
+                        <span class="slot-nome">${move.damage_class.name}</span>
+                        <span class="slot-nome">${move.type.name}</span>
+                    </div>
+                </div>
+            `;
+        } else {
+            grid.innerHTML += `<div class="slot-pokemon">${i + 1}</div>`;
+        }
+    }
+
+}
+
+async function salvarMoves(){
+    try{
+        const dadosEnviados = await fetch('../pokemon/?acao=salvarMoves', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({moves: moves[pokemonSelecionado], pokemon_id: timeBanco[pokemonSelecionado].id})
+        });
+        const resultado = await dadosEnviados.json();
+    }
+    catch(erro){
+        console.log("Os dados não foram passados corretamente;\nErro: ", erro);
+    }
+
+}
+
+function verificaMovePokemon(moves, moveRequired){
+    let permitido = false;
+    moves.forEach(move => {
+        if(moveRequired == move.move.name){
+            permitido = true;
+        }
+    });
+    return permitido;
 }

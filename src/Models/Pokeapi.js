@@ -1,4 +1,6 @@
 let cachePokemon = {};
+let cacheMove = {};
+let pokemonSelecionado;
 
 async function getByUrl(url){
 
@@ -54,7 +56,7 @@ async function formatarPokemon(pokemon, salvo = false){
     dark: 'Sombrio',
     fairy: 'Fada'
     };
-    
+
     let tiposFormatados = "";
     if(!salvo){
         pokemon.apelido = pokemon.name;
@@ -97,6 +99,15 @@ async function formatarPokemon(pokemon, salvo = false){
     pokemonFormatado.tiposFormatados = tiposFormatados;
     
     return pokemonFormatado;
+
+}
+
+async function formatarMoves(pokemon){
+    
+    const promisses = pokemon.map((move) => getByUrl(`https://pokeapi.co/api/v2/move/${move.move_id}`));
+    pokemonMovesFormatados = await Promise.all(promisses);
+    
+    return pokemonMovesFormatados;
 
 }
 
@@ -190,7 +201,6 @@ async function showCard() {
                 <img src="${pokemon.sprites.front_default}"  style="filter: grayscale(100%);" >
                 <h3 style="font-size: 12px; margin: 5px 0; margin-bottom:-5px;">Nº ${pokemon.api_id} - ${pokemon.apelido}</h3>
                 <p style="background: rgba(0,0,0,0.1); font-size:10px; padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 2px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
-                <button onclick="adicionarAoTime(${pokemon.api_id})" class="btn-adicionar" disabled  style=" top:-15px; background-color: red;"> Você não pode adicionar esse pokémon no seu time, pois é uma evolução, compre a pedra da evolução na loja para conseguir evoluí-lo</button>
             </div>
         `;
     }
@@ -209,11 +219,6 @@ async function showCard() {
     }
 
 }
-/*async function getPokemon(){
-    
-    pokemon = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`);
-}*/
-
 
 function toggleDropdown(event) {
     event.stopPropagation();
@@ -272,3 +277,39 @@ function trocarAvatar(novaImagem) {
 
     document.getElementById("modal-avatar").style.display = "none";
 }
+
+async function showMove(){
+    let input = document.getElementById('input-busca-move').value.toLowerCase().trim();
+    let telaResultado = document.getElementById('resultado-pesquisa-move');
+        
+    if (input === "") return;
+        
+    telaResultado.innerHTML = "<p style='color: yellow;'>Buscando...</p>";
+        
+    let move = null;
+
+    move = await getByUrl(`https://pokeapi.co/api/v2/move/${input}`);
+    
+    if(!verificaMovePokemon(timeEscolhido[pokemonSelecionado].moves, move.name)){
+        telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Movimento não permitido para este Pokemon!</p>";
+        return;
+    }
+    if(move == null){
+        telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Não encontrado!</p>";
+        return;
+    }
+
+    cacheMove[move.id] = move;
+    telaResultado.innerHTML = `
+        <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
+            <div class="cartao-fundo"></div>
+            <img src="">
+            <h3 style="margin: 5px 0;">Nº ${move.name} - ${move.damage_class.name}</h3>
+            <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${move.type.name}</p>
+            <button onclick="adicionarMove(${move.id})" class="btn-adicionar">Adicionar ao Pokemon</button>
+        </div>
+    `;
+
+}
+
+
