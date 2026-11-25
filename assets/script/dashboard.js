@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if(menuJogar) menuJogar.classList.remove('ativo'); 
             if(telaEquipe) telaEquipe.classList.remove('ativo');
             if(menuVoltar) menuVoltar.classList.remove('ativo'); 
-            if(menuGens) menuGens.classList.toggle('ativo');   
+            if(menuGens) menuGens.classList.add('ativo');   
         });
     }
     if (linkJogar) {
@@ -22,14 +22,13 @@ document.addEventListener("DOMContentLoaded", function() {
             if(menuGens) menuGens.classList.remove('ativo');   
             if(menuVoltar) menuVoltar.classList.remove('ativo'); 
             if(telaEquipe) telaEquipe.classList.remove('ativo');
-            if(menuJogar) menuJogar.classList.toggle('ativo');  
+            if(menuJogar) menuJogar.classList.add('ativo');  
         });
     }
 });
 
 function telaMontarEquipe() {
-    document.getElementById('opjogar').classList.remove('ativo');
-    document.getElementById('tela-equipe').classList.add('ativo');
+    window.location.href = "../pokemon/?acao=time";
 }
 
 function voltarParaGeracoes() {
@@ -37,82 +36,50 @@ function voltarParaGeracoes() {
     document.getElementById('opgens').classList.add('ativo');
 }
 
-function voltarParaJogar() {
-    document.getElementById('tela-equipe').classList.remove('ativo');
-    document.getElementById('opjogar').classList.add('ativo');
-    document.getElementById('resultado-pesquisa').innerHTML = "";
-    document.getElementById('input-busca').value = "";
+function iniciarJogo(){
+    window.location.href = "../pokemon/?acao=batalha";
+}
+function IrALoja() {
+    window.location.href = "../main/loja.php";
+}
+function Creditos() {
+    window.location.href = "../main/creditos.php";
 }
 
-const tiposTraduzidos = {
-    normal: 'Normal',
-    fighting: 'Lutador',
-    flying: 'Voador',
-    poison: 'Venenoso',
-    ground: 'Terra',
-    rock: 'Pedra',
-    bug: 'Inseto',
-    ghost: 'Fantasma',
-    steel: 'Metal',
-    fire: 'Fogo',
-    water: 'Água',
-    grass: 'Grama',
-    electric: 'Elétrico',
-    psychic: 'Psíquico',
-    ice: 'Gelo',
-    dragon: 'Dragão',
-    dark: 'Sombrio',
-    fairy: 'Fada'
-};
+async function showGen(gen){
+    document.getElementById('opgens').classList.remove('ativo');
+    document.getElementById('voltargen').classList.add('ativo');
+    const lista = document.getElementById('pokemon');
+    const pokemons = await getByUrl(`https://pokeapi.co/api/v2/generation/generation-${gen}`);
+        lista.innerHTML = '';
+        for(const species of pokemons.pokemon_species){
+            const url = species.url.replace("-species", "");
+            let pokemon = await getByUrl(url);
+            
+            pokemon = await formatarPokemon(pokemon);
 
-let timeEscolhido = [];
-
-function adicionarAoTime(pokemon) {
-    console.log(pokemon);
-    if (timeEscolhido.length < 6 && pokemon !== null) {
-        timeEscolhido.push(pokemon);
-        atualizarTelaTime();
-    } else if (timeEscolhido.length >= 6) {
-        alert("Seu time já tem 6 Pokémons!");
-    }
-}
-
-function removerDoTime(posicao) {
-    timeEscolhido.splice(posicao, 1);
-    atualizarTelaTime();
-}
-
-function atualizarTelaTime() {
-    let grid = document.getElementById('grid-time');
-    grid.innerHTML = "";
-    for (let i = 0; i < 6; i++) {
-        if (timeEscolhido[i] != null) {
-            const p = timeEscolhido[i];
-            grid.innerHTML += `
-                <div class="slot-pokemon preenchido">
-                    <button class="btn-remover" onclick="removerDoTime(${i})">X</button>
-                    <img src="${p.sprites.front_default}">
-                    <div class="slot-info">
-                        <span class="slot-id">Nº ${p.id}</span>
-                        <span class="slot-nome">${p.name}</span>
+            lista.innerHTML += `
+                <li class="cartao-pokemon">
+                    <div class="cartao-fundo"></div>
+                    <img src='${pokemon.sprites.front_default}'>
+                    <h3>${pokemon.apelido}</h3>
+                    <h3>#${pokemon.api_id}</h3>
+                
+                    <div class="costas-seguras">
+                        <h3>${pokemon.apelido}</h3>
+                        <p>${pokemon.tiposFormatados}</p>
                     </div>
-                </div>
-            `;
-        } else {
-            grid.innerHTML += `<div class="slot-pokemon">${i + 1}</div>`;
+                </li>
+            `
         }
-    }
-    let btnSalvar = document.getElementById('btn-salvar-time');
-    if (timeEscolhido.length > 0) {
-        btnSalvar.style.display = 'block';
-    } else {
-        btnSalvar.style.display = 'none';
-    }
 }
 
-function salvarTime(){
+document.querySelectorAll('.dashmainclick').forEach(botao => {
+    botao.addEventListener('click', () => {
+        const aside = document.querySelector('.dashaside');
+        if (aside) {
+            aside.classList.remove('modo-inicial');
+        }
+    });
+});
 
-    dadosJSON = JSON.stringify(timeEscolhido, null, 2);
-    console.log(dadosJSON);
-
-}

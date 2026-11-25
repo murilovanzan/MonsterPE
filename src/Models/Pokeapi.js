@@ -1,85 +1,157 @@
-class Pokeapi{
+let cachePokemon = {};
 
-    static async getByUrl(url){
+async function getByUrl(url){
 
-        try{
+    try{
 
-            const resposta = await fetch(url);
-            if(!resposta.ok){
-                throw new Error('Erro ao buscar a url: ', url);
-            }
-
-            const dados = await resposta.json();
-            return dados;
-
-        }catch(erro){
-            console.error("Erro: ", erro);
+        const resposta = await fetch(url);
+        if(!resposta.ok){
+            throw new Error('Erro ao buscar a url: ', url);
         }
-    }
 
-    static async showGen(gen){
-        document.getElementById('opgens').classList.remove('ativo');
-        document.getElementById('voltargen').classList.add('ativo');
-        const lista = document.getElementById('pokemon');
-        const pokemons = await this.getByUrl(`https://pokeapi.co/api/v2/generation/generation-${gen}`);
-            lista.innerHTML = '';
-            for(const species of pokemons.pokemon_species){
-                const url = species.url.replace("-species", "");
-                const pokemon = await this.getByUrl(url);
-                let nomeTipo1 = pokemon.types[0].type.name;
-                let tiposPokemon = tiposTraduzidos[nomeTipo1] || nomeTipo1; 
+        const dados = await resposta.json();
+        return dados;
 
-                if(pokemon.types.length > 1) {
-                    let nomeTipo2 = pokemon.types[1].type.name;
-                    tiposPokemon += " / " + (tiposTraduzidos[nomeTipo2] || nomeTipo2);
-                }
-                lista.innerHTML += `
-                    <li class="cartao-pokemon">
-                        <div class="cartao-fundo"></div>
-                        <img src='${pokemon.sprites.front_default}'>
-                        <h3>${pokemon.name}</h3>
-                        <h3>#${pokemon.id}</h3>
-                    
-                        <div class="costas-seguras">
-                            <h3>${pokemon.name}</h3>
-                            <p>${tiposPokemon}</p>
-                        </div>
-                    </li>`
-            }
+    }catch(erro){
+        console.error("Erro: ", erro);
     }
+}
+
+async function formatarPokemon(pokemon, salvo = false){
+
+    let pokemonFormatado = {};
     
-    static async showCard() {
-        let input = document.getElementById('input-busca').value.toLowerCase().trim();
-        let telaResultado = document.getElementById('resultado-pesquisa');
-        
-        if (input === "") return;
-        
-        telaResultado.innerHTML = "<p style='color: yellow;'>Buscando...</p>";
-        
-        let pokemon = null;
-        try{
-            pokemon = await this.getByUrl(`https://pokeapi.co/api/v2/pokemon/${input}`);
-        } catch (erro){
-            console.log(erro);
-            return;
-        }
-        let tiposFormatados = "";
-        pokemon.types.forEach(tipo => {
-            tipo.type.name = tiposTraduzidos[tipo.type.name] || tipo.type.name;
-            tiposFormatados += tipo.type.name + " | ";
-        });
+    const tiposTraduzidos = {
+    normal: 'Normal',
+    fighting: 'Lutador',
+    flying: 'Voador',
+    poison: 'Venenoso',
+    ground: 'Terra',
+    rock: 'Pedra',
+    bug: 'Inseto',
+    ghost: 'Fantasma',
+    steel: 'Metal',
+    fire: 'Fogo',
+    water: 'Água',
+    grass: 'Grama',
+    electric: 'Elétrico',
+    psychic: 'Psíquico',
+    ice: 'Gelo',
+    dragon: 'Dragão',
+    dark: 'Sombrio',
+    fairy: 'Fada'
+    };
 
-        tiposFormatados = tiposFormatados.replace(/ \| \s*$/, "");
-        pokemon.tiposFormatados = tiposFormatados;
-
-            telaResultado.innerHTML = `
-                <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;">
-                    <div class="cartao-fundo"></div>
-                    <img src="${pokemon.sprites.front_default}">
-                    <h3 style="margin: 5px 0;">Nº ${pokemon.id} - ${pokemon.name}</h3>
-                    <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
-                    <button onclick="adicionarAoTime(${pokemon})" class="btn-adicionar">Adicionar ao Time</button>
-                </div>
-            `;
+    let tiposFormatados = "";
+    if(!salvo){
+        pokemon.apelido = pokemon.name;
+        pokemon.api_id = pokemon.id;
+        pokemon.ativo = null;
+        pokemon.nivel = 1;
+        pokemon.item = null;
+        pokemon.status = null;
+        pokemon.id = null;
+        pokemonFormatado = pokemon;
     }
+    else{
+        pokemonFormatado = await getByUrl(`https://pokeapi.co/api/v2/pokemon/${pokemon.api_id}`);
+
+        pokemonFormatado.id = pokemon.id;
+        pokemonFormatado.api_id = pokemon.api_id;
+        pokemonFormatado.apelido = pokemon.apelido;
+        pokemonFormatado.nivel = pokemon.nivel;
+        pokemonFormatado.stats[0].base_stat = pokemon.hp;
+        pokemonFormatado.stats[5].base_stat = pokemon.speed;
+        pokemonFormatado.stats[1].base_stat = pokemon.attack;
+        pokemonFormatado.stats[3].base_stat = pokemon.spAttack;
+        pokemonFormatado.stats[2].base_stat = pokemon.defense;
+        pokemonFormatado.stats[4].base_stat = pokemon.spDefense;
+        pokemonFormatado.posicao = pokemon.posicao;
+        pokemonFormatado.item = pokemon.item;
+        pokemonFormatado.status = pokemon.status;
+        pokemonFormatado.ativo = pokemon.ativo;
+
+        cachePokemon[pokemonFormatado.id] = pokemonFormatado;
+    
+    }
+
+    pokemonFormatado.types.forEach(tipo => {
+        tipo.type.name = tiposTraduzidos[tipo.type.name] || tipo.type.name;
+        tiposFormatados += tipo.type.name + " | ";
+    });
+
+    tiposFormatados = tiposFormatados.replace(/ \| \s*$/, "");
+    pokemonFormatado.tiposFormatados = tiposFormatados;
+    
+    return pokemonFormatado;
+
+}
+
+async function formatarMoves(pokemon){
+    
+    const promisses = pokemon.map((move) => getByUrl(`https://pokeapi.co/api/v2/move/${move.move_id}`));
+    pokemonMovesFormatados = await Promise.all(promisses);
+    
+    return pokemonMovesFormatados;
+
+}
+
+function toggleDropdown(event) {
+    event.stopPropagation();
+    let dropdown = document.getElementById("dropdown-usuario");
+
+    if (!dropdown) {
+        let nomeBd = event.target.getAttribute("data-username");
+        let emailBd = event.target.getAttribute("data-email");
+        let avatarSalvo = localStorage.getItem("meuAvatar") || "/MonsterPE/assets/imgs/Avatars/ash.png";
+
+        dropdown = document.createElement("div");
+        dropdown.id = "dropdown-usuario";
+        dropdown.className = "dropdown-branco";
+        
+        dropdown.innerHTML = `
+            <aside class="dropdown-avatar">
+                <img id="foto-perfil" src="${avatarSalvo}" alt="Avatar">
+            </aside>
+            <div class="dropdown-info">
+                <span class="dropdown-nome">${nomeBd}</span>
+                <span class="dropdown-email">${emailBd}</span>
+                <a class="btn-editar-usuario" onclick="document.getElementById('modal-avatar').style.display='flex'" style="cursor:pointer;">Editar avatar</a>
+            </div>
+        `;
+        event.target.parentElement.appendChild(dropdown);
+    }
+
+    dropdown.style.display = (dropdown.style.display === "none" || dropdown.style.display === "") ? "flex" : "none";
+}
+
+function trocarAvatar(novaImagem) {
+    localStorage.setItem("meuAvatar", novaImagem);
+    document.getElementById("foto-perfil").src = novaImagem;
+    document.getElementById("modal-avatar").style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const avatarSalvo = localStorage.getItem("meuAvatar") || "/MonsterPE/assets/imgs/Avatars/ash.png";
+    const avatarNav = document.getElementById("avatar-nav");
+    
+    if (avatarNav) {
+        avatarNav.src = avatarSalvo;
+    }
+});
+
+function trocarAvatar(novaImagem) {
+    localStorage.setItem("meuAvatar", novaImagem);
+
+    const fotoDropdown = document.getElementById("foto-perfil");
+    if (fotoDropdown) {
+        fotoDropdown.src = novaImagem;
+    }
+
+    const avatarNav = document.getElementById("avatar-nav");
+    if (avatarNav) {
+        avatarNav.src = novaImagem;
+    }
+
+    document.getElementById("modal-avatar").style.display = "none";
 }
