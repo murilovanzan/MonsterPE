@@ -55,18 +55,21 @@
         public function salvarMoves(){
 
             $dadosBrutos = file_get_contents("php://input");
+            $dados = json_decode($dadosBrutos, true);
+            $movesPokemon = $dados['moves'];
+            $pokemon_id = $dados['pokemon_id'];
 
-            $movesPokemon = json_decode($dadosBrutos, true);
             $posicao = 0;
             $vetorErro = [];
+            Moves::delete($pokemon_id);
             foreach ($movesPokemon as $moves) {
                 $move = new Moves(
-                    $moves['move_id'],
-                    $moves['pokemon_id'],
+                    $moves['id'],
+                    $pokemon_id,
                     $posicao
                 );
                 array_push($vetorErro, !$move->salvar());
-                $posicao++;    
+                $posicao++;
             }
 
         }

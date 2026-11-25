@@ -3,6 +3,7 @@ function voltarParaJogar() {
 }
 
 let timeEscolhido = [];
+let timeBanco = [];
 let moves = [];
 
 function adicionarAoTime(id, salvo = false) {
@@ -38,6 +39,28 @@ function removerDoTime(posicao, salvo = null) {
     atualizarTelaTime();
 }
 
+function alterarApelido(posicao, alterar = false){
+
+    if(alterar){
+        const inputTrocarApelido = document.getElementById('trocarApelido');
+        timeEscolhido[posicao].apelido = inputTrocarApelido.value;
+        salvarTime();
+    }
+    else{
+        const divPokemon = document.querySelector(`#pokemon-escolhido-${posicao} > div`);
+        const divPokemonButton = document.querySelector(`#pokemon-escolhido-${posicao} > div > button`);
+        console.log(divPokemon);
+        console.log(divPokemonButton);
+        divPokemonButton.style.display = "none";
+        divPokemon.innerHTML += `
+            <input type="text" id="trocarApelido">
+            <button onclick="alterarApelido(${posicao}, true)">Alterar</button>
+        `;
+    }
+
+
+}
+
 function atualizarTelaTime() {
     let grid = document.getElementById('grid-time');
     grid.innerHTML = "";
@@ -45,12 +68,13 @@ function atualizarTelaTime() {
         if (timeEscolhido[i] != null) {
             let p = timeEscolhido[i];
             grid.innerHTML += `
-                <div class="slot-pokemon preenchido">
+                <div class="slot-pokemon preenchido" id="pokemon-escolhido-${i}">
                     <button class="btn-remover" onclick="removerDoTime(${i}, ${p.ativo})">X</button>
                     <img src="${p.sprites.front_default}">
                     <div class="slot-info">
                         <span class="slot-id">Nº ${p.api_id}</span>
                         <span class="slot-nome">${p.apelido}</span>
+                        <button type="button" onclick="alterarApelido(${i})">ALTERAR NOME</button>
                     </div>
                 </div>
             `;
@@ -69,28 +93,6 @@ function atualizarTelaTime() {
     }
 }
 
-function atualizarTimeAtaques() {
-    let grid = document.getElementById('grid-time-ataques');
-    grid.innerHTML = "";
-    for (let i = 0; i < 6; i++) {
-        if (timeEscolhido[i] != null) {
-            let p = timeEscolhido[i];
-            grid.innerHTML += `
-                <div class="slot-pokemon preenchido">
-                    <img src="${p.sprites.front_default}">
-                    <div class="slot-info">
-                        <span class="slot-id">Nível ${p.nivel}</span>
-                        <span class="slot-nome">${p.apelido}</span>
-                        <button onclick="editarMoves('${p.id}')" class="btn-adicionar">EDITAR</button>
-                    </div>
-                </div>
-            `;
-        } else {
-            grid.innerHTML += `<div class="slot-pokemon">${i + 1}</div>`;
-        }
-    }
-}
-
 async function salvarTime(){
     try{
 
@@ -100,25 +102,6 @@ async function salvarTime(){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(timeEscolhido)
-        });
-        const resultado = await dadosEnviados.json();
-    }
-    catch(erro){
-        console.log("Os dados não foram passados corretamente;\nErro: ", erro);
-    }
-
-    location.reload();
-}
-
-async function salvarMoves(){
-    try{
-
-        const dadosEnviados = await fetch('../pokemon/?acao=salvarMoves', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(movesPokemon[id])
         });
         const resultado = await dadosEnviados.json();
     }
@@ -173,6 +156,31 @@ function showPokemonSalvos(pokemonSalvo){
     });
 }
 
+function atualizarTimeAtaques(pokemonMoves) {
+    let grid = document.getElementById('grid-time-ataques');
+    grid.innerHTML = "";
+    for (let i = 0; i < 6; i++) {
+        if (timeEscolhido[i] != null) {
+            timeBanco[i] = timeEscolhido[i];
+            let p = timeEscolhido[i];
+            
+            grid.innerHTML += `
+                <div class="slot-pokemon preenchido">
+                    <img src="${p.sprites.front_default}">
+                    <div class="slot-info">
+                        <span class="slot-id">Nível ${p.nivel}</span>
+                        <span class="slot-nome">${p.apelido}</span>
+                        <button onclick="editarMoves('${p.posicao}')" class="btn-adicionar">EDITAR</button>
+                    </div>
+                </div>
+            `;
+            moves[i] = pokemonMoves[i];
+        } else {
+            grid.innerHTML += `<div class="slot-pokemon">${i + 1}</div>`;
+        }
+    }
+}
+
 function toggleMoves(){
     const divTime = document.getElementById('time');
     const divMoves = document.getElementById('time-moves');
@@ -192,13 +200,14 @@ function toggleMoves(){
     }
 }
 
-function editarMoves(id = 0){
+function editarMoves(posicao = null){
 
-    if(id == 0){
+    if(posicao == null){
         pokemonSelecionado = null;
     }
     else{
-        pokemonSelecionado = id;
+        pokemonSelecionado = posicao;
+        atualizarTelaMove(); 
     }
 
     const divTime = document.getElementById('time-moves');
@@ -219,23 +228,30 @@ function adicionarMove(id){
         moves[pokemonSelecionado].push(cacheMove[id]);
         atualizarTelaMove(); 
     } else if (timeEscolhido.length >= 4) {
-        alert("Seu time já tem 6 Pokémons!");
+        alert("Seu Pokemon já tem 4 Ataques!");
     }
+}
 
+function removerMove(posicao) {
+    const move = moves[posicao];
+    moves[pokemonSelecionado].splice(posicao, 1);
+    atualizarTelaMove();
 }
 
 function atualizarTelaMove(){
-    let grid = document.getElementById('grid-time-ataques');
+    let grid = document.getElementById('grid-ataques');
     grid.innerHTML = "";
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {
         if (moves[pokemonSelecionado][i] != null) {
             let move = moves[pokemonSelecionado][i];
             grid.innerHTML += `
                 <div class="slot-pokemon preenchido">
-                    <button class="btn-remover" onclick="">X</button>
+                    <button class="btn-remover" onclick="removerMove(${i})">X</button>
                     <img src="">
                     <div class="slot-info">
                         <span class="slot-nome">${move.name}</span>
+                        <span class="slot-nome">${move.damage_class.name}</span>
+                        <span class="slot-nome">${move.type.name}</span>
                     </div>
                 </div>
             `;
@@ -243,4 +259,32 @@ function atualizarTelaMove(){
             grid.innerHTML += `<div class="slot-pokemon">${i + 1}</div>`;
         }
     }
+
+}
+
+async function salvarMoves(){
+    try{
+        const dadosEnviados = await fetch('../pokemon/?acao=salvarMoves', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({moves: moves[pokemonSelecionado], pokemon_id: timeBanco[pokemonSelecionado].id})
+        });
+        const resultado = await dadosEnviados.json();
+    }
+    catch(erro){
+        console.log("Os dados não foram passados corretamente;\nErro: ", erro);
+    }
+
+}
+
+function verificaMovePokemon(moves, moveRequired){
+    let permitido = false;
+    moves.forEach(move => {
+        if(moveRequired == move.move.name){
+            permitido = true;
+        }
+    });
+    return permitido;
 }

@@ -237,4 +237,5 @@ class Pokemon implements JsonSerializable{
         
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 4));
     }
+
 }

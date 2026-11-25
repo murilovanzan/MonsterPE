@@ -14,7 +14,7 @@
         $salvarTimeErro = "";
     }
 
-?>
+?> 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -30,8 +30,10 @@
         const pokemonSalvoPoor = <?= json_encode($_SESSION['pokemonSalvo']) ?>;
         const pokemonAtivoPoor = <?= json_encode($_SESSION['pokemonAtivo']) ?>;
 
-        const moves = <?= json_encode($_SESSION['moves']) ?>;
-        console.log(moves);
+        const pokemonMovesBruto = <?= json_encode($_SESSION['moves']) ?>;
+
+        const promissesPokemonMoves = pokemonMovesBruto.map(pokemon => formatarMoves(pokemon));
+        let pokemonMoves = await Promise.all(promissesPokemonMoves);
 
         const promissesSalvo = pokemonSalvoPoor.map(pokemon => formatarPokemon(pokemon, true));
         const pokemonSalvoArray = await Promise.all(promissesSalvo);
@@ -43,7 +45,7 @@
         pokemonAtivoArray.forEach(pokemon => {
             adicionarAoTime(pokemon.id);
         });
-        atualizarTimeAtaques();
+        atualizarTimeAtaques(pokemonMoves);
 
     </script>
 </head>
@@ -59,7 +61,7 @@
     <main class="maindash">
         <div id="tela-equipe" class="menugens" style="display:flex; position:relative;">
             <div class="layout-equipe" id="time" style="display: flex;">
-            <button class="btn-voltar-pequeno" onclick="voltarParaJogar()">⬅ Voltar</button>
+                <button class="btn-voltar-pequeno" onclick="voltarParaJogar()">⬅ Voltar</button>
                 <div class="area-time">
                     <h2 class="titulo-geracoes" style="font-size: 40px;">Meu Time</h2>
                     <div class="grid-time" id="grid-time">
@@ -71,7 +73,7 @@
                         <div class="slot-pokemon">6</div>
                     </div>
                     <button id="btn-salvar-time" class="btn-time" onclick="salvarTime()">SALVAR TIME COMPLETO</button>
-                    <button id="btn-limpar-time" class="btn-time" onclick="limparTime()">Limpar Time</button>
+                    <button id="btn-limpar-time" class="btn-time" onclick="limparTime()">LIMPAR TIME</button>
                     <span>
                         <?= $salvarTimeErro?>
                     </span>
@@ -86,10 +88,12 @@
                     <h2 class="titulo-geracoes" style="font-size: 30px;">Ataques</h2>
                     <button onclick="toggleMoves()" class="btn-buscar">Escolher ataques</button>
                 </div>
+                <div>
+                    <ul style="list-style-type: none; display: flex;" id="pokemonSalvo"></ul>
+                </div>
             </div>
-
             <div class="layout-equipe" id="time-moves" style="display: none;">
-                <div class="area-time" id="area-time-ataques" style="display: block;">
+                <div class="area-time">
                     <h2 class="titulo-geracoes" style="font-size: 40px;">ESCOLHER ATAQUES</h2>
                     <div class="grid-time" id="grid-time-ataques">
                         <div class="slot-pokemon">1</div>
@@ -103,19 +107,19 @@
                 <div class="area-pesquisa">
                     <h2 class="titulo-geracoes" style="font-size: 30px;">⬅Montar Time</h2>
                     <button onclick="toggleMoves()" class="btn-buscar">Voltar Para Montagem</button>
-                    <div id="resultado-pesquisa"></div>
                 </div>
             </div>
+
             <div class="layout-equipe" id="moves" style="display: none;">
                 <div class="area-time">
                     <h2 class="titulo-geracoes" style="font-size: 40px;">ESCOLHER ATAQUES</h2>
-                    <div class="grid-time" id="grid-time-ataques">
+                    <div class="grid-time" id="grid-ataques">
                         <div class="slot-pokemon">1</div>
                         <div class="slot-pokemon">2</div>
                         <div class="slot-pokemon">3</div>
                         <div class="slot-pokemon">4</div>
                     </div>
-                    <button id="btn-voltar-time-ataques" class="btn-time" style="display: block;" onclick="editarMoves()">VER TIME COMPLETO</button>
+                    <button id="btn-salvar-ataques" class="btn-time" style="display: block;" onclick="salvarMoves()">SALVAR MOVES</button>
                 </div>
                 <div class="area-pesquisa">
                     <h2 class="titulo-geracoes" style="font-size: 30px;">Buscar</h2>
@@ -123,10 +127,11 @@
                     <button onclick="showMove()" class="btn-buscar">Escolher ataque</button>
                     <div id="resultado-pesquisa-move"></div>
                 </div>
+                <div class="area-pesquisa">
+                    <h2 class="titulo-geracoes" style="font-size: 30px;">VER TIME COMPLETO</h2>
+                    <button onclick="editarMoves()" class="btn-buscar">VER TIME COMPLETO</button>
+                </div>
             </div>
-        </div>
-        <div>
-            <ul style="list-style-type: none; display: flex;" id="pokemonSalvo"></ul>
         </div>
     </main>
 <footer>

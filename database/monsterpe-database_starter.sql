@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS pokemon_moves
   CONSTRAINT FK_pokemon_TO_pokemon_moves
     FOREIGN KEY (pokemon_id)
     REFERENCES pokemon (id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS usuario_item

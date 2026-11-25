@@ -102,6 +102,15 @@ async function formatarPokemon(pokemon, salvo = false){
 
 }
 
+async function formatarMoves(pokemon){
+    
+    const promisses = pokemon.map((move) => getByUrl(`https://pokeapi.co/api/v2/move/${move.move_id}`));
+    pokemonMovesFormatados = await Promise.all(promisses);
+    
+    return pokemonMovesFormatados;
+
+}
+
 async function showGen(gen){
     document.getElementById('opgens').classList.remove('ativo');
     document.getElementById('voltargen').classList.add('ativo');
@@ -188,7 +197,11 @@ async function showMove(){
     let move = null;
 
     move = await getByUrl(`https://pokeapi.co/api/v2/move/${input}`);
-
+    
+    if(!verificaMovePokemon(timeEscolhido[pokemonSelecionado].moves, move.name)){
+        telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Movimento não permitido para este Pokemon!</p>";
+        return;
+    }
     if(move == null){
         telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Não encontrado!</p>";
         return;
