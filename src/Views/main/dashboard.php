@@ -1,8 +1,23 @@
 <?php
+    $caminhoModelo = $_SERVER['DOCUMENT_ROOT'] . '/MonsterPE/src/Models/Usuario.php';
 
+    if (file_exists($caminhoModelo)) {
+        require_once $caminhoModelo;
+    }
+
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $nomeSeguro = 'Jogador';
+    $emailSeguro = 'email@desconhecido.com';
+
+    if (isset($_SESSION['usuario']) && is_object($_SESSION['usuario']) && method_exists($_SESSION['usuario'], 'getUsername')) {
+        $nomeSeguro = $_SESSION['usuario']->getUsername();
+        $emailSeguro = $_SESSION['usuario']->getEmail();
+    }
     require_once '../../../assets/script/restricoes.php';
     verificaLogin();
-
+    
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -10,30 +25,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página do usuário</title>
-    <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=2">
+    <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=3">
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
 </head>
 <body>
-    <nav style="justify-content:space-around;">
+    <nav>
         <div class="logonav"><a href="index.php"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
-        <div class="opnav">
-            <a class="userview"> Usuário</a>|
-            <a href="../usuario/?acao=logout" >Logout</a>
+        <div class="opnav" style="position: relative;">
+          <a class="userview" style="cursor: pointer;" 
+            data-username="<?php echo $nomeSeguro; ?>" 
+            data-email="<?php echo $emailSeguro; ?>"
+            onclick="toggleDropdown(event)">
+            <img id="avatar-nav" src="" alt="Avatar">
+        </a>
+            <span></span>
+            <a href="../usuario/?acao=logout" class="btn-logout">| Logout</a>
         </div>
     </nav>
     <div class="conteudo">
-        <aside class="dashaside">
-        <div class="opdashmain">
-            <a id="verpoke" class="dashmainclick">VER POKÉMON</a>
-            <ul class="ulescondida">
-                <li>Aqui é possível visualizar os pokémons separados por geração podendo voltar depois para entrar na aba Jogar e escolher seu time depois de ver todas opções.</li>
-            </ul>
+        <aside class="dashaside modo-inicial">
+                <div class="opdashmain">
+            <a href="../main" class="dashmainclick" id="jogarpoke">JOGAR</a>
         </div>
         <div class="opdashmain">
-            <a href="../main" class="dashmainclick" id="jogarpoke">JOGAR</a>
-            <ul class="ulescondida">
-                <li>Aqui você terá duas opções uma para montar a sua equipe e outra para jogar o MonsterPE.
-            </ul>
+            <a id="verpoke" class="dashmainclick">VER POKÉMON</a>
         </div>
     </aside>
     <main class="maindash">
@@ -51,8 +66,10 @@
         </div>
         <div id="opjogar" class="menugens">
             <h2 class="titulo-geracoes">ESCOLHA UMA AÇÃO</h2>
-            <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>
             <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png"></button>
+            <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>        
+            <button onclick="IrALoja()">IR À LOJA</button>
+            <button onclick="Creditos()">CRÉDITOS</button>
         </div>
         
         <div id="voltargen" class="menugens">
@@ -69,5 +86,22 @@
 </footer>
 <script src="../../Models/Pokeapi.js"></script>
 <script src="../../../assets/script/dashboard.js"></script>
+    <div id="modal-avatar" class="modal-fundo" style="display: none;">
+        <div class="modal-card" style="width: 360px; text-align: center;">
+            <span class="btn-fechar" onclick="document.getElementById('modal-avatar').style.display='none'">X</span>
+            <h3>Escolher Avatar</h3>
+            <div class="grid-avatares">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-alola.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-capbackward.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-hoenn.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-johto.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-kalos.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-sinnoh.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash-unova.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/ash.png" onclick="trocarAvatar(this.src)">
+                <img src="/MonsterPE/assets/imgs/Avatars/marcio.png" onclick="trocarAvatar(this.src)">
+            </div>
+        </div>
+    </div>
 </body>
 </html>

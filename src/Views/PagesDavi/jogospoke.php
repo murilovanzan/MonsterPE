@@ -24,20 +24,284 @@
         <input type="checkbox" id="dropdown-toggle">
         <label for="dropdown-toggle" class="dropdown-btn">Geração</label>
         <div class="dropdown-content">
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen1.php" id="drop1">GEN 1</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen2.php" id="drop2">GEN 2</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen3.php" id="drop3">GEN 3</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen4.php" id="drop4">GEN 4</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen5.php" id="drop5">GEN 5</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen6.php" id="drop6">GEN 6</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen7.php" id="drop7">GEN 7</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen8.php" id="drop8">GEN 8</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen9.php" id="drop9">GEN 9</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosGen10.php" id="drop10">GEN 10</a>
-            <a class="dropop" href="/MonsterPE/src/Views/PagesDavi/GenJogos/JogosSemGen.php" id="drop11">SEM GERAÇÃO</a>
+            <button onclick="genx('gen1')"><a>1° geração</a></button>
+            <button onclick="genx('gen2')"><a>2° geração</a></button>
+            <button onclick="genx('gen3')"><a>3° geração</a></button>
+            <button onclick="genx('gen4')"><a>4° geração</a></button>
+            <button onclick="genx('gen5')"><a>5° geração</a></button>
+            <button onclick="genx('gen6')"><a>6° geração</a></button>
+            <button onclick="genx('gen7')"><a>7° geração</a></button>
+            <button onclick="genx('gen8')"><a>8° geração</a></button>
+            <button onclick="genx('gen9')"><a>9° geração</a></button>
+            <button onclick="genx('gen0')"><a>sem geração</a></button> 
         </div>
     </div>
     </div>
+    <div class="titlegen" id="tituloGen"></div>
+
+<div class="cardes" id="listaJogos"></div>
+
+<script>
+
+
+
+const gens = {
+
+gen1: {
+    titulo: "JOGOS DA PRIMEIRA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pocket Monsters Red",
+            imagem: "Red_JP_boxart.webp"
+        },
+        {
+            nome: "Pocket Monsters Green",
+            imagem: "Green_JP_boxart.webp"
+        },
+        {
+            nome: "Pocket Monsters Blue",
+            imagem: "Blue_JP_boxart.webp"
+        },
+        {
+            nome: "Pokémon Red",
+            imagem: "Pokemon_Red.webp"
+        },
+        {
+            nome: "Pokémon Blue",
+            imagem: "Pokemon_Blue.webp"
+        },
+        {
+            nome: "Pokémon Yellow",
+            imagem: "Pokemon_Yellow.webp"
+        }
+    ]
+},
+
+gen2: {
+    titulo: "JOGOS DA SEGUNDA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon Gold",
+            imagem: "Pokemon_gold.webp"
+        },
+        {
+            nome: "Pokémon Silver",
+            imagem: "Pokemon_silver.webp"
+        },
+        {
+            nome: "Pokémon Crystal",
+            imagem: "Pokemon_crystal.webp"
+        },
+        {
+            nome: "Pokémon HeartGold",
+            imagem: "HeartGold_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon SoulSilver",
+            imagem: "SoulSilver_EN_boxart.webp"
+        }
+    ]
+},
+
+gen3: {
+    titulo: "JOGOS DA TERCEIRA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon Ruby",
+            imagem: "Ruby_boxart.webp"
+        },
+        {
+            nome: "Pokémon Sapphire",
+            imagem: "Sapphire_boxart.webp"
+        },
+        {
+            nome: "Pokémon Emerald",
+            imagem: "Emerald_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Omega Ruby",
+            imagem: "Omega_Ruby_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Alpha Sapphire",
+            imagem: "Alpha_Sapphire_EN_boxart.webp"
+        }
+    ]
+},
+
+gen4: {
+    titulo: "JOGOS DA QUARTA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon Diamond",
+            imagem: "Diamond_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Pearl",
+            imagem: "Pearl_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Platinum",
+            imagem: "Platinum_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Brilliant Diamond",
+            imagem: "Brilliant_Diamond_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Shining Pearl",
+            imagem: "Shining_Pearl_EN_boxart.webp"
+        }
+    ]
+},
+
+gen5: {
+    titulo: "JOGOS DA QUINTA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon Black",
+            imagem: "Black_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon White",
+            imagem: "White_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Black 2",
+            imagem: "Black_2_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon White 2",
+            imagem: "White_2_EN_boxart.webp"
+        }
+    ]
+},
+
+gen6: {
+    titulo: "JOGOS DA SEXTA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon X",
+            imagem: "X_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Y",
+            imagem: "Y_EN_boxart.webp"
+        }
+    ]
+},
+
+gen7: {
+    titulo: "JOGOS DA SÉTIMA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon Sun",
+            imagem: "SunBoxart.webp"
+        },
+        {
+            nome: "Pokémon Moon",
+            imagem: "MoonBoxart.webp"
+        },
+        {
+            nome: "Pokémon Ultra Sun",
+            imagem: "DHhA38wXgAE3eeW.webp"
+        },
+        {
+            nome: "Pokémon Ultra Moon",
+            imagem: "DHhBDHDXcAApHsU.webp"
+        }
+    ]
+},
+
+gen8: {
+    titulo: "JOGOS DA OITAVA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon Sword",
+            imagem: "Sword_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Shield",
+            imagem: "Shield_EN_boxart.webp"
+        }
+    ]
+},
+
+gen9: {
+    titulo: "JOGOS DA NONA GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon Scarlet",
+            imagem: "scarlet.webp"
+        },
+        {
+            nome: "Pokémon Violet",
+            imagem: "violeta.webp"
+        }
+    ]
+},
+
+gen0: {
+    titulo: "JOGOS SEM GERAÇÃO",
+    jogos: [
+        {
+            nome: "Pokémon Let's Go, Pikachu!",
+            imagem: "Lets_Go_Pikachu_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Let's Go, Eevee!",
+            imagem: "Lets_Go_Eevee_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Legends: Arceus",
+            imagem: "Legends_Arceus_EN_boxart.webp"
+        },
+        {
+            nome: "Pokémon Legends: Z-A",
+            imagem: "Legends_Z-A.webp"
+        }
+    ]
+}
+};
+
+function genx(geracao){
+    const dados = gens[geracao];
+    if (!dados){
+        return;
+    }
+    document.getElementById("tituloGen").textContent = dados.titulo;
+    const lista = document.getElementById("listaJogos");
+    lista.innerHTML = "";
+
+    dados.jogos.forEach(function(jogo) {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const personagem = document.createElement("div");
+        personagem.className = "personagem";
+
+        const imagem = document.createElement("img");
+        imagem.src = "/MonsterPE/assets/Jogos/" + jogo.imagem;
+        imagem.alt = jogo.nome;
+
+        const escrita = document.createElement("div");
+        escrita.className = "escrita";
+        escrita.textContent = jogo.nome;
+
+        personagem.appendChild(imagem);
+        card.appendChild(personagem);
+        card.appendChild(escrita);
+
+        lista.appendChild(card);
+    });
+
+    document.getElementById("dropdown-toggle").checked = false;
+}
+
+genx("gen1");
+
+
+</script>
 </main>
 <footer>
         <img class="logofoot" src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo">

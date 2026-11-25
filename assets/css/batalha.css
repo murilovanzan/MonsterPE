@@ -1,0 +1,196 @@
+.bodybattle{
+   background: rgba(98, 99, 100, 0.577) !important;
+}
+nav{
+    height: 10vh;
+    margin-bottom: 5vh !important;
+}
+.jogo{
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+    border: solid 1px black;
+    margin: 0px !important;
+}
+.telajogo{
+    flex: 5;
+    height: 80vh;
+    border-right: 1px solid rgb(0, 0, 0);
+    background-size: cover;
+    background-position: center bottom; 
+    background-repeat: no-repeat; 
+    background-color: #18566e;
+     background-image: url('/MonsterPE/assets/imgs/Batalha/EstadioBatalha.png');
+}
+.logacoes {
+    flex: 1;
+    border-left: 2px solid rgb(0, 0, 0);
+    height: 80vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('/MonsterPE/assets/imgs/Batalha/QuadroLog.jpg');
+    background-position: center;
+    background-size: cover;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    font-size: 15px;
+    color: white; 
+}
+.round > ul{
+    padding-bottom: 10px;
+    border-bottom: rgb(200, 200, 200) 1px solid;
+}
+.round > ul > h3{
+    margin-bottom: 5px;
+}
+.logacoes > h2 {
+    text-align: center;
+    margin: 15px 0;
+    flex-shrink: 0; 
+    border-bottom: rgb(200, 200, 200) 1px solid;
+    margin-bottom: 0px;
+    padding-bottom: 5px;
+}
+
+.round {
+    flex: 1;
+    overflow-y: auto; 
+    padding: 0 10px; 
+}
+.round::-webkit-scrollbar {
+    width: 8px;
+}
+.round::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+}
+footer{
+    border-top: 1px solid rgba(255, 255, 255, 0.347);
+    padding-top: 5vh;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.188);
+    gap: 2vh;
+    padding-bottom: 5vh;
+    height: 10vh;
+}
+
+.telajogo {
+    position: relative;
+    
+}
+.pokemon-area {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.oponente-area {
+    top: 32%;
+    right: 15%;
+}
+
+.jogador-area {
+    bottom: 18%;
+    left: 31%;
+}
+
+.info-card {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: rgba(255, 255, 255, 0.9);
+    color:#000;
+    border: 3px solid #333;
+    border-radius: 8px;
+    padding: 10px;
+    width: 200px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+.info-card h3 { margin: 0; font-size: 16px; text-transform: capitalize; }
+.info-card span { font-size: 14px; font-weight: bold; }
+.tipos { display: flex; gap: 5px; margin: 5px 0; font-size: 12px; text-transform: uppercase; }
+
+.nome-level-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.hp-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    margin-top: 5px;
+}
+
+.hp-bar {
+    flex: 1;
+    height: 10px;
+    background: #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #000;
+}
+
+.hp-texto {
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap; 
+}
+.hp-fill {
+    height: 100%;
+    background: #32cd32;
+    width: 100%;
+    transition: width 0.5s ease;
+}
+
+.pokemon-sprite {
+    height: 170px;
+    image-rendering: pixelated; 
+}
+.sprite-costas {
+    height: 200px;
+    image-rendering: pixelated; 
+}
+
+.painel-batalha {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.menu-botoes {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-batalha {
+    padding: 15px 25px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 5px;
+    background: #444;
+    color: white;
+    transition: 0.2s;
+}
+.btn-batalha:hover { background: #5b5a5a; }
+
+.separador-menu {
+    width: 2px;
+    background-color: rgba(255, 255, 255, 0.5); 
+    border-radius: 2px;
+    margin: 0 10px;
+}

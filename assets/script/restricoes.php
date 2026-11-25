@@ -1,5 +1,4 @@
 <?php
-    session_start();
     
     function verificaLogin(){
         if(!isset($_SESSION['login']) || !$_SESSION['login']){

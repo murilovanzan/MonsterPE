@@ -25,13 +25,14 @@ function removerDoTime(posicao, salvo = null) {
         const pokemon = timeEscolhido[posicao];
         const listaPokemonSalvo = document.getElementById('pokemonSalvo');
         listaPokemonSalvo.innerHTML += `
-            <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;" id="${pokemon.id}">
+            <div class="cartao-pokemon" style="height: auto; width: 270px; padding-bottom: 15px;" id="${pokemon.id}">
                 <div class="cartao-fundo"></div>
-                <img src="${pokemon.sprites.front_default}">
-                <h3 style="margin: 5px 0;">Nº ${pokemon.api_id} - ${pokemon.apelido}</h3>
+                <img style="height: 200px; width: 200px;"  src="${pokemon.sprites.front_default}" >
+                <h4 style="margin: 5px 0;">Nº ${pokemon.api_id} - ${pokemon.apelido}</h4>
+                <h3 style="margin: 5px 0;">${pokemon.apelido}</h3>
                 <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
                 <button onclick="adicionarAoTime('${pokemon.id}', true)" class="btn-adicionar">Adicionar ao Time</button>
-                <button onclick="excluirPokemonSalvo('${pokemon.id}')" class="btn-adicionar">Excluir</button>
+                <button onclick="excluirPokemonSalvo('${pokemon.id}')" class="btn-adicionar" style="background-color: red;">Excluir</button>
             </div>
         `;
     }
@@ -144,13 +145,14 @@ function showPokemonSalvos(pokemonSalvo){
     pokemonSalvo.forEach(pokemon => {
         cachePokemon[pokemon.id] = pokemon;
         listaPokemonSalvo.innerHTML += `
-            <div class="cartao-pokemon" style="height: auto; width: 100%; padding-bottom: 15px;" id="${pokemon.id}">
+            <div class="cartao-pokemon" style="height: auto; width: 270px; padding-bottom: 15px;" id="${pokemon.id}">
                 <div class="cartao-fundo"></div>
-                <img src="${pokemon.sprites.front_default}">
-                <h3 style="margin: 5px 0;">Nº ${pokemon.api_id} - ${pokemon.apelido}</h3>
+                <img style="height: 200px; width: 200px;"  src="${pokemon.sprites.front_default}" >
+                <h4 style="margin: 5px 0;">Nº ${pokemon.api_id} - ${pokemon.apelido}</h4>
+                <h3 style="margin: 5px 0;">${pokemon.apelido}</h3>
                 <p style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-bottom: 10px; color: black; font-family: Lexend, sans-serif;">${pokemon.tiposFormatados}</p>
                 <button onclick="adicionarAoTime('${pokemon.id}', true)" class="btn-adicionar">Adicionar ao Time</button>
-                <button onclick="excluirPokemonSalvo('${pokemon.id}')" class="btn-adicionar">Excluir</button>
+                <button onclick="excluirPokemonSalvo('${pokemon.id}')" class="btn-adicionar" style="background-color: red;">Excluir</button>
             </div>
         `;
     });
