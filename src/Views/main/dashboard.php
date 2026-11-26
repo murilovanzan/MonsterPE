@@ -66,12 +66,12 @@
         </div>
         <div id="opjogar" class="menugens">
             <h2 class="titulo-geracoes">ESCOLHA UMA AÇÃO</h2>
-            <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png"></button>
-            <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>        
-            <button onclick="IrALoja()">IR À LOJA</button>
+            <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png" style="height: 35px; width: auto;"></button>
+            <button onclick="telaMontarEquipe()">MONTAR EQUIPE <img src="/MonsterPE/assets/imgs/Equipe2.png" alt="" style="height: 60px; width: auto; transform: scale(1.3); padding-right:50px;"></button>   
+            <button onclick="centropokemon()"><img class="pokemart" src="/MonsterPE/assets/imgs/pokemart.png" alt="" style="height: 60px; width: auto; transform: scale(4.2);"></button>   
+            <button onclick="IrALoja()"><img class="pokecenter" src="/MonsterPE/assets/imgs/pokecenter.png" alt="" style="height: 60px; width: auto; transform: scale(3.5);"></button>
             <button onclick="Creditos()">CRÉDITOS</button>
         </div>
-        
         <div id="voltargen" class="menugens">
             <button onclick="voltarParaGeracoes()">⬅ Voltar para gerações</button>
         <ul id='pokemon'></ul>

@@ -466,6 +466,9 @@ input{
     padding: 20px;
     box-sizing: border-box;
 }
+.opjogar #{
+    width:1000000%;
+}
 .titulo-geracoes {
     grid-column: 1 / -1;
     text-align: center;
