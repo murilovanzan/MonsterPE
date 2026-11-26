@@ -39,8 +39,8 @@ function voltarParaGeracoes() {
 function iniciarJogo(){
     window.location.href = "../pokemon/?acao=batalha";
 }
-function IrALoja() {
-    window.location.href = "../main/loja.php";
+function irParaLoja() {
+    window.location.href = "../item/?acao=loja";
 }
 function Creditos() {
     window.location.href = "../main/creditos.php";

@@ -68,7 +68,7 @@
             <h2 class="titulo-geracoes">ESCOLHA UMA AÇÃO</h2>
             <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png"></button>
             <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>        
-            <button onclick="IrALoja()">IR À LOJA</button>
+            <button onclick="irParaLoja()">IR À LOJA</button>
             <button onclick="Creditos()">CRÉDITOS</button>
         </div>
         

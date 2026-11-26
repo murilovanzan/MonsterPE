@@ -110,6 +110,9 @@
 
         public function batalha(){
             
+            require_once '../../../assets/script/restricoes.php';
+            verificaLogin();
+            
             $this->renderizar("batalha", "main");
         }
 

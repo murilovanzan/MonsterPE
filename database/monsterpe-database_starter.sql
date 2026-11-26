@@ -56,10 +56,10 @@ CREATE TABLE IF NOT EXISTS pokemon_moves
 
 CREATE TABLE IF NOT EXISTS usuario_item
 (
-  id         INT         NOT NULL AUTO_INCREMENT,
+  item_id    INT         NOT NULL AUTO_INCREMENT,
   usuario_id INT         NOT NULL,
-  url        VARCHAR(31) NOT NULL,
-  PRIMARY KEY (id),
+  quantidade INT         NOT NULL,
+  PRIMARY KEY (item_id, usuario_id),
   CONSTRAINT FK_usuario_TO_usuario_item
     FOREIGN KEY (usuario_id)
     REFERENCES usuario (id)

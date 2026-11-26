@@ -141,6 +141,12 @@
                             <span class="item-desc" style="display: none;">Cura 50HP de um pokémon que não esteja desmaiado.</span>
                         </div>
                         <div class="slot-item" onclick="MostrarItem(this)">
+                            <img src="/MonsterPE/assets/imgs/Loja/evolutionstone.png" alt="Pedra da evolução" class="item-imagem">
+                            <span class="item-nome">Evolution Stone</span>
+                            <span class="item-preco">R$ 10,00</span>
+                            <span class="item-desc" style="display: none;">A pedra que concede ao pokémon evolução imediata.</span>
+                        </div>
+                        <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/honey.png" alt="Honey" class="item-imagem">
                             <span class="item-nome">Sweet honey</span>
                             <span class="item-preco">R$ 10,00</span>
@@ -158,12 +164,6 @@
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">O PascualOVO da sorte serve para aumentar a amizade com seu pokémon.</span>
                         </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/evolutionstone.png" alt="Pedra da evolução" class="item-imagem">
-                            <span class="item-nome">Evolution Stone</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">A pedra que concede ao pokémon evolução imediata.</span>
-                        </div>
                     </div>
                     <span>
                     
@@ -172,7 +172,7 @@
                     <div class="areacompras">
                         <div class="area-pesquisa">
                             <h2 class="titulo-geracoes" style="font-size: 30px;">CARTEIRA</h2>
-                            <div class="btn-buscar" style="align-self: center;"> R$ XX,XX</div>
+                            <div class="btn-buscar" style="align-self: center;"> R$ <?= $_SESSION['usuario']->getTokens() ?></div>
                         </div>
                         <div class="area-pesquisa">
                             <h2 class="titulo-geracoes" style="font-size: 30px;">CARRINHO</h2>
