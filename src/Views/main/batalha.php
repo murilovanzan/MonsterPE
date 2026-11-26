@@ -56,10 +56,10 @@
                 </div>
                 <div class="painel-batalha">
                     <div id="menu-principal" class="menu-botoes">
-                        <button class="btn-batalha btn-atacar" onclick="mostrarAtaques()">Atacar</button>
-                        <button class="btn-batalha btn-mochila" onclick="abrirModal('modal-mochila')">Mochila</button>
-                        <button class="btn-batalha btn-pokemon" onclick="abrirModal('modal-equipe')">Pokémon</button>
-                        <button class="btn-batalha btn-fugir" onclick="abrirModal('modal-fugir')">Fugir</button>
+                        <button class="btn-batalha btn-atacar" data-acao-principal="atacar">Atacar</button>
+                        <button class="btn-batalha btn-mochila" data-acao-principal="mochila">Mochila</button>
+                        <button class="btn-batalha btn-pokemon" data-acao-principal="equipe">Pokémon</button>
+                        <button class="btn-batalha btn-fugir" data-acao-principal="fugir">Fugir</button>
                     </div>
                     <div id="menu-ataques" class="menu-botoes" style="display: none;">
                     </div>

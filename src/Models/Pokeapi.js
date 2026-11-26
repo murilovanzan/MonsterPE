@@ -74,10 +74,9 @@ async function formatarPokemon(pokemon, salvo = false){
         cachePokemon[pokemonFormatado.id] = pokemonFormatado;
     
     }
-
+    
     pokemonFormatado.types.forEach(tipo => {
-        tipo.type.name = tiposTraduzidos[tipo.type.name] || tipo.type.name;
-        tiposFormatados += tipo.type.name + " | ";
+        tiposFormatados += tiposTraduzidos[tipo.type.name] + " | ";
     });
 
     tiposFormatados = tiposFormatados.replace(/ \| \s*$/, "");
