@@ -54,6 +54,17 @@ CREATE TABLE IF NOT EXISTS pokemon_moves
     ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS item
+(
+  id        INT           NOT NULL AUTO_INCREMENT,
+  nome      VARCHAR(10)   NOT NULL,
+  descricao VARCHAR(50)   NOT NULL,
+  status    VARCHAR(20)   NOT NULL,
+  efeito    VARCHAR(10)   NOT NULL,
+  preco     DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS usuario_item
 (
   item_id    INT         NOT NULL AUTO_INCREMENT,
@@ -62,10 +73,16 @@ CREATE TABLE IF NOT EXISTS usuario_item
   PRIMARY KEY (item_id, usuario_id),
   CONSTRAINT FK_usuario_TO_usuario_item
     FOREIGN KEY (usuario_id)
-    REFERENCES usuario (id)
+    REFERENCES usuario (id),
+  CONSTRAINT FK_item_TO_usuario_item
+    FOREIGN KEY (item_id)
+    REFERENCES item (id)
 );
 
 INSERT INTO usuario (nome, username, email, senha, adm)
 VALUES ("admin", "admin", "murilovanzandasilva@gmail.com", "$2y$10$Is5WEHHrza8dYLZNUMeVLuCOboGXJWGsZEPNGRBakqFnV144.LYNu", 1);
+
+INSERT INTO item (nome, descricao, status, efeito, preco)
+VALUES ();
 
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

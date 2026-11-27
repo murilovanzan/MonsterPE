@@ -60,10 +60,17 @@ async function getPokemonAndMoves(){
 
 function trocarPokemon(posicaoPokemon, usuario = null){
     if(usuario){
+        if (timeJogador[posicaoPokemon].stats[0].base_stat <= 0) {
+            alert("Este Pokémon está desmaiado e não pode batalhar!");
+            return;
+        }
+
         posicaoPokemonSelecionadoJogador = posicaoPokemon;
         pokemonSelecionadoJogador = timeJogador[posicaoPokemonSelecionadoJogador];
         fecharModal('modal-equipe');
         atualizarTela(true, false);
+        
+        round();
     } else {
         posicaoPokemonSelecionadoOponente = posicaoPokemon;
         pokemonSelecionadoOponente = timeOponente[posicaoPokemonSelecionadoOponente];
@@ -104,11 +111,11 @@ function carregarModal_Equipe(){
     modal_equipe.innerHTML = "";
     timeJogador.forEach(pokemon => {
         if(pokemon.posicao == posicaoPokemonSelecionadoJogador){
-            modal_equipe.innerHTML += `<button type="Button" disabled>${pokemon.apelido} (Atual)</button>`
+            modal_equipe.innerHTML += `<button type="Button" disabled>${pokemon.apelido} (Atual)</button>`;
         } else if (pokemon.stats[0].base_stat <= 0) {
-            modal_equipe.innerHTML += `<button type="Button" disabled>${pokemon.apelido} (Desmaiado)</button>`
+            modal_equipe.innerHTML += `<button type="Button" disabled>${pokemon.apelido} (Desmaiado)</button>`;
         } else {
-            modal_equipe.innerHTML += `<button type="Button" data-acao="equipe" data-id="${pokemon.posicao}" class="btn-subacao">${pokemon.apelido}</button>`
+            modal_equipe.innerHTML += `<button type="Button" data-acao="equipe" data-id="${pokemon.posicao}" class="btn-subacao">${pokemon.apelido}</button>`;
         }
     });
 }
@@ -145,8 +152,6 @@ function turnoJogador(acao, id){
     switch (acao) {
         case "ataque":
             ataque(arrayMoves[posicaoPokemonSelecionadoJogador][id], true);
-            break;
-        case "mochila":
             break;
         case "equipe":
             trocarPokemon(id, true);
@@ -211,15 +216,11 @@ function calcularMultiplicadorTipo(tipoAtaque, tiposOponente) {
     return multiplicadorTotal;
 }
 
-// ---- NOVA IA INTELIGENTE DO OPONENTE ----
 function escolherAcaoOponente() {
     const movesOponente = arrayMoves[posicaoPokemonSelecionadoOponente];
     const pokemonOponenteAtual = pokemonSelecionadoOponente;
     
-    // 1. Decidir se vale a pena trocar de Pokémon
-    // Se o Pokémon oponente estiver com menos de 25% do HP ou em grande desvantagem, procura outro vivo
     let hpAtual = pokemonOponenteAtual.stats[0].base_stat;
-    // Nota: Se você guardar o HP máximo em outra propriedade, ajuste aqui. Assumimos perigo se HP < 50 para exemplo.
     if (hpAtual < 50) {
         let pokemonsDisponiveisParaTroca = [];
         timeOponente.forEach((poke, index) => {
@@ -228,7 +229,6 @@ function escolherAcaoOponente() {
             }
         });
 
-        // Se encontrou outro Pokémon saudável na reserva, 40% de chance de trocar para se salvar
         if (pokemonsDisponiveisParaTroca.length > 0 && Math.random() < 0.4) {
             const escolhaTroca = pokemonsDisponiveisParaTroca[Math.floor(Math.random() * pokemonsDisponiveisParaTroca.length)];
             return {
@@ -238,7 +238,6 @@ function escolherAcaoOponente() {
         }
     }
 
-    // 2. Escolher o melhor ataque baseado em dano e eficácia de tipo
     let melhorIndiceAque = 0;
     let maiorPontuacaoDano = -1;
 
@@ -246,18 +245,14 @@ function escolherAcaoOponente() {
         const move = movesOponente[i];
         if (move != null && move.power) {
             let poderBase = move.power;
-            
-            // Verifica eficácia do tipo do ataque contra o seu Pokémon
             let multTipo = calcularMultiplicadorTipo(move.type.name, pokemonSelecionadoJogador.types);
             
-            // Verifica STAB (se o ataque é do mesmo tipo do oponente)
             let temStab = false;
             pokemonOponenteAtual.types.forEach(tipo => {
                 if (tipo.type.name === move.type.name) temStab = true;
             });
             let bonusStab = temStab ? 1.5 : 1.0;
 
-            // Pontuação estimada de dano do golpe
             let pontuacaoEstimada = poderBase * multTipo * bonusStab;
 
             if (pontuacaoEstimada > maiorPontuacaoDano) {
@@ -267,7 +262,6 @@ function escolherAcaoOponente() {
         }
     }
 
-    // Se nenhum ataque com poder foi encontrado, pega o primeiro válido
     if (maiorPontuacaoDano === -1) {
         for (let i = 0; i < movesOponente.length; i++) {
             if (movesOponente[i] != null) {
@@ -296,7 +290,6 @@ function calculoDePrioridade(tipoAcao, idAcao, jogador = null){
                 posicaoPokemon = posicaoPokemonSelecionadoOponente;
             }
             return [arrayMoves[posicaoPokemon][idAcao].priority, time[posicaoPokemon].stats[5].base_stat];
-        case "mochila":
         case "equipe":
             return [10, false];
     }
@@ -373,7 +366,7 @@ function ataque(move, jogador = null){
     dano = Math.floor(dano);
 
     timeSofredor[posicaoPokemonSofredor].stats[0].base_stat -= dano;
-    if(timeSofredor[posicaoPokemonSofredor].stats[0].base_stat < 0) {
+    if(timeSofredor[posicaoPokemonSofredor].stats[0].base_stat <= 0) {
         timeSofredor[posicaoPokemonSofredor].stats[0].base_stat = 0;
     }
 
@@ -405,10 +398,10 @@ function processarTurnoCompleto(tipoAcaoJogador, idAcaoJogador) {
 
     let jogadorVaiPrimeiro = false;
 
-    if (tipoAcaoJogador === 'equipe' || tipoAcaoJogador === 'mochila') {
+    if (tipoAcaoJogador === 'equipe') {
         jogadorVaiPrimeiro = true;
     } else if (acaoOponente.tipo === 'equipe') {
-        jogadorVaiPrimeiro = false; // Se a IA escolheu trocar, ela vai primeiro devido à prioridade de troca
+        jogadorVaiPrimeiro = false;
     } else if (prioridadeJogador[0] > prioridadeOponente[0]) {
         jogadorVaiPrimeiro = true;
     } else if (prioridadeJogador[0] < prioridadeOponente[0]) {
@@ -417,63 +410,75 @@ function processarTurnoCompleto(tipoAcaoJogador, idAcaoJogador) {
         jogadorVaiPrimeiro = prioridadeJogador[1] >= prioridadeOponente[1];
     }
 
-    if (jogadorVaiPrimeiro) {
+    function verificarOponenteMorto() {
+        if (pokemonSelecionadoOponente.stats[0].base_stat <= 0) {
+            pokemonVivoOponente[posicaoPokemonSelecionadoOponente] = false;
+            
+            for (let i = 0; i < timeOponente.length; i++) {
+                pokemonVivoOponente[i] = timeOponente[i].stats[0].base_stat > 0;
+            }
 
+            if (pokemonVivoOponente.includes(true)) {
+                let pokemonVivos = [];
+                pokemonVivoOponente.forEach((vivo, index) => {
+                    if (vivo) pokemonVivos.push(index);
+                });
+                let novoPokemon = pokemonVivos[Math.floor(Math.random() * pokemonVivos.length)];
+                trocarPokemon(novoPokemon, false);
+                round();
+                return true;
+            } else {
+                finalizarBatalha('jogador');
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function verificarJogadorMorto() {
+        if (pokemonSelecionadoJogador.stats[0].base_stat <= 0) {
+            pokemonVivoJogador[posicaoPokemonSelecionadoJogador] = false;
+            
+            for (let i = 0; i < timeJogador.length; i++) {
+                pokemonVivoJogador[i] = timeJogador[i].stats[0].base_stat > 0;
+            }
+
+            if (pokemonVivoJogador.includes(true)) {
+                alert("Seu Pokémon desmaiou! Escolha outro.");
+                abrirModal('modal-equipe');
+                carregarModal_Equipe();
+                return true;
+            } else {
+                finalizarBatalha('oponente');
+                return true;
+            }
+        }
+        return false;
+    }
+
+    if (jogadorVaiPrimeiro) {
         turnoJogador(tipoAcaoJogador, idAcaoJogador);
         
         if (tipoAcaoJogador === 'equipe') {
             console.log("Você trocou de Pokémon. O oponente aproveita para agir!");
             turnoOponente(acaoOponente);
+            if (verificarJogadorMorto()) return;
         } else {
-            if (pokemonSelecionadoOponente.stats[0].base_stat > 0) {
-                turnoOponente(acaoOponente);
-            } else {
-                pokemonVivoOponente[posicaoPokemonSelecionadoOponente] = false;
-                
-                if(pokemonVivoOponente.includes(true)){
-                    let pokemonVivos = [];
-                    pokemonVivoOponente.forEach((vivo, index) => {
-                        if(vivo){
-                            pokemonVivos.push(index);
-                        }             
-                    });
-                    let novoPokemon;
-                    do {
-                        novoPokemon = gerarInteiro(0, timeOponente.length - 1);
-                    } while(!pokemonVivos.includes(novoPokemon));
-                    
-                    trocarPokemon(novoPokemon, false);
-                    round();
-                    return;
-                } else {
-                    finalizarBatalha('jogador');
-                    return;
-                }
-            }
+            if (verificarOponenteMorto()) return;
+            turnoOponente(acaoOponente);
+            if (verificarJogadorMorto()) return;
         }
 
     } else {
         turnoOponente(acaoOponente);
 
-        // Se o oponente usou a troca, agora o jogador pode agir ou continuar o turno
+        if (verificarJogadorMorto()) return;
+
         if (acaoOponente.tipo === 'equipe') {
             console.log("O oponente trocou de Pokémon.");
         } else {
-            if (pokemonSelecionadoJogador.stats[0].base_stat > 0) {
-                turnoJogador(tipoAcaoJogador, idAcaoJogador);
-            } else {
-                pokemonVivoJogador[posicaoPokemonSelecionadoJogador] = false;
-                console.log(pokemonVivoJogador);
-                if(pokemonVivoJogador.includes(true)){
-                    alert("Seu Pokémon desmaiou! Escolha outro.");
-                    abrirModal('modal-equipe');
-                    carregarModal_Equipe();
-                    return;
-                } else {
-                    finalizarBatalha('oponente');
-                    return;
-                }
-            }
+            turnoJogador(tipoAcaoJogador, idAcaoJogador);
+            if (verificarOponenteMorto()) return;
         }
     }
 
@@ -494,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     mostrarAtaques();
                     break;
                 case 'mochila':
-                    abrirModal('modal-mochila');
+                    alert("A mochila está indisponível no momento!");
                     break;
                 case 'equipe':
                     abrirModal('modal-equipe');
@@ -522,3 +527,29 @@ document.addEventListener('DOMContentLoaded', () => {
         processarTurnoCompleto(tipoAcao, idAcao);
     });
 });
+
+function fugirDaBatalha() {
+    alert("Você fugiu em segurança!");
+    location.href = "../";
+}
+
+const coresTipos = {
+    normal: '#A8A77A',
+    fire: '#EE8130',
+    water: '#6390F0',
+    electric: '#F7D02C',
+    grass: '#7AC74C',
+    ice: '#96D9D6',
+    fighting: '#C22E28',
+    poison: '#A33EA1',
+    ground: '#E2BF65',
+    flying: '#A98FF3',
+    psychic: '#F95587',
+    bug: '#A6B91A',
+    rock: '#B6A136',
+    ghost: '#735797',
+    dragon: '#6F35FC',
+    dark: '#705848',
+    steel: '#B7B7CE',
+    fairy: '#D685AD'
+};

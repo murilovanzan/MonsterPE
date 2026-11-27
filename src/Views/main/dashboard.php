@@ -1,4 +1,5 @@
 <?php
+
     $caminhoModelo = $_SERVER['DOCUMENT_ROOT'] . '/MonsterPE/src/Models/Usuario.php';
 
     if (file_exists($caminhoModelo)) {
@@ -10,11 +11,14 @@
     }
     $nomeSeguro = 'Jogador';
     $emailSeguro = 'email@desconhecido.com';
-
+    if(isset($_SESSION['erroBatalha'])){
+        $erroBatalha = $_SESSION['erroBatalha'];
+        unset($_SESSION['erroBatalha']);
+    }
     if (isset($_SESSION['usuario']) && is_object($_SESSION['usuario']) && method_exists($_SESSION['usuario'], 'getUsername')) {
         $nomeSeguro = $_SESSION['usuario']->getUsername();
         $emailSeguro = $_SESSION['usuario']->getEmail();
-    }
+    }    
     require_once '../../../assets/script/restricoes.php';
     verificaLogin();
     
@@ -43,6 +47,8 @@
         </div>
     </nav>
     <div class="conteudo">
+
+        <span><?= $erroBatalha?></span>
         <aside class="dashaside modo-inicial">
                 <div class="opdashmain">
             <a href="../main" class="dashmainclick" id="jogarpoke">JOGAR</a>

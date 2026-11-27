@@ -2,86 +2,103 @@
 
     class Item {
 
-        private ?int $item_id = null;
-        private ?int $usuario_id = null;
-        private ?int $quantidade = null;
+        private ?int $id = null;
+        private ?string $nome = null;
+        private ?string $descricao = null;
+        private ?string $status = null;
+        private ?string $efeito = null;
+        private ?float $preco = null;
 
-        public function __construct(?int $item_id = null, ?int $usuario_id = null, ?int $quantidade = null){
+        public function __construct(?int $id = null, ?string $nome = null, ?string $descricao = null, ?string $status = null, ?string $efeito = null, ?float $preco = null){
 
-            if (!isset($item_id) && !isset($usuario_id) && !isset($quantidade)) return;
+            if (!isset($id) && !isset($nome) && !isset($descricao) && !isset($status) && !isset($efeito) && !isset($preco)) return;
 
-            $this->item_id = $item_id;
-            $this->usuario_id = $usuario_id;
-            $this->quantidade = $quantidade;
+            $this->id =$id;
+            $this->nome =$nome;
+            $this->descricao =$descricao;
+            $this->status =$status;
+            $this->efeito =$efeito;
+            $this->preco =$preco;
         }
 
         // Getters
-        public function getItemId() { return $this->item_id; }
-        public function getUsuarioId() { return $this->usuario_id; }
-        public function getQuantidade() { return $this->quantidade; }
+        public function getId() { return $this->id; }
+        public function getNome() { return $this->nome; }
+        public function getDescricao() { return $this->descricao; }
+        public function getStatus() { return $this->status; }
+        public function getEfeito() { return $this->efeito; }
+        public function getPreco() { return $this->preco; }
 
         // Setters
-        public function setItemId($item_id) { $this->item_id = $item_id; }
-        public function setUsuarioId($usuario_id) { $this->usuario_id = $usuario_id; }
-        public function setQuantidade($quantidade) { $this->quantidade = $quantidade; }
+        public function setId($id) { $this->id =$id; }
+        public function setNome($nome) { $this->nome =$nome; }
+        public function setDescricao($descricao) { $this->descricao =$descricao; }
+        public function setStatus($status) { $this->status =$status; }
+        public function setEfeito($efeito) { $this->efeito =$efeito; }
+        public function setPreco($preco) { $this->preco =$preco; }
         
-        public function salvar($update = false) {
-            $db = getConnection();
-            if(!$update){
-                $sql = "INSERT INTO usuario_itens (item_id, usuario_id, quantidade) VALUES (:item_id, :usuario_id, :quantidade);";
+        public function salvar($update = false) {$db = getConnection();
+            if(!$update){$sql = "INSERT INTO itens (nome, descricao, status, efeito, preco) VALUES (:nome, :descricao, :status, :efeito, :preco);";
                 $stmt = $db->prepare($sql);
-                return $stmt->execute([
-                    ':item_id'    => $this->item_id,
-                    ':usuario_id' => $this->usuario_id,
-                    ':quantidade' => $this->quantidade
+                $resultado =$stmt->execute([
+                    ':nome'      => $this->nome,
+                    ':descricao' => $this->descricao,
+                    ':status'    => $this->status,
+                    ':efeito'    => $this->efeito,
+                    ':preco'     => $this->preco
                 ]);
+                
+                if ($resultado) {
+                    $this->id =$db->lastInsertId();
+                }
+                return $resultado;
             }
             else{
-                $sql = "UPDATE usuario_itens SET quantidade = :quantidade WHERE item_id = :item_id AND usuario_id = :usuario_id;";
+                $sql = "UPDATE itens SET nome = :nome, descricao = :descricao, status = :status, efeito = :efeito, preco = :preco WHERE id = :id;";
                 $stmt = $db->prepare($sql);
                 return $stmt->execute([
-                    ':quantidade' => $this->quantidade,
-                    ':item_id'    => $this->item_id,
-                    ':usuario_id' => $this->usuario_id
+                    ':nome'      => $this->nome,
+                    ':descricao' => $this->descricao,
+                    ':status'    => $this->status,
+                    ':efeito'    => $this->efeito,
+                    ':preco'     => $this->preco,
+                    ':id'        => $this->id
                 ]);
             }
         }
 
-        public static function delete($item_id, $usuario_id){
-            $db = getConnection();
-            $sql = "DELETE FROM usuario_itens WHERE item_id = :item_id AND usuario_id = :usuario_id;";
+        public static function delete($id){
+            $db = getConnection();$sql = "DELETE FROM itens WHERE id = :id;";
             $stmt = $db->prepare($sql);
             return $stmt->execute([
-                ':item_id'    => $item_id,
-                ':usuario_id' => $usuario_id
+                ':id' => $id
             ]);
         }
 
-        public static function getItensPorUsuario($usuario_id){
-            $db = getConnection();
-            $sql = "SELECT * FROM usuario_itens WHERE usuario_id = :usuario_id;";
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':usuario_id' => $usuario_id
-            ]);
+        public static function getAllItens(){
+            $db = getConnection();$sql = "SELECT * FROM itens;";
+            $stmt =$db->prepare($sql);$stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public static function getByItemAndUser($item_id, $usuario_id){
-            $db = getConnection();
-            $sql = "SELECT * FROM usuario_itens WHERE item_id = :item_id AND usuario_id = :usuario_id;";
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':item_id'    => $item_id,
-                ':usuario_id' => $usuario_id
+        public static function getById($id){
+            $db = getConnection();$sql = "SELECT * FROM itens WHERE id = :id;";
+            $stmt =$db->prepare($sql);$stmt->execute([
+                ':id' => $id
             ]);
-            $dados = $stmt->fetch(PDO::FETCH_ASSOC);
+            $dados =$stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($dados) {
-                return new self($dados['item_id'], $dados['usuario_id'], $dados['quantidade']);
+                return new self(
+                    $dados['id'],$dados['nome'], 
+                    $dados['descricao'],$dados['status'], 
+                    $dados['efeito'],$dados['preco']
+                );
             }
             return null;
         }
+
+        
 
     }
 
