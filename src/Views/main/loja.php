@@ -18,6 +18,7 @@
     }
     require_once '../../../assets/script/restricoes.php';
     verificaLogin();
+    $mochila = Item::getInventario($_SESSION['usuario']->getId());
 ?>
 
 <style>
@@ -35,6 +36,42 @@
     #tela-equipe.menugens {
         max-height: none;
         overflow-y: visible;
+    }
+
+    .mochila-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+        gap: 8px;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .mochila-item {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid #888;
+        border-radius: 6px;
+        padding: 6px 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        font-size: 11px;
+        text-align: center;
+    }
+    .mochila-item img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        image-rendering: pixelated;
+    }
+    .mochila-qtd {
+        font-weight: bold;
+        color: #ffd54f;
+        margin-top: 2px;
+    }
+    .mochila-vazia {
+        color: #ccc;
+        font-size: 14px;
+        margin-top: 12px;
     }
 </style>
 
@@ -68,90 +105,18 @@
                 <div class="area-loja">
                     <h2 class="titulo-loja" style="font-size: 50px; margin-top: -5px;">PokéMart</h2>
                     <div class="grid-time" id="grid-time">
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/antidote.png" alt="Antidote" class="item-imagem">
-                            <span class="item-nome">Antidote</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Envenenamento.</span>
+                        <?php $itens = Item::getAtivos(); ?>
+                        <?php if (empty($itens)): ?>
+                            <p style="color: white;">Nenhum item disponível no momento.</p>
+                        <?php endif; ?>
+                        <?php foreach ($itens as $item): ?>
+                        <div class="slot-item" data-id="<?= (int) $item['id'] ?>" data-preco="<?= htmlspecialchars($item['preco']) ?>" onclick="MostrarItem(this)">
+                            <img src="<?= htmlspecialchars(Item::getImagem($item['nome'])) ?>" alt="<?= htmlspecialchars($item['nome']) ?>" class="item-imagem">
+                            <span class="item-nome"><?= htmlspecialchars($item['nome']) ?></span>
+                            <span class="item-preco">R$ <?= number_format((float) $item['preco'], 2, ',', '') ?></span>
+                            <span class="item-desc" style="display: none;"><?= htmlspecialchars($item['descricao']) ?></span>
                         </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/awakening.jpeg" alt="Awakening" class="item-imagem">
-                            <span class="item-nome">Awakening</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Sono.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/burnheal.png" alt="Burn Heal" class="item-imagem">
-                            <span class="item-nome">Burn Heal</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Queimadura.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/full heal.png" alt="Full Heal" class="item-imagem">
-                            <span class="item-nome">Full Heal</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura um Pokémon de status de Envenenamento, Sono, Congelamento, Paralisia e Queimadura, sem recuperar HP.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/fullrestore.png" alt="Full Restore" class="item-imagem">
-                            <span class="item-nome">Full Restore</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura 100% do HP e todos status.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/hyperpotion.jpeg" alt="Hyper Potion" class="item-imagem">
-                            <span class="item-nome">Hyper Potion</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura um 200HP de um pokémon que não esteja desmaiado.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/iceheal.png" alt="Ice Heal" class="item-imagem">
-                            <span class="item-nome">Ice Heal</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Congelamento.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/maxpotion.jpeg" alt="Max Potion" class="item-imagem">
-                            <span class="item-nome">Max Potion</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura 100% do HP de um pokémon que não esteja desmaiado.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/paralyzeheal.jpeg" alt="Paralyze Heal" class="item-imagem">
-                            <span class="item-nome">Paralyze Heal</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Paralisia.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/Potion.jpeg" alt="Potion" class="item-imagem">
-                            <span class="item-nome">Potion</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura 20HP de um pokémon que não esteja desmaiado.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/rarecandy.jpeg" alt="Rare Candy" class="item-imagem">
-                            <span class="item-nome">Rare Candy</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Aumenta um nível de um pokémon.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/revive.png" alt="Revive Super (RS)" class="item-imagem">
-                            <span class="item-nome">Revive Super (RS)</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Tira o pokémon do estado de desmaiado e cura 50% de seu HP</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/superpotion.png" alt="Super Potion" class="item-imagem">
-                            <span class="item-nome">Super Potion</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Cura 50HP de um pokémon que não esteja desmaiado.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/evolutionstone.png" alt="Pedra da evolução" class="item-imagem">
-                            <span class="item-nome">Evolution Stone</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">A pedra que concede ao pokémon evolução imediata.</span>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                     <span>
                     
@@ -160,7 +125,22 @@
                     <div class="areacompras">
                         <div class="area-pesquisa">
                             <h2 class="titulo-geracoes" style="font-size: 30px;">CARTEIRA</h2>
-                            <div class="btn-buscar" style="align-self: center;"> R$ <?= $_SESSION['usuario']->getTokens() ?></div>
+                            <div class="btn-buscar" id="saldo-carteira" style="align-self: center;"> R$ <?= $_SESSION['usuario']->getTokens() ?></div>
+                        </div>
+                        <div class="area-pesquisa">
+                            <h2 class="titulo-geracoes" style="font-size: 30px;">MOCHILA</h2>
+                            <div class="mochila-grid">
+                                <?php if (empty($mochila)): ?>
+                                    <p class="mochila-vazia">Sua mochila está vazia.</p>
+                                <?php endif; ?>
+                                <?php foreach ($mochila as $m): ?>
+                                    <div class="mochila-item" title="<?= htmlspecialchars($m['descricao']) ?>">
+                                        <img src="<?= htmlspecialchars(Item::getImagem($m['nome'])) ?>" alt="<?= htmlspecialchars($m['nome']) ?>">
+                                        <span><?= htmlspecialchars($m['nome']) ?></span>
+                                        <span class="mochila-qtd">x<?= (int) $m['quantidade'] ?></span>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                         <div class="area-pesquisa">
                             <h2 class="titulo-geracoes" style="font-size: 30px;">CARRINHO</h2>

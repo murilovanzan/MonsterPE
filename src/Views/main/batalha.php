@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de batalha</title>
     <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=2">
-    <link rel="stylesheet" href="/MonsterPE/assets/css/batalha.css?v=2">
+    <link rel="stylesheet" href="/MonsterPE/assets/css/batalha.css?v=3">
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
     <script src="../../../assets/script/batalha.js"></script>
     <script type="module">
@@ -33,6 +33,7 @@
                         </div>
                         
                         <div id="tipos-oponente" class="tipos"></div>
+                        <div id="status-oponente" class="status-linha"></div>
                         <div class="hp-container">
                             <div class="hp-bar"><div id="hp-oponente-fill" class="hp-fill"></div></div>
                             <span id="hp-texto-oponente" class="hp-texto">--/--</span>
@@ -48,6 +49,7 @@
                         </div>
                         
                         <div id="tipos-jogador" class="tipos"></div>
+                        <div id="status-jogador" class="status-linha"></div>
                         <div class="hp-container">
                             <div class="hp-bar"><div id="hp-jogador-fill" class="hp-fill"></div></div>
                             <span id="hp-texto-jogador" class="hp-texto">--/--</span>
@@ -56,7 +58,8 @@
                     <img id="sprite-jogador" class="pokemon-sprite sprite-costas" src="" alt="Jogador">
                 </div>
                 <div class="painel-batalha">
-                    <div id="menu-principal" class="menu-botoes">
+                    <div id="mensagem-batalha" class="mensagem-batalha">Carregando batalha...</div>
+                    <div id="menu-principal" class="menu-botoes" style="display: none;">
                         <button class="btn-batalha btn-atacar" data-acao-principal="atacar">Atacar</button>
                         <button class="btn-batalha btn-mochila" data-acao-principal="mochila">Mochila</button>
                         <button class="btn-batalha btn-pokemon" data-acao-principal="equipe">Pokémon</button>
@@ -68,18 +71,28 @@
             </div>
 
             <div id="modal-mochila" class="modal-fundo" style="display: none;">
-                <div class="modal-card">
+                <div class="modal-card modal-lista">
                     <span class="btn-fechar" onclick="fecharModal('modal-mochila')">X</span>
-                    <h3>Sua Mochila</h3>
-                    <p>Poções, Pokebolas, etc...</p>
+                    <h3 id="mochila-titulo">🎒 Sua Mochila</h3>
+                    <p id="mochila-aviso" class="aviso-modal"></p>
+                    <div id="mochila-conteudo"></div>
                 </div>
             </div>
             <div id="modal-equipe" class="modal-fundo" style="display: none;">
+                <div class="modal-card modal-lista">
+                    <span id="equipe-fechar" class="btn-fechar" onclick="fecharModal('modal-equipe')">X</span>
+                    <h3 id="equipe-titulo">Sua Equipe</h3>
+                    <div id="equipe-lista"></div>
+                </div>
+            </div>
+            <div id="modal-fim" class="modal-fundo" style="display: none;">
                 <div class="modal-card">
-                    <span class="btn-fechar" onclick="fecharModal('modal-equipe')">X</span>
-                    <h3>Sua Equipe</h3>
-                    <p>Selecione um Pokémon para trocar.</p>
-                    <div></div>
+                    <h3 id="fim-titulo"></h3>
+                    <p id="fim-texto"></p>
+                    <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                        <button onclick="location.reload()">Jogar novamente</button>
+                        <button onclick="fugirDaBatalha()">Voltar ao menu</button>
+                    </div>
                 </div>
             </div>
             <div id="modal-fugir" class="modal-fundo" style="display: none;">
@@ -94,39 +107,7 @@
 
             <div class="logacoes">
                 <h2>Histórico dos Rounds</h2>
-                <div class="round">
-                    <ul>
-                        <h3>Round X</h3>
-                        <li>Seu ataque</li>
-                        <li>Ataque do oponente</li>
-                        <li>mais acoes sla inha</li>
-                    </ul>
-                    <ul>
-                        <h3>Round X</h3>
-                        <li>Seu ataque</li>
-                        <li>Ataque do oponente</li>
-                        <li>mais acoes sla inha</li>
-                    </ul>
-                    <ul>
-                        <h3>Round X</h3>
-                        <li>Seu ataque</li>
-                        <li>Ataque do oponente</li>
-                        <li>mais acoes sla inha</li>
-                    </ul>
-                    <ul>
-                        <h3>Round X</h3>
-                        <li>Seu ataque</li>
-                        <li>Ataque do oponente</li>
-                        <li>mais acoes sla inha</li>
-                    </ul>
-                    <ul>
-                        <h3>Round X</h3>
-                        <li>Seu ataque</li>
-                        <li>Ataque do oponente</li>
-                        <li>mais acoes sla inha</li>
-                    </ul>
-                    
-                </div>
+                <div class="round" id="log-rounds"></div>
             </div>
      </main>
     <footer>

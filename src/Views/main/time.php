@@ -76,7 +76,7 @@
 
     </style>
 <script src="../../Models/Pokeapi.js"></script>
-<script src="../../../assets/script/centro.js"></script>
+<script src="../../../assets/script/time.js"></script>
     <script type="module">
         getPokemonAndMoves();
     </script>
@@ -109,7 +109,7 @@
                     </div>
                     <button id="btn-salvar-time" class="btn-time" onclick="salvarTime()">SALVAR TIME COMPLETO</button>
                     <button id="btn-limpar-time" class="btn-time" onclick="limparTime()">LIMPAR TIME</button>
-                    <span>
+                    <span class="titulo-geracoes" style="font-size: 25px; padding-left:150px; padding-top: 25px;">
                         <?= $salvarTimeErro?>
                     </span>
                 </div>

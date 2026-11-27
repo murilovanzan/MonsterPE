@@ -194,3 +194,127 @@ footer{
     border-radius: 2px;
     margin: 0 10px;
 }
+/* ---------- Melhorias da batalha ---------- */
+.mensagem-batalha {
+    min-height: 28px;
+    margin-bottom: 14px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #111;
+    border: 3px solid #333;
+    border-radius: 8px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.tipo-badge {
+    color: #fff;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 11px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.status-linha { display: flex; gap: 4px; min-height: 18px; margin-bottom: 2px; }
+.status-badge {
+    display: inline-block;
+    color: #fff;
+    background: #777;
+    padding: 0 6px;
+    border-radius: 4px;
+    font-size: 11px !important;
+    font-weight: bold;
+}
+.status-paralysis { background: #d4a800; }
+.status-burn      { background: #e8590c; }
+.status-poison    { background: #9c36b5; }
+.status-sleep     { background: #5c7cfa; }
+.status-freeze    { background: #22b8cf; }
+.status-confusion { background: #e64980; }
+.status-protecao  { background: #2f9e44; }
+
+/* sprites */
+.pokemon-sprite { transition: opacity 0.6s ease, transform 0.6s ease, filter 0.2s; }
+.sprite-desmaiado { opacity: 0; transform: translateY(40px); }
+.sprite-dano { animation: tremer 0.4s linear; filter: brightness(2) saturate(0.4); }
+.sprite-entrada { animation: entrar 0.4s ease-out; }
+@keyframes tremer {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-8px); }
+    80% { transform: translateX(8px); }
+}
+@keyframes entrar {
+    from { transform: scale(0.2); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+/* botões de golpe */
+.btn-golpe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    border: 3px solid #fff;
+    min-width: 130px;
+}
+.golpe-nome { font-weight: bold; text-transform: capitalize; }
+.golpe-info { font-size: 12px; opacity: 0.85; }
+
+/* modais de mochila / equipe */
+.modal-lista {
+    width: 440px;
+    max-width: 92vw;
+    max-height: 85vh;
+    overflow-y: auto;
+    color: #fff;
+}
+.aviso-modal { color: #ff8787; font-size: 14px; min-height: 18px; margin: 4px 0 10px; }
+.linha-equipe, .linha-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 2px solid #ffcb05;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: Lexend, sans-serif;
+    font-size: 15px;
+}
+.linha-equipe:hover:not(:disabled), .linha-item:hover:not(:disabled) { background: rgba(255, 203, 5, 0.25); }
+.linha-equipe:disabled, .linha-item:disabled { opacity: 0.45; cursor: not-allowed; }
+.linha-equipe img { width: 48px; height: 48px; object-fit: contain; }
+.linha-item img { width: 40px; height: 40px; object-fit: contain; background: #fff; border-radius: 6px; }
+.linha-nome { flex: 1; display: flex; flex-direction: column; text-transform: capitalize; }
+.linha-nome small { font-size: 12px; opacity: 0.8; text-transform: none; }
+.linha-hp { display: flex; flex-direction: column; align-items: flex-end; font-size: 12px; gap: 3px; }
+.mini-hp { display: block; width: 80px; height: 8px; background: #333; border-radius: 4px; overflow: hidden; }
+.mini-hp > span { display: block; height: 100%; }
+.item-qtd { font-weight: bold; color: #ffcb05; font-size: 18px; }
+.mochila-vazia-batalha { color: #ccc; font-size: 15px; padding: 20px 0; }
+
+/* histórico */
+.round > ul { margin: 0; padding-left: 0; list-style: none; }
+.round > ul > li { margin: 3px 0; font-size: 14px; }
+.round > ul > li.log-golpe   { font-weight: bold; }
+.round > ul > li.log-super   { color: #ffa94d; }
+.round > ul > li.log-fraco   { color: #adb5bd; }
+.round > ul > li.log-critico { color: #ffd43b; }
+.round > ul > li.log-erro    { color: #ff8787; }
+.round > ul > li.log-cura    { color: #8ce99a; }
+.round > ul > li.log-item    { color: #74c0fc; font-weight: bold; }
+.round > ul > li.log-status  { color: #da77f2; }
+.round > ul > li.log-desmaio { color: #ff6b6b; font-weight: bold; }
+.round > ul > li.log-troca   { color: #74c0fc; }
+
+/* histórico mais legível sobre a imagem de fundo */
+.logacoes {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    url('/MonsterPE/assets/imgs/Batalha/QuadroLog.jpg');
+}

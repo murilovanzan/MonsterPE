@@ -5,14 +5,12 @@ let carrinho = [];
 function MostrarItem(elementoClicado) {
     let imgElemento = elementoClicado.querySelector('.item-imagem');
     let nomeElemento = elementoClicado.querySelector('.item-nome');
-    let precoElemento = elementoClicado.querySelector('.item-preco');
     let descrElemento = elementoClicado.querySelector('.item-desc');
     let imgUrl = imgElemento.src;
     let nome = nomeElemento.innerText;
-    let precoTexto = precoElemento.innerText; 
-    let precoNumero = parseFloat(precoTexto.replace("R$ ", "").replace(",", "."));
+    let precoNumero = parseFloat(elementoClicado.dataset.preco);
     let descricao = descrElemento ? descrElemento.innerText : "Sem descrição.";
-    itemAtual = { nome: nome, preco: precoNumero };
+    itemAtual = { id: parseInt(elementoClicado.dataset.id), nome: nome, preco: precoNumero };
     quantidadeAtual = 1; 
     
     document.getElementById("modal-nome").innerText = nome;
@@ -36,12 +34,13 @@ function alterarQuantidade(valor) {
 }
 
 function adicionarAoCarrinho() {
-    let indexExistente = carrinho.findIndex(item => item.nome === itemAtual.nome);
+    let indexExistente = carrinho.findIndex(item => item.id === itemAtual.id);
 
     if (indexExistente !== -1) {
         carrinho[indexExistente].quantidade += quantidadeAtual;
     } else {
         carrinho.push({
+            id: itemAtual.id,
             nome: itemAtual.nome,
             preco: itemAtual.preco,
             quantidade: quantidadeAtual
@@ -60,7 +59,7 @@ function removerDoCarrinho(index) {
 function renderizarCarrinho() {
     let lista = document.getElementById("lista-carrinho");
     const botaoComprar = document.getElementById('comprar');
-    botaoComprar.style.display = "flex";
+    botaoComprar.style.display = carrinho.length > 0 ? "flex" : "none";
     lista.innerHTML = "";
     
     let totalValorCarrinho = 0;
@@ -83,4 +82,37 @@ function renderizarCarrinho() {
     document.getElementById("total-carrinho").innerText = " Total carrinho: R$ " + totalValorCarrinho.toFixed(2).replace(".", ",");
 }
 
-finalizarCompra();
+async function finalizarCompra() {
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    const botaoComprar = document.getElementById('comprar');
+    botaoComprar.disabled = true;
+
+    try {
+        const resposta = await fetch("../item/?acao=comprar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                carrinho: carrinho.map(item => ({ id: item.id, quantidade: item.quantidade }))
+            })
+        });
+        const dados = await resposta.json();
+
+        if (dados.sucesso) {
+            // Recarrega a página para a mochila mostrar os itens comprados
+            alert(dados.mensagem);
+            location.reload();
+            return;
+        }
+        alert(dados.mensagem);
+
+    } catch (erro) {
+        console.error("Erro ao comprar:", erro);
+        alert("Não foi possível concluir a compra. Tente novamente.");
+    } finally {
+        botaoComprar.disabled = false;
+    }
+}

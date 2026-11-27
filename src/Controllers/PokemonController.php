@@ -113,6 +113,7 @@
             if(empty(Pokemon::getUsuarioPokemon($_SESSION['usuario']->getId(), 1))){
                 $_SESSION['erroBatalha'] = "Você deve selecionar um pokemon primeiro";
                 header('location: ../main/dashboard.php');
+                exit;
             }
             $this->renderizar("batalha", "main");
         }
