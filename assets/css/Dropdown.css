@@ -1,3 +1,17 @@
+body, main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;               
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}   
 #dropdown-toggle {
     display: none;
 }
@@ -8,9 +22,11 @@
     color: rgb(255, 255, 255);
     font-size: 20px;
     font-family: Lexend, sans-serif;
+    margin-top: -75px; 
 }
 
 .dropdown-btn {
+    margin: 10px;
     background-color: #384cff;
     color:rgb(255, 255, 255);
     padding: 25px;
@@ -18,6 +34,13 @@
     border: solid black 1px;
     cursor: pointer;
     display: inline-block;
+    position: relative; 
+    border-radius: 10px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-left: 70px;
 }
 
 .dropdown-content {
@@ -28,6 +51,41 @@
     z-index: 1;
     max-height: 250px;
     overflow-y: auto;
+}
+.dropdown-btn,
+.dropdown-content button,
+.dropdown-content .dropop {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;               
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+}
+.dropdown-content button,
+.dropdown-content .dropop {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;               
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 0px;
+        
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+    margin-top: 60px;
 }
 .dropdown-content::-webkit-scrollbar {
   width: 8px;
@@ -55,50 +113,50 @@
 }
 
 #drop1{
-    background-color: rgb(255, 0, 0);
+    background-color: red;
     color:white;
     transition: 0.2s;
 }
 #drop2{
-    background-color: #1500ff;
+    background-color: rgb(75, 24, 1);
     color: white;
     transition: 0.2s;
 }
 #drop3{
-    background-color: #ff8000;
+    background-color: green;
     transition: 0.2s;
 }
 #drop4{
-    background-color: #ff00c3;
+    background-color: blue;
     transition: 0.2s;
 }
 #drop5{
-    background-color: #9000ff;
+    background-color: silver;
     color: white;
     transition: 0.2s;
 }
 #drop6{
-    background-color: #ff00a6;
+    background-color: violet;
     color: white;
     transition: 0.2s;
 }
 #drop7{
-    background-color: #05560a;
+    background-color: lightseagreen;
     color: white;
     transition: 0.2s;
 }
 #drop8{
-    background-color: #15868e;
+    background-color: purple;
     color: white;
     transition: 0.2s;
 }
 #drop9{
-    background-color: #b64343;
+    background-color: orange;
     color: white;
     transition: 0.2s;
 }
 #drop10{
-    background-color: #2950ff;
+    background-color: black;
     color: white;
     transition: 0.2s;
 }
@@ -158,7 +216,7 @@
     transition: 0.2s;
 }
 .card{
-    background-image: url('/MonsterPE/assets/imgs/Ultraball1-1.png');
+    background-image: url('/MonsterPE/assets/imgs/pokeballwall.jpg');
     width: 250px;
     height: 250px;
     background-size: cover;
@@ -167,7 +225,6 @@
     border-radius: 6%;
     justify-content: flex-end;
     flex-direction: column;
-
     overflow: hidden;
 }
 .personagem{
@@ -197,7 +254,7 @@
     justify-content: center;
     height: 70px;
     font-size: clamp(0.5rem, 2vw, 1.5rem);
-    color:rgb(251, 255, 0);
+    color:rgb(255, 255, 255);
     font-family: Lexend, sans-serif;
     align-items: center;
     text-align: center;
@@ -220,4 +277,7 @@
     background-color: #0000005b;
     padding: 20px;
     border: #000000b5 solid 1px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: 10px;
 }

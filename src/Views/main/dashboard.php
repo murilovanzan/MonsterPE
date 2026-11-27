@@ -54,7 +54,7 @@
             <a href="../main" class="dashmainclick" id="jogarpoke">JOGAR</a>
         </div>
         <div class="opdashmain">
-            <a id="verpoke" class="dashmainclick">VER POKÉMON</a>
+            <a id="verpoke" class="dashmainclick" style="margin-right:15px;">VER POKÉMON</a>
         </div>
     </aside>
     <main class="maindash">
@@ -72,12 +72,12 @@
         </div>
         <div id="opjogar" class="menugens">
             <h2 class="titulo-geracoes">ESCOLHA UMA AÇÃO</h2>
-            <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png"></button>
-            <button onclick="telaMontarEquipe()">MONTAR EQUIPE</button>        
-            <button onclick="irParaLoja()">IR À LOJA</button>
+            <button onclick="iniciarJogo()">JOGAR <img src="/MonsterPE/assets/imgs/MonsterPE.png" style="height: 35px; width: auto;"></button>
+            <button onclick="telaMontarEquipe()">MONTAR EQUIPE <img src="/MonsterPE/assets/imgs/Equipe2.png" alt="" style="height: 60px; width: auto; transform: scale(1.3); padding-right:50px;"></button>   
+            <button onclick="IrAoCentro()"><img class="pokemart" src="/MonsterPE/assets/imgs/pokecenter.png" alt="" style="height: 60px; margin-top: 10px; width: auto; transform: scale(2.5);"></button>   
+            <button onclick="irParaLoja()"><img class="pokecenter" src="/MonsterPE/assets/imgs/pokemart.png" alt="" style="height: 60px; margin-top: 2px; width: auto; transform: scale(1.6);"></button>
             <button onclick="Creditos()">CRÉDITOS</button>
         </div>
-        
         <div id="voltargen" class="menugens">
             <button onclick="voltarParaGeracoes()">⬅ Voltar para gerações</button>
         <ul id='pokemon'></ul>
@@ -87,7 +87,7 @@
         <img class="logofoot" src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo">
         <div class="opfoot">© 2026 MonsterPE | Todos direitos reservados</div>
         <div class="opfoot" id="2">Entre na nossa comunidade do discord!
-          <a href="https://discord.gg/uaCCbWHex" target="_blank">Clique aqui!</a>
+          <a href="https://discord.gg/6VaQrXhea" target="_blank">Clique aqui!</a>
         </div>
 </footer>
 <script src="../../Models/Pokeapi.js"></script>

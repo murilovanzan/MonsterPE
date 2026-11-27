@@ -99,7 +99,7 @@
         <img class="logofoot" src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo">
         <div class="opfoot">© 2026 MonsterPE | Todos direitos reservados</div>
         <div class="opfoot" id="2">Entre na nossa comunidade do discord!
-          <a href="https://discord.gg/uaCCbWHex" target="_blank">Clique aqui!</a>
+          <a href="https://discord.gg/6VaQrXhea" target="_blank">Clique aqui!</a>
         </div>
 </footer>
 <script src="../../Models/Pokeapi.js"></script>

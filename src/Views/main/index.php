@@ -20,7 +20,7 @@
         <a href="/MonsterPE/src/Views/PagesDavi/guia.php" target="_blank">Guias</a>|
         <a href="/MonsterPE/src/Views/PagesDavi/jogospoke.php" target="_blank">Jogos de Pokémon</a>|
         <a href="/MonsterPE/src/Views/PagesDavi/animes.php" target="_blank">Anime</a>|
-        <a href="https://discord.gg/uaCCbWHex" target="_blank">Discord</a></div>
+        <a href="https://discord.gg/6VaQrXhea" target="_blank">Discord</a></div>
     </nav>
     <main>
         <div class="form">
@@ -47,7 +47,7 @@
         <img class="logofoot" src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo">
         <div class="opfoot">© 2026 MonsterPE | Todos direitos reservados</div>
         <div class="opfoot" id="2">Entre na nossa comunidade do discord!
-          <a href="https://discord.gg/uaCCbWHex" target="_blank">Clique aqui!</a>
+          <a href="https://discord.gg/6VaQrXhea" target="_blank">Clique aqui!</a>
         </div>
 </footer>
 </body>
