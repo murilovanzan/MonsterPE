@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/MonsterPE/assets/css/index.css?v=2">
     <link rel="stylesheet" href="/MonsterPE/assets/css/batalha.css?v=3">
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
+    <script>const BATALHA_ID = <?= (int) ($_SESSION['batalha_id'] ?? 0) ?>;</script>
     <script src="../../../assets/script/batalha.js"></script>
     <script type="module">
         iniciarBatalha();

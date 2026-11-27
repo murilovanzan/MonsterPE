@@ -116,3 +116,51 @@ async function finalizarCompra() {
         botaoComprar.disabled = false;
     }
 }
+
+// ---------- Evolução com a Pedra da Evolução ----------
+let itemEvolucaoId = null;
+
+document.addEventListener("click", (evento) => {
+    const itemUsavel = evento.target.closest(".mochila-usavel");
+    if (itemUsavel) {
+        itemEvolucaoId = parseInt(itemUsavel.dataset.itemId, 10);
+        document.getElementById("modal-evolucao").style.display = "flex";
+        return;
+    }
+
+    const botaoPokemon = evento.target.closest(".btn-evoluir-pokemon");
+    if (botaoPokemon) {
+        evoluirPokemon(botaoPokemon.dataset.id, botaoPokemon);
+    }
+});
+
+function fecharModalEvolucao() {
+    document.getElementById("modal-evolucao").style.display = "none";
+}
+
+async function evoluirPokemon(pokemonId, botao) {
+    if (!itemEvolucaoId) return;
+    if (!confirm("Usar a Pedra da Evolução neste Pokémon? A pedra será gasta.")) return;
+
+    botao.disabled = true;
+    try {
+        const resposta = await fetch("../item/?acao=evoluir", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ pokemon_id: pokemonId, item_id: itemEvolucaoId })
+        });
+        const dados = await resposta.json();
+
+        if (dados.sucesso) {
+            alert(`Parabéns! Seu Pokémon evoluiu para ${dados.nome}!`);
+            location.reload();
+        } else {
+            alert(dados.mensagem || "Não foi possível evoluir o Pokémon.");
+        }
+    } catch (erro) {
+        console.error("Erro ao evoluir:", erro);
+        alert("Não foi possível evoluir o Pokémon. Tente novamente.");
+    } finally {
+        botao.disabled = false;
+    }
+}

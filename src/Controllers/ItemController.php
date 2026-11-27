@@ -46,6 +46,8 @@
             try{
                 $novoSaldo = Item::comprar($_SESSION['usuario']->getId(), $carrinho);
                 $_SESSION['usuario']->setTokens($novoSaldo);
+                LogUsuario::registrar($_SESSION['usuario']->getId(), LogUsuario::COMPRA,
+                    json_encode(['itens' => $carrinho, 'saldo_restante' => $novoSaldo], JSON_UNESCAPED_UNICODE));
 
                 echo json_encode(['sucesso' => true, 'mensagem' => 'Compra realizada com sucesso!', 'saldo' => $novoSaldo]);
             }
@@ -106,6 +108,7 @@
 
             try{
                 $restante = Item::consumir($_SESSION['usuario']->getId(), $itemId);
+                LogUsuario::registrar($_SESSION['usuario']->getId(), LogUsuario::USO_ITEM, "item: " . $itemId);
                 echo json_encode(['sucesso' => true, 'restante' => $restante]);
             }
             catch (InvalidArgumentException $e){
@@ -115,6 +118,55 @@
             catch (Throwable $e){
                 http_response_code(500);
                 echo json_encode(['sucesso' => false, 'mensagem' => 'Erro ao usar o item. Tente novamente.']);
+            }
+        }
+
+        // Usa a Pedra da Evolução para evoluir um Pokémon (fora da batalha)
+        public function evoluir(){
+
+            header('Content-Type: application/json; charset=utf-8');
+
+            if(!isset($_SESSION['usuario'])){
+                http_response_code(401);
+                echo json_encode(['sucesso' => false, 'mensagem' => 'Você deve fazer login antes!']);
+                return;
+            }
+
+            if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+                http_response_code(405);
+                echo json_encode(['sucesso' => false, 'mensagem' => 'Método não permitido.']);
+                return;
+            }
+
+            $dados = json_decode(file_get_contents("php://input"), true);
+            $pokemonId = is_string($dados['pokemon_id'] ?? null) ? $dados['pokemon_id'] : '';
+            $itemId = filter_var($dados['item_id'] ?? null, FILTER_VALIDATE_INT);
+
+            if($pokemonId === '' || $itemId === false || $itemId < 1){
+                http_response_code(400);
+                echo json_encode(['sucesso' => false, 'mensagem' => 'Dados inválidos.']);
+                return;
+            }
+
+            try{
+                $usuarioId = $_SESSION['usuario']->getId();
+                $resultado = Evolucao::evoluir($usuarioId, $pokemonId, $itemId);
+                LogUsuario::registrar($usuarioId, LogUsuario::EVOLUIR,
+                    "pokemon: " . $pokemonId . ", de " . $resultado['nomeAntigo'] . " para " . $resultado['nome']);
+
+                echo json_encode(['sucesso' => true, 'nome' => $resultado['nome'], 'restante' => $resultado['restante']]);
+            }
+            catch (InvalidArgumentException $e){
+                http_response_code(400);
+                echo json_encode(['sucesso' => false, 'mensagem' => $e->getMessage()]);
+            }
+            catch (RuntimeException $e){
+                http_response_code(502);
+                echo json_encode(['sucesso' => false, 'mensagem' => $e->getMessage()]);
+            }
+            catch (Throwable $e){
+                http_response_code(500);
+                echo json_encode(['sucesso' => false, 'mensagem' => 'Erro ao evoluir o Pokémon. Tente novamente.']);
             }
         }
 

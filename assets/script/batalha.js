@@ -13,6 +13,8 @@ let bloqueado = true;         // true enquanto um turno está sendo executado
 let modoEquipe = 'troca';     // 'troca' (voluntária) ou 'forcado' (Pokémon desmaiou)
 let resolverSubstituto = null;
 let fimDeJogo = false;
+let eventosBatalha = [];   // todas as mensagens do combate, enviadas ao log no fim
+let batalhaEnviada = false;
 let ulRoundAtual = null;
 
 const estado = {
@@ -298,6 +300,7 @@ function abrirRound(inicio = false) {
 }
 
 function registrar(texto, classe = '') {
+    eventosBatalha.push({ round: roundN, texto: texto });
     if (!ulRoundAtual) abrirRound(true);
     const li = document.createElement('li');
     li.textContent = texto;
@@ -1090,9 +1093,32 @@ function finalizarBatalha(vencedor) {
         ? `Você venceu em ${roundN} rounds, com ${vivos} Pokémon em pé.`
         : `Todos os seus Pokémon desmaiaram em ${roundN} rounds.`;
     abrirModal('modal-fim');
+    enviarFimBatalha(venceu ? 'vitoria' : 'derrota');
 }
 
-function fugirDaBatalha() {
+// Grava o resultado e o histórico da batalha no log (só envia uma vez por batalha)
+async function enviarFimBatalha(resultado) {
+    if (batalhaEnviada || typeof BATALHA_ID === 'undefined' || !BATALHA_ID) return;
+    batalhaEnviada = true;
+    try {
+        const resposta = await fetch("../pokemon/?acao=finalizarBatalha", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                batalha_id: BATALHA_ID,
+                resultado: resultado,
+                rounds: roundN,
+                eventos: eventosBatalha
+            })
+        });
+        if (!resposta.ok) console.error("Não foi possível registrar a batalha no log.");
+    } catch (erro) {
+        console.error("Erro ao registrar a batalha:", erro);
+    }
+}
+
+async function fugirDaBatalha() {
+    await enviarFimBatalha('fuga');
     location.href = "../main/dashboard.php";
 }
 

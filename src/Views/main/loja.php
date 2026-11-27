@@ -19,6 +19,7 @@
     require_once '../../../assets/script/restricoes.php';
     verificaLogin();
     $mochila = Item::getInventario($_SESSION['usuario']->getId());
+    $pokemonsUsuario = Pokemon::getTodosDoUsuario($_SESSION['usuario']->getId());
 ?>
 
 <style>
@@ -72,6 +73,38 @@
         color: #ccc;
         font-size: 14px;
         margin-top: 12px;
+    }
+    .mochila-usavel {
+        cursor: pointer;
+        border-color: #ffcb05;
+    }
+    .mochila-usavel:hover {
+        background: rgba(255, 203, 5, 0.25);
+    }
+    .lista-evolucao {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 50vh;
+        overflow-y: auto;
+        margin-top: 12px;
+    }
+    .lista-evolucao button {
+        padding: 10px 14px;
+        font-size: 15px;
+        text-align: left;
+        border: 2px solid #333;
+        border-radius: 5px;
+        background: #444;
+        color: #fff;
+        cursor: pointer;
+    }
+    .lista-evolucao button:hover:not(:disabled) {
+        background: #5b5a5a;
+    }
+    .lista-evolucao button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 </style>
 
@@ -134,7 +167,7 @@
                                     <p class="mochila-vazia">Sua mochila está vazia.</p>
                                 <?php endif; ?>
                                 <?php foreach ($mochila as $m): ?>
-                                    <div class="mochila-item" title="<?= htmlspecialchars($m['descricao']) ?>">
+                                    <div class="mochila-item<?= strtolower(trim($m['nome'])) === 'evolution stone' ? ' mochila-usavel' : '' ?>" data-item-id="<?= (int) $m['id'] ?>" title="<?= htmlspecialchars($m['descricao']) ?><?= strtolower(trim($m['nome'])) === 'evolution stone' ? ' (clique para evoluir um Pokémon)' : '' ?>">
                                         <img src="<?= htmlspecialchars(Item::getImagem($m['nome'])) ?>" alt="<?= htmlspecialchars($m['nome']) ?>">
                                         <span><?= htmlspecialchars($m['nome']) ?></span>
                                         <span class="mochila-qtd">x<?= (int) $m['quantidade'] ?></span>
@@ -181,6 +214,23 @@
 <script src="../../../assets/script/time.js"></script>
 <script src="../../../assets/script/loja.js"></script>
 
+    <div id="modal-evolucao" class="modal-fundo" style="display: none;">
+        <div class="modal-card" style="width: 380px; text-align: center;">
+            <span class="btn-fechar" onclick="fecharModalEvolucao()">X</span>
+            <h3>Evoluir Pokémon</h3>
+            <p style="font-size: 14px; color: #ccc;">Escolha o Pokémon que vai evoluir com a Pedra da Evolução.</p>
+            <div class="lista-evolucao">
+                <?php if (empty($pokemonsUsuario)): ?>
+                    <p style="color: #ccc;">Você ainda não tem Pokémon.</p>
+                <?php endif; ?>
+                <?php foreach ($pokemonsUsuario as $p): ?>
+                    <button type="button" class="btn-evoluir-pokemon" data-id="<?= htmlspecialchars($p['id']) ?>">
+                        <?= htmlspecialchars($p['apelido']) ?> (Lv <?= (int) $p['nivel'] ?>)<?= ((int) $p['ativo']) === 1 ? ' • no time' : '' ?>
+                    </button>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
     <div id="modal-avatar" class="modal-fundo" style="display: none;">
         <div class="modal-card" style="width: 360px; text-align: center;">
             <span class="btn-fechar" onclick="document.getElementById('modal-avatar').style.display='none'">X</span>

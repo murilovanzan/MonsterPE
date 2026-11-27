@@ -116,6 +116,7 @@ function toggleDropdown(event) {
                 <span class="dropdown-nome">${nomeBd}</span>
                 <span class="dropdown-email">${emailBd}</span>
                 <a class="btn-editar-usuario" onclick="document.getElementById('modal-avatar').style.display='flex'" style="cursor:pointer;">Editar avatar</a>
+                <a href="/MonsterPE/src/Views/usuario/?acao=editar" class="btn-editar-usuario">Editar Informações</a>
             </div>
         `;
         event.target.parentElement.appendChild(dropdown);

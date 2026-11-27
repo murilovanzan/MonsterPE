@@ -195,6 +195,15 @@ class Pokemon implements JsonSerializable{
 
     }
 
+    // Todos os Pokémon do usuário (time e caixa), para a tela de evolução
+    public static function getTodosDoUsuario($usuario_id){
+        $db = getConnection();
+        $sql = "SELECT id, apelido, nivel, ativo FROM pokemon WHERE usuario_id = :usuario_id ORDER BY ativo DESC, posicao ASC;";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([':usuario_id' => $usuario_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function desativarTime($usuario_id){
         $db = getConnection();
         $sql = "UPDATE pokemon SET ativo = 0, posicao = null WHERE usuario_id = :id";
