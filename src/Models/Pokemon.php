@@ -1,175 +1,249 @@
 <?php
 
-    class Pokemon {
+class Pokemon implements JsonSerializable{
 
-        private ?int $id = null;
-        private ?string $nome = null;
-        private ?string $descricao = null;
-        private ?int $geracao = null;
-        private ?int $hp = null;
-        private ?int $speed = null;
-        private ?int $attack = null;
-        private ?int $defense = null;
-        private ?int $spAttack = null;
-        private ?int $spDefense = null;
+    private ?string $id = null;
+    private ?int $usuario_id = null;
+    private ?int $api_id = null;
+    private ?string $apelido = null;
+    private ?int $nivel = null;
+    private ?int $hp = null;
+    private ?int $speed = null;
+    private ?int $attack = null;
+    private ?int $spAttack = null;
+    private ?int $defense = null;
+    private ?int $spDefense = null;
+    private ?int $posicao = null;
+    private ?int $item = null;
+    private ?int $status = null;
+    private ?int $ativo = null;
 
-        public function __construct(?string $nome = null, ?string $descricao = null, ?int $geracao = null, ?int $hp = null, ?int $speed = null, ?int $attack = null, ?int $defense = null, ?int $spAttack = null, ?int $spDefense = null) {
-            
-            if(!isset($nome) && !isset($descricao) && !isset($geracao) && !isset($hp) && !isset($speed) && !isset($attack) && !isset($defense) && !isset($spAttack) && !isset($spDefense)) return;
+    public function jsonSerialize(): mixed {
+        return [
+            'id'         => $this->id,
+            'api_id'     => $this->api_id,
+            'apelido'    => $this->apelido,
+            'nivel'      => $this->nivel,
+            'hp'         => $this->hp,
+            'speed'      => $this->speed,
+            'attack'     => $this->attack,
+            'spAttack'   => $this->spAttack,
+            'defense'    => $this->defense,
+            'spDefense'  => $this->spDefense,
+            'posicao'    => $this->posicao,
+            'item'       => $this->item,
+            'status'     => $this->status,
+            'ativo'      => $this->ativo
+        ];
+    }
+
+    public function __construct(
+        ?string $id = null,
+        ?int $usuario_id = null,
+        ?int $api_id = null,
+        ?string $apelido = null,
+        ?int $nivel = null,
+        ?int $hp = null,
+        ?int $speed = null,
+        ?int $attack = null,
+        ?int $spAttack = null,
+        ?int $defense = null,
+        ?int $spDefense = null,
+        ?int $posicao = null,
+        ?int $item = null,
+        ?int $status = null,
+        ?int $ativo = null
+    ) {
+        if (!isset($usuario_id) && !isset($api_id)) return;
         
-            $this->nome = $nome;
-            $this->descricao = $descricao;
-            $this->geracao = $geracao;
-            $this->hp = $hp;
-            $this->speed = $speed;
-            $this->attack = $attack;
-            $this->defense = $defense;
-            $this->spAttack = $spAttack;
-            $this->spDefense = $spDefense;
-        }
+        $this->id = $id;
+        $this->usuario_id = $usuario_id;
+        $this->api_id = $api_id;
+        $this->apelido = $apelido;
+        $this->nivel = $nivel;
+        $this->hp = $hp;
+        $this->speed = $speed;
+        $this->attack = $attack;
+        $this->spAttack = $spAttack;
+        $this->defense = $defense;
+        $this->spDefense = $spDefense;
+        $this->posicao = $posicao;
+        $this->item = $item;
+        $this->status = $status;
+        $this->ativo = $ativo;
+    }
 
-        public function getId(): ?int {
-            return $this->id;
-        }
-        public function getNome(): ?string {
-            return $this->nome;
-        }
-        public function getDescricao(): ?string {
-            return $this->descricao;
-        }
-        public function getGeracao(): ?int {
-            return $this->geracao;
-        }
-        public function getHp(): ?int {
-            return $this->hp;
-        }
-        public function getSpeed(): ?int {
-            return $this->speed;
-        }
-        public function getAttack(): ?int {
-            return $this->attack;
-        }
-        public function getDefense(): ?int {
-            return $this->defense;
-        }
-        public function getSpAttack(): ?int {
-            return $this->spAttack;
-        }
-        public function getSpDefense(): ?int {
-            return $this->spDefense;
-        }
+    // --- GETTERS ---
+    public function getId() { return $this->id; }
+    public function getUsuarioId() { return $this->usuario_id; }
+    public function getApiId() { return $this->api_id; }
+    public function getApelido() { return $this->apelido; }
+    public function getNivel() { return $this->nivel; }
+    public function getHp() { return $this->hp; }
+    public function getSpeed() { return $this->speed; }
+    public function getAttack() { return $this->attack; }
+    public function getSpAttack() { return $this->spAttack; }
+    public function getDefense() { return $this->defense; }
+    public function getSpDefense() { return $this->spDefense; }
+    public function getPosicao() { return $this->posicao; }
+    public function getItem() { return $this->item; }
+    public function getStatus() { return $this->status; }
+    public function getAtivo() { return $this->ativo; }
+
+    // --- SETTERS ---
+    public function setId($id = null) { 
         
-        public function setNome(?string $nome): void {
-            $this->nome = $nome;
-        }
-        public function setDescricao(?string $descricao): void {
-            $this->descricao = $descricao;
-        }
-        public function setGeracao(?int $geracao): void {
-            $this->geracao = $geracao;
-        }
-        public function setHp(?int $hp): void {
-            $this->hp = $hp;
-        }
-        public function setSpeed(?int $speed): void {
-            $this->speed = $speed;
-        }
-        public function setAttack(?int $attack): void {
-            $this->attack = $attack;
-        }
-        public function setDefense(?int $defense): void {
-            $this->defense = $defense;
-        }
-        public function setSpAttack(?int $spAttack): void {
-            $this->spAttack = $spAttack;
-        }
-        public function setSpDefense(?int $spDefense): void {
-            $this->spDefense = $spDefense;
+        if(is_null($id)){
+            $id = self::gerarUuidV7();
         }
 
-        public function salvar(){
-            $db = getConnection();
-            
-            if($this->id){
-                $sql = "UPDATE pokemon SET nome = :nome, descricao = :descricao, geracao = :geracao, hp = :hp, speed = :speed, attack = :attack, defense = :defense, spAttack = :spAttack, spDefense = :spDefense WHERE id = :id;";
-                $stmt = $db->prepare($sql);
-                return $stmt->execute([ ':nome' => $this->nome, ':descricao' => $this->descricao, ':geracao' => $this->geracao, ':hp' => $this->hp, ':speed' => $this->speed, ':attack' => $this->attack, ':defense' => $this->defense, ':spAttack' => $this->spAttack, ':spDefense' => $this->spDefense, ':id' => $this->id]);
-            }
-            
-            $sql = "INSERT INTO pokemon (nome, descricao, geracao, hp, speed, attack, defense, spAttack, spDefense) VALUES (:nome, :descricao, :geracao, :hp, :speed, :attack, :defense, :spAttack, :spDefense);";
-            $stmt = $db->prepare($sql);
-            
-            $inserido = $stmt->execute([':nome' => $this->nome, ':descricao' => $this->descricao, ':geracao' => $this->geracao, ':hp' => $this->hp, ':speed' => $this->speed, ':attack' => $this->attack, ':defense' => $this->defense, ':spAttack' => $this->spAttack, ':spDefense' => $this->spDefense]);
-            
-            if($inserido){
-                $this->id = (int) $db->lastInsertId();
-            }
-            
-            return $inserido;
-        }
+        $this->id = $id; 
+    }
+    public function setUsuarioId($usuario_id) { $this->usuario_id = $usuario_id; }
+    public function setApiId($api_id) { $this->api_id = $api_id; }
+    public function setApelido($apelido) { $this->apelido = $apelido; }
+    public function setNivel($nivel) { $this->nivel = $nivel; }
+    public function setHp($hp) { $this->hp = $hp; }
+    public function setSpeed($speed) { $this->speed = $speed; }
+    public function setAttack($attack) { $this->attack = $attack; }
+    public function setSpAttack($spAttack) { $this->spAttack = $spAttack; }
+    public function setDefense($defense) { $this->defense = $defense; }
+    public function setSpDefense($spDefense) { $this->spDefense = $spDefense; }
+    public function setPosicao($posicao) { $this->posicao = $posicao; }
+    public function setItem($item) { $this->item = $item; }
+    public function setStatus($status) { $this->status = $status; }
+    public function setAtivo($ativo) { $this->ativo = $ativo; }
 
-        public static function delete($id){
-            $db = getConnection();
-            $sql = "DELETE FROM pokemon WHERE id = :id;";
-            $stmt = $db->prepare($sql);
-            return $stmt->execute([':id' => $id]);
-        }
-
-        public function getTodos(){
-            $db = getConnection();
-            $sql = "SELECT * FROM pokemon;";
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll();
-        }
-
-        public static function getById($id, $class = true){
-            $db = getConnection();
-            $sql = "SELECT * FROM pokemon WHERE id = :id;";
-            $stmt = $db->prepare($sql);
-            $stmt->execute([':id' => $id]);
-            if($class){
-                $obj = $stmt->fetch(PDO::FETCH_OBJ);
-                if(!$obj){
-                    throw new Exception('ID não encontrado');
-                }
-                return self::hydrate($obj);
-            }
-            else{
-                return $stmt->fetch();
-            }
-        }
-
-        public static function getByColumn($columnValue, $column){
+    public function salvar() {
+        $db = getConnection();
+        if(is_null($this->id)){
+            $this->setId();
+            $sql = "INSERT INTO pokemon (id, usuario_id, api_id, apelido, nivel, hp, speed, attack, spAttack, defense, spDefense, posicao, item, status, ativo) 
+                    VALUES (:id, :u_id, :api_id, :ap, :n, :hp, :s, :a, :sa, :d, :sd, :pos, :item, :st, :ativo);";
             
-            $db = getConnection();
-            $sql = "SELECT * FROM pokemon WHERE $column = :valor";
             $stmt = $db->prepare($sql);
-            $stmt->execute([':valor' => $columnValue]);
-            $obj = $stmt->fetch(PDO::FETCH_OBJ);
-            if(!$obj){
-                return $obj;
-            }
-            return self::hydrate($obj);
-            
-        }
+            return $stmt->execute([
+                ':id'    => $this->id,
+                ':u_id'  => $this->usuario_id,
+                ':api_id'     => $this->api_id,
+                ':ap'     => $this->apelido,
+                ':n'     => $this->nivel,
+                ':hp'    => $this->hp,
+                ':s'     => $this->speed,
+                ':a'     => $this->attack,
+                ':sa'    => $this->spAttack,
+                ':d'     => $this->defense,
+                ':sd'    => $this->spDefense,
+                ':pos'   => $this->posicao,
+                ':item'  => $this->item,
+                ':st'    => $this->status,
+                ':ativo' => $this->ativo
+            ]);
         
-        public static function hydrate($obj){
-                $pokemon = new self();
-                $pokemon->id = $obj->id;
-                $pokemon->nome = $obj->nome;
-                $pokemon->descricao = $obj->descricao;
-                $pokemon->geracao = $obj->geracao;
-                $pokemon->hp = $obj->hp;
-                $pokemon->speed = $obj->speed;
-                $pokemon->attack = $obj->attack;
-                $pokemon->spAttack = $obj->spAttack;
-                $pokemon->defense = $obj->defense;
-                $pokemon->spDefense = $obj->spDefense;
-                return $pokemon;
+        }
+        else{
+            $sql = "UPDATE pokemon SET usuario_id = :u_id, api_id = :api_id, apelido = :ap, nivel = :n, hp = :hp, speed = :s, attack = :a, spAttack = :sa, defense = :d, spDefense = :sd, posicao = :pos, item = :item, status = :st, ativo = :ativo WHERE id = :id;";
+            $stmt = $db->prepare($sql);
+            return $stmt->execute([
+                ':u_id'  => $this->usuario_id,
+                ':api_id'=> $this->api_id,
+                ':ap'    => $this->apelido,
+                ':n'     => $this->nivel,
+                ':hp'    => $this->hp,
+                ':s'     => $this->speed,
+                ':a'     => $this->attack,
+                ':sa'    => $this->spAttack,
+                ':d'     => $this->defense,
+                ':sd'    => $this->spDefense,
+                ':pos'   => $this->posicao,
+                ':item'  => $this->item,
+                ':st'    => $this->status,
+                'ativo'  => $this->ativo,
+                ':id'    => $this->id
+            ]);  
+        }
+    }
+
+    public static function deletePokemon($id){
+        $db = getConnection();
+        $sql = "DELETE FROM pokemon WHERE id = :id;";
+        $stmt = $db->prepare($sql);
+        return $stmt->execute([':id' => $id]);
+    }
+
+    public static function getUsuarioPokemon($usuario_id, $ativo = null, $objeto = true) {
+
+        $db = getConnection();
+        $sql = "SELECT * FROM pokemon WHERE usuario_id = :usuario_id AND ativo = :ativo ORDER BY posicao;";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+        ':usuario_id' => $usuario_id,
+        ':ativo' => $ativo
+        ]);
+
+        if(!$objeto){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        else{
+            $resultados = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $pokemonSalvo = [];
+            foreach ($resultados as $obj) {
+                array_push($pokemonSalvo, self::hydrate($obj));
+            }
+            return $pokemonSalvo;
         }
 
     }
 
+    // Todos os Pokémon do usuário (time e caixa), para a tela de evolução
+    public static function getTodosDoUsuario($usuario_id){
+        $db = getConnection();
+        $sql = "SELECT id, apelido, nivel, ativo FROM pokemon WHERE usuario_id = :usuario_id ORDER BY ativo DESC, posicao ASC;";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([':usuario_id' => $usuario_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-?>
+    public static function desativarTime($usuario_id){
+        $db = getConnection();
+        $sql = "UPDATE pokemon SET ativo = 0, posicao = null WHERE usuario_id = :id";
+        $stmt = $db->prepare($sql);
+        $timeInativo = $stmt->execute([':id' => $usuario_id]);
+    }
+
+    public static function hydrate($obj) {
+        $poke = new self();
+        $poke->id         = $obj->id;
+        $poke->usuario_id = $obj->usuario_id;
+        $poke->api_id    = $obj->api_id;
+        $poke->apelido    = $obj->apelido;
+        $poke->nivel      = $obj->nivel;
+        $poke->hp         = $obj->hp;
+        $poke->speed      = $obj->speed;
+        $poke->attack     = $obj->attack;
+        $poke->spAttack   = $obj->spAttack;
+        $poke->defense    = $obj->defense;
+        $poke->spDefense  = $obj->spDefense;
+        $poke->posicao    = $obj->posicao;
+        $poke->item       = $obj->item;
+        $poke->status     = $obj->status;
+        $poke->ativo      = $obj->ativo;
+        return $poke;
+    }
+
+    private static function gerarUuidV7(): string {
+        
+        $tempoMs = (int) (microtime(true) * 1000);
+        
+        $aleatorio = random_bytes(10);
+        
+        $bytes = pack('J', $tempoMs << 16);
+        $bytes = substr($bytes, 0, 6) . $aleatorio;
+        
+        $bytes[6] = chr((ord($bytes[6]) & 0x0f) | 0x70);
+        $bytes[8] = chr((ord($bytes[8]) & 0x3f) | 0x80);
+        
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($bytes), 4));
+    }
+
+}

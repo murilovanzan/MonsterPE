@@ -50,6 +50,7 @@
 </body>
 </html>
 <?php
-
+    $_SESSION['username'] = $dadosDoBanco['username'];
+    $_SESSION['email'] = $dadosDoBanco['email'];
     $errorMessage = $_GET['errorMessage'] ?? '';
 ?>
