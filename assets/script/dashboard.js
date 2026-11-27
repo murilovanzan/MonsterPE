@@ -42,8 +42,8 @@ function iniciarJogo(){
 function IrAoCentro() {
     window.location.href = "../main/centro.php";
 }
-function IrALoja() {
-    window.location.href = "../main/loja.php";
+function irParaLoja() {
+    window.location.href = "../item/?acao=loja";
 }
 function Creditos() {
     window.location.href = "../main/creditos.php";

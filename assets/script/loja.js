@@ -59,6 +59,8 @@ function removerDoCarrinho(index) {
 
 function renderizarCarrinho() {
     let lista = document.getElementById("lista-carrinho");
+    const botaoComprar = document.getElementById('comprar');
+    botaoComprar.style.display = "flex";
     lista.innerHTML = "";
     
     let totalValorCarrinho = 0;
@@ -80,3 +82,5 @@ function renderizarCarrinho() {
 
     document.getElementById("total-carrinho").innerText = " Total carrinho: R$ " + totalValorCarrinho.toFixed(2).replace(".", ",");
 }
+
+finalizarCompra();

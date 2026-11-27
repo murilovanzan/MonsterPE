@@ -1,4 +1,5 @@
 <?php
+
     $caminhoModelo = $_SERVER['DOCUMENT_ROOT'] . '/MonsterPE/src/Models/Usuario.php';
 
     if (file_exists($caminhoModelo)) {
@@ -37,6 +38,9 @@
     else{
         $salvarTimeErro = "";
     }
+
+    require_once '../../../assets/script/restricoes.php';
+    verificaLogin();
 
 ?>
 <!DOCTYPE html>

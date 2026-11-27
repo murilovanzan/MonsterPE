@@ -1,4 +1,5 @@
 <?php
+    
     $caminhoModelo = $_SERVER['DOCUMENT_ROOT'] . '/MonsterPE/src/Models/Usuario.php';
 
     if (file_exists($caminhoModelo)) {
@@ -15,6 +16,8 @@
         $nomeSeguro = $_SESSION['usuario']->getUsername();
         $emailSeguro = $_SESSION['usuario']->getEmail();
     }
+    require_once '../../../assets/script/restricoes.php';
+    verificaLogin();
 ?>
 
 <style>
@@ -71,70 +74,60 @@
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Envenenamento.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/awakening.jpeg" alt="Awakening" class="item-imagem">
                             <span class="item-nome">Awakening</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Sono.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/burnheal.png" alt="Burn Heal" class="item-imagem">
                             <span class="item-nome">Burn Heal</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Queimadura.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/full heal.png" alt="Full Heal" class="item-imagem">
                             <span class="item-nome">Full Heal</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura um Pokémon de status de Envenenamento, Sono, Congelamento, Paralisia e Queimadura, sem recuperar HP.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/fullrestore.png" alt="Full Restore" class="item-imagem">
                             <span class="item-nome">Full Restore</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura 100% do HP e todos status.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/hyperpotion.jpeg" alt="Hyper Potion" class="item-imagem">
                             <span class="item-nome">Hyper Potion</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura um 200HP de um pokémon que não esteja desmaiado.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/iceheal.png" alt="Ice Heal" class="item-imagem">
                             <span class="item-nome">Ice Heal</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Congelamento.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/maxpotion.jpeg" alt="Max Potion" class="item-imagem">
                             <span class="item-nome">Max Potion</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura 100% do HP de um pokémon que não esteja desmaiado.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/paralyzeheal.jpeg" alt="Paralyze Heal" class="item-imagem">
                             <span class="item-nome">Paralyze Heal</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura um Pokémon do estado de Paralisia.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/Potion.jpeg" alt="Potion" class="item-imagem">
                             <span class="item-nome">Potion</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura 20HP de um pokémon que não esteja desmaiado.</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/rarecandy.jpeg" alt="Rare Candy" class="item-imagem">
                             <span class="item-nome">Rare Candy</span>
@@ -142,42 +135,16 @@
                             <span class="item-desc" style="display: none;">Aumenta um nível de um pokémon.</span>
                         </div>
                         <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/rarecandy.jpeg" alt="Rare Candy" class="item-imagem">
-                            <span class="item-nome"> 10 X Rare Candy</span>
-                            <span class="item-preco">R$ 100,00</span>
-                            <span class="item-desc" style="display: none;">Aumenta um nível de um pokémon.</span>
-                        </div>
-
-                        <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/revive.png" alt="Revive Super (RS)" class="item-imagem">
                             <span class="item-nome">Revive Super (RS)</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Tira o pokémon do estado de desmaiado e cura 50% de seu HP</span>
                         </div>
-
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/superpotion.png" alt="Super Potion" class="item-imagem">
                             <span class="item-nome">Super Potion</span>
                             <span class="item-preco">R$ 10,00</span>
                             <span class="item-desc" style="display: none;">Cura 50HP de um pokémon que não esteja desmaiado.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/honey.png" alt="Honey" class="item-imagem">
-                            <span class="item-nome">Sweet honey</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Serve para atrair pokémons e deixá-los confusos.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/redorb.png" alt="Ruby" class="item-imagem">
-                            <span class="item-nome">Precious Ruby</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">Pode te salvar de grandes fumaceiros.</span>
-                        </div>
-                        <div class="slot-item" onclick="MostrarItem(this)">
-                            <img src="/MonsterPE/assets/imgs/Loja/Egg.jpeg" alt="Lucky Egg" class="item-imagem">
-                            <span class="item-nome">Lucky Egg</span>
-                            <span class="item-preco">R$ 10,00</span>
-                            <span class="item-desc" style="display: none;">O PascualOVO da sorte serve para aumentar a amizade com seu pokémon.</span>
                         </div>
                         <div class="slot-item" onclick="MostrarItem(this)">
                             <img src="/MonsterPE/assets/imgs/Loja/evolutionstone.png" alt="Pedra da evolução" class="item-imagem">
@@ -193,14 +160,14 @@
                     <div class="areacompras">
                         <div class="area-pesquisa">
                             <h2 class="titulo-geracoes" style="font-size: 30px;">CARTEIRA</h2>
-                            <div class="btn-buscar" style="align-self: center;"> R$ XX,XX</div>
+                            <div class="btn-buscar" style="align-self: center;"> R$ <?= $_SESSION['usuario']->getTokens() ?></div>
                         </div>
                         <div class="area-pesquisa">
                             <h2 class="titulo-geracoes" style="font-size: 30px;">CARRINHO</h2>
                             <div id="total-carrinho" class="btn-buscar" style="align-self: center; font-size: 12px; font-family: Lexend, sans-serif;"></div>
                             <div id="lista-carrinho" style="width: 100%; margin-top: 20px; color: white;"></div>
                         </div>
-                        
+                        <button type="button" onclick="finalizarCompra()" style="display: none;" id="comprar">Comprar</button>
                     </div>
             </div>
         </div>

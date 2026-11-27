@@ -16,8 +16,6 @@ body, main {
     display: none;
 }
 
-
-
 .dropdown {
     position: relative;
     display: inline-block;
@@ -27,13 +25,12 @@ body, main {
     margin-top: -75px; 
 }
 
-
 .dropdown-btn {
     margin: 10px;
     background-color: #384cff;
-    color: rgb(255, 255, 255);
-    padding: 8px 24px; 
-    font-size: 20px;
+    color:rgb(255, 255, 255);
+    padding: 25px;
+    font-size: 25px;
     border: solid black 1px;
     cursor: pointer;
     display: inline-block;
@@ -47,15 +44,11 @@ body, main {
 }
 
 .dropdown-content {
-    background-size: contain;
     display: none;
     position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%); 
     min-width: 140px;
     background-color: #000000ca;
-    z-index: 100;
+    z-index: 1;
     max-height: 250px;
     overflow-y: auto;
 }
@@ -110,10 +103,12 @@ body, main {
     min-width: 110px;
     text-decoration: none;
 }
-
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
 #dropdown-toggle:checked + .dropdown-btn + .dropdown-content {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     flex-direction: column;
 }
 
