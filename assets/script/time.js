@@ -411,10 +411,6 @@ async function showMove(){
 
     move = await getByUrl(`https://pokeapi.co/api/v2/move/${input}`);
     
-    if(move.damage_class.name == "status"){
-        telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Movimento de status não são permitidos.<br>Aguarde Futuras Atualizações!</p>";
-        return;
-    }
     if(!verificaMovePokemon(timeEscolhido[pokemonSelecionado].moves, move.name)){
         telaResultado.innerHTML = "<p style='color: red; font-weight: bold;'>Movimento não permitido para este Pokemon!</p>";
         return;

@@ -8,7 +8,14 @@
     <link rel="icon" type="image/png" href="/MonsterPE/assets/imgs/MasterballIcon.png">
     <style>
     body {
-        font-family: 'Lexend', sans-serif;
+        font-family: 'Poppins', sans-serif;
+    font-weight: 600;               
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     }
     .type-box {
         position: fixed;
@@ -141,11 +148,11 @@
     <nav style="padding-top: 20px;">
         <div class="logonav"><a href="/MonsterPE/src/Views/main/"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav">
-        <a href="/MonsterPE/src/Views/PagesDavi/duvidas.php" target="_blank">Dúvidas</a>|
-        <a href="/MonsterPE/src/Views/PagesDavi/guia.php" target="_blank">Guias</a>|
-        <a href="/MonsterPE/src/Views/PagesDavi/jogospoke.php" target="_blank">Jogos de Pokémon</a>|
-        <a href="/MonsterPE/src/Views/PagesDavi/animes.php" target="_blank">Anime</a>|
-        <a href="https://discord.gg/uaCCbWHex" target="_blank">Discord</a></div>
+        <a href="/MonsterPE/src/Views/PagesDavi/duvidas.php">Dúvidas</a>|
+        <a href="/MonsterPE/src/Views/PagesDavi/guia.php">Guias</a>|
+        <a href="/MonsterPE/src/Views/PagesDavi/jogospoke.php">Jogos de Pokémon</a>|
+        <a href="/MonsterPE/src/Views/PagesDavi/animes.php">Anime</a>|
+        <a href="https://discord.gg/uaCCbWHex">Discord</a></div>
     </nav>
     <main class="mainguia">
         <div class="descrito">
@@ -546,7 +553,7 @@
         <img class="logofoot" src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo">
         <div class="opfoot">© 2026 MonsterPE | Todos direitos reservados</div>
         <div class="opfoot" id="2">Entre na nossa comunidade do discord!
-          <a href="https://discord.gg/uaCCbWHex">Clique aqui!</a>
+          <a href="https://discord.gg/6VaQrXhea">Clique aqui!</a>
         </div>
 </footer>
 </body>

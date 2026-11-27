@@ -71,8 +71,8 @@
         }
 
     </style>
-    <script src="../../Models/Pokeapi.js"></script>
-    <script src="../../../assets/script/time.js"></script>
+<script src="../../Models/Pokeapi.js"></script>
+<script src="../../../assets/script/centro.js"></script>
     <script type="module">
         getPokemonAndMoves();
     </script>

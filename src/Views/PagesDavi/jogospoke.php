@@ -12,32 +12,33 @@
     <nav>
         <div class="logonav"><a href="/MonsterPE/src/Views/main/"><img src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo"></a></div>
         <div class="opnav">
-        <a href="/MonsterPE/src/Views/PagesDavi/duvidas.php" target="_blank">Dúvidas</a>|
-        <a href="/MonsterPE/src/Views/PagesDavi/guia.php" target="_blank">Guias</a>|
-        <a href="/MonsterPE/src/Views/PagesDavi/jogospoke.php" target="_blank">Jogos de Pokémon</a>|
-        <a href="/MonsterPE/src/Views/PagesDavi/animes.php" target="_blank">Anime</a>|
-        <a href="https://discord.gg/uaCCbWHex" target="_blank">Discord</a></div>
+        <a href="/MonsterPE/src/Views/PagesDavi/duvidas.php">Dúvidas</a>|
+        <a href="/MonsterPE/src/Views/PagesDavi/guia.php">Guias</a>|
+        <a href="/MonsterPE/src/Views/PagesDavi/jogospoke.php" >Jogos de Pokémon</a>|
+        <a href="/MonsterPE/src/Views/PagesDavi/animes.php">Anime</a>|
+        <a href="https://discord.gg/uaCCbWHex">Discord</a></div>
     </nav>
     <main style="padding-bottom: 100px;">
+        <div class="titlegen" id="tituloGen"></div>
         <div class="container">
      <div class="dropdown">
         <input type="checkbox" id="dropdown-toggle">
-        <label for="dropdown-toggle" class="dropdown-btn">Geração</label>
+        <label for="dropdown-toggle" class="dropdown-btn">Ver geração</label>
         <div class="dropdown-content">
-            <button onclick="genx('gen1')"><a>1° geração</a></button>
-            <button onclick="genx('gen2')"><a>2° geração</a></button>
-            <button onclick="genx('gen3')"><a>3° geração</a></button>
-            <button onclick="genx('gen4')"><a>4° geração</a></button>
-            <button onclick="genx('gen5')"><a>5° geração</a></button>
-            <button onclick="genx('gen6')"><a>6° geração</a></button>
-            <button onclick="genx('gen7')"><a>7° geração</a></button>
-            <button onclick="genx('gen8')"><a>8° geração</a></button>
-            <button onclick="genx('gen9')"><a>9° geração</a></button>
-            <button onclick="genx('gen0')"><a>sem geração</a></button> 
+            <button onclick="genx('gen1')" id="drop1"><a>1° geração</a></button>
+            <button onclick="genx('gen2')" id="drop2"><a>2° geração</a></button>
+            <button onclick="genx('gen3')" id="drop3" ><a>3° geração</a></button>
+            <button onclick="genx('gen4')" id="drop4"><a>4° geração</a></button>
+            <button onclick="genx('gen5')" id="drop5"><a>5° geração</a></button>
+            <button onclick="genx('gen6')" id="drop6"><a>6° geração</a></button>
+            <button onclick="genx('gen7')" id="drop7"><a>7° geração</a></button>
+            <button onclick="genx('gen8')" id="drop8"><a>8° geração</a></button>
+            <button onclick="genx('gen9')" id="drop9"><a>9° geração</a></button>
+            <button onclick="genx('gen0')" id="drop10"><a>sem geração</a></button> 
         </div>
     </div>
     </div>
-    <div class="titlegen" id="tituloGen"></div>
+    
 
 <div class="cardes" id="listaJogos"></div>
 
@@ -73,7 +74,16 @@ gen1: {
         {
             nome: "Pokémon Yellow",
             imagem: "Pokemon_Yellow.webp"
-        }
+        },
+        {
+            nome: "Pokémon Fire Red ",
+            imagem: "FireRed_boxart.webp"
+        },
+        {
+            nome: "Pokémon Leaf Green",
+            imagem: "LeafGreen_boxart.webp"
+        },
+        
     ]
 },
 
@@ -307,7 +317,7 @@ genx("gen1");
         <img class="logofoot" src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo">
         <div class="opfoot">© 2026 MonsterPE | Todos direitos reservados</div>
         <div class="opfoot" id="2">Entre na nossa comunidade do discord!
-          <a href="https://discord.gg/uaCCbWHex">Clique aqui!</a>
+          <a href="https://discord.gg/6VaQrXhea">Clique aqui!</a>
         </div>
 </footer>
 </body>

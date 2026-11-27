@@ -16,6 +16,25 @@
         $emailSeguro = $_SESSION['usuario']->getEmail();
     }
 ?>
+
+<style>
+    html {
+        height: auto;
+        min-height: 100%;
+    }
+
+    body {
+        height: auto;
+        overflow-y: visible;
+        overflow-x: hidden;
+    }
+
+    #tela-equipe.menugens {
+        max-height: none;
+        overflow-y: visible;
+    }
+</style>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -39,7 +58,9 @@
     </nav>
     <main class="maindash">
         <div id="tela-equipe" class="menugens" style="display:flex;">
-            <button class="btn-voltar-pequeno" onclick="voltarParaJogar()">⬅ Voltar</button>
+            <aside class="aside-voltar" style="margin-left: -67px">
+                <button class="btn-voltar-pequeno" onclick="voltarParaJogar()">⬅ Voltar</button>
+            </aside>
             <div class="layout-loja">
                 <div class="area-loja">
                     <h2 class="titulo-loja" style="font-size: 50px; margin-top: -5px;">PokéMart</h2>
@@ -206,7 +227,7 @@
             <img class="logofoot" src="/MonsterPE/assets/imgs/MonsterPE.png" alt="MonsterPE logo">
             <div class="opfoot">© 2026 MonsterPE | Todos direitos reservados</div>
             <div class="opfoot" id="2">Entre na nossa comunidade do discord!
-            <a href="https://discord.gg/uaCCbWHex" target="_blank">Clique aqui!</a>
+            <a href="https://discord.gg/6VaQrXhea" target="_blank">Clique aqui!</a>
             </div>
     </footer>
 <script src="../../Models/Pokeapi.js"></script>
@@ -232,3 +253,4 @@
     </div>
 </body>
 </html>
+
